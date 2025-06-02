@@ -6,9 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            roboto: ['"Roboto Slab"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
 </head>
 
-<body class="flex flex-col min-h-screen justify-between">
+<body class="flex flex-col min-h-screen justify-between font-roboto">
 
   <header>
     <?php include 'includes/Header.php'; ?>
