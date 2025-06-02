@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+<?php include 'Includes/DBkoneksi.php'; ?>
 
 <head>
   <meta charset="UTF-8">
@@ -30,15 +31,15 @@
     <h1 class="text-3xl font-bold mb-2">Masuk</h1>
     <p class="mb-6 text-center text-gray-600">Silahkan Masukkan Akun Ngajar.ID</p>
 
-    <form class="w-full max-w-sm space-y-4">
+    <form class="w-full max-w-sm space-y-4" method="POST" action="">
       <div>
         <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-Mail</label>
-        <input type="email" id="email" placeholder="" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500" />
+        <input type="email" id="email" placeholder="" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500" />
       </div>
 
       <div>
         <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-        <input type="password" id="password" placeholder="" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500" />
+        <input type="password" id="password" placeholder="" name="password" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500" />
       </div>
 
       <button type="submit" class="w-full py-2 bg-teal-600 text-white rounded hover:bg-teal-700">Masuk</button>
