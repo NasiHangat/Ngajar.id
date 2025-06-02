@@ -1,3 +1,20 @@
+<?php
+include 'Includes/DBkoneksi.php';
+
+// Ambil total donasi
+$sql_total = "SELECT SUM(jumlah) AS total FROM donasi";
+$result_total = $conn->query($sql_total);
+$total_donasi = 0;
+if ($result_total && $row = $result_total->fetch_assoc()) {
+    $total_donasi = $row['total'] ?? 0;
+}
+
+// Ambil riwayat donasi
+$sql_riwayat = "SELECT nama, jumlah, tanggal FROM donasi ORDER BY tanggal DESC";
+$result_riwayat = $conn->query($sql_riwayat);
+?>
+
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -30,7 +47,7 @@
         <!-- Total Donasi -->
         <div class="bg-teal-600 text-white text-center py-10 rounded-lg mb-8">
             <h2 class="text-xl font-bold uppercase mb-2">Total Donasi</h2>
-            <p class="text-4xl md:text-5xl font-bold">Rp 000.000,00</p>
+            <p class="text-4xl md:text-5xl font-bold">Rp <?php echo number_format($total_donasi, 0, ',', '.'); ?>,00</p>
         </div>
 
         <!-- Riwayat Donasi -->
@@ -46,14 +63,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Data donasi di sini -->
+                <?php if ($result_riwayat && $result_riwayat->num_rows > 0): ?>
+                    <?php while($row = $result_riwayat->fetch_assoc()): ?>
                     <tr>
-                        <td class="border border-teal-300 px-4 py-2">-</td>
-                        <td class="border border-teal-300 px-4 py-2">-</td>
-                        <td class="border border-teal-300 px-4 py-2">-</td>
+                        <td class="border border-teal-300 px-4 py-2"><?php echo htmlspecialchars($row['nama']); ?></td>
+                        <td class="border border-teal-300 px-4 py-2">Rp <?php echo number_format($row['jumlah'], 0, ',', '.'); ?>,00</td>
+                        <td class="border border-teal-300 px-4 py-2"><?php echo date('d-m-Y H:i', strtotime($row['tanggal'])); ?></td>
                     </tr>
-                    <!-- Tambahkan baris baru sesuai kebutuhan -->
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <tr>
+                    <td colspan="3" class="border border-teal-300 px-4 py-2 text-gray-500">Belum ada donasi tercatat.</td>
+                    </tr>
+                <?php endif; ?>
                 </tbody>
+
             </table>
         </div>
     </div>

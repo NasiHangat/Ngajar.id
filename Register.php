@@ -20,6 +20,41 @@
   </script>
 </head>
 
+<?php
+include 'Includes/DBkoneksi.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nama     = $_POST['nama'];
+    $email    = $_POST['email'];
+    $password = $_POST['password'];
+    $konfirmasi = $_POST['konfirmasi'];
+    $role     = $_POST['role'];
+
+    // Validasi sederhana
+    if ($password !== $konfirmasi) {
+        echo "<script>alert('Password dan konfirmasi tidak cocok');</script>";
+    } else {
+        // Hash password
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+        // Insert ke database
+        $sql = "INSERT INTO users (name, email, password, role, status) 
+                VALUES (?, ?, ?, ?, 'aktif')";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssss", $nama, $email, $password_hash, $role);
+
+        if ($stmt->execute()) {
+            echo "<script>alert('Registrasi berhasil!'); window.location.href='login.php';</script>";
+        } else {
+            echo "<script>alert('Terjadi kesalahan: {$stmt->error}');</script>";
+        }
+
+        $stmt->close();
+    }
+}
+?>
+
 <body class="flex flex-col min-h-screen justify-between font-roboto">
 
   <header>
@@ -30,30 +65,30 @@
     <h1 class="text-3xl font-bold mb-2">Daftar</h1>
     <p class="mb-6 text-center text-gray-600">Silahkan Isi Form untuk Membuat Akun Ngajar.ID</p>
 
-    <form class="w-full max-w-sm space-y-4">
+    <form class="w-full max-w-sm space-y-4" method="POST" action="">
       <div>
         <label for="nama" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
-        <input type="text" id="nama" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500" />
+        <input type="text" id="nama" name="nama" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500" />
       </div>
 
       <div>
         <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-Mail</label>
-        <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500" />
+        <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500" />
       </div>
 
       <div>
         <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-        <input type="password" id="password" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500" />
+        <input type="password" id="password" name="password" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500" />
       </div>
 
       <div>
         <label for="konfirmasi" class="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Password</label>
-        <input type="password" id="konfirmasi" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500" />
+        <input type="password" id="konfirmasi" name="konfirmasi" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500" />
       </div>
 
       <div>
         <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-        <select id="status" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500">
+        <select id="status" name="role" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500">
           <option value="" disabled selected></option>
           <option value="pengajar">Pengajar</option>
           <option value="murid">Murid</option>
