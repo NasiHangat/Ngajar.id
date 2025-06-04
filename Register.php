@@ -1,3 +1,55 @@
+<?php
+include 'includes/DBkoneksi.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nama     = $_POST['nama'];
+    $email    = $_POST['email'];
+    $password = $_POST['password'];
+    $konfirmasi = $_POST['konfirmasi'];
+    $role     = $_POST['role'];
+
+    // Validasi sederhana
+    if ( empty($nama) || empty($email) || empty($password) || empty($konfirmasi) || empty($role)) {
+    echo "<script>alert('Semua field wajib diisi!'); window.history.back();</script>";
+    exit;
+    } if ($password !== $konfirmasi) {
+      echo "<script>alert('Password dan konfirmasi tidak cocok'); window.history.back();</script>";
+    }  else {
+        // Hash password
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+        // Cek apakah email sudah terdaftar
+        $sql = "SELECT * FROM users WHERE email = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            echo "<script>alert('Email sudah terdaftar!'); window.history.back();</script>";
+            $stmt->close();
+            exit;
+        }
+
+        // Insert ke database
+        $sql = "INSERT INTO users (name, email, password, role, status) 
+                VALUES (?, ?, ?, ?, 'aktif')";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssss", $nama, $email, $password_hash, $role);
+
+        if ($stmt->execute()) {
+            echo "<script>alert('Registrasi berhasil!'); window.location.href='login.php';</script>";
+            header("Location: login.php?success=1");
+            exit;
+        } else {
+            echo "<script>alert('Terjadi kesalahan: {$stmt->error}');</script>";
+        }
+
+        $stmt->close();
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -19,41 +71,6 @@
     }
   </script>
 </head>
-
-<?php
-include 'Includes/DBkoneksi.php';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nama     = $_POST['nama'];
-    $email    = $_POST['email'];
-    $password = $_POST['password'];
-    $konfirmasi = $_POST['konfirmasi'];
-    $role     = $_POST['role'];
-
-    // Validasi sederhana
-    if ($password !== $konfirmasi) {
-        echo "<script>alert('Password dan konfirmasi tidak cocok');</script>";
-    } else {
-        // Hash password
-        $password_hash = password_hash($password, PASSWORD_DEFAULT);
-
-        // Insert ke database
-        $sql = "INSERT INTO users (name, email, password, role, status) 
-                VALUES (?, ?, ?, ?, 'aktif')";
-
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssss", $nama, $email, $password_hash, $role);
-
-        if ($stmt->execute()) {
-            echo "<script>alert('Registrasi berhasil!'); window.location.href='login.php';</script>";
-        } else {
-            echo "<script>alert('Terjadi kesalahan: {$stmt->error}');</script>";
-        }
-
-        $stmt->close();
-    }
-}
-?>
 
 <body class="flex flex-col min-h-screen justify-between font-roboto">
 
@@ -87,9 +104,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
 
       <div>
-        <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-        <select id="status" name="role" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500">
-          <option value="" disabled selected></option>
+        <label for="role" class="block text-sm font-medium text-gray-700 mb-1">Role</label>
+        <select id="role" name="role" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500">
+          <option hidden value="">-- Pilih Role --</option>
           <option value="pengajar">Pengajar</option>
           <option value="murid">Murid</option>
         </select>

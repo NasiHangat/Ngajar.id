@@ -1,3 +1,24 @@
+<?php
+include 'includes/DBkoneksi.php';
+
+// Ambil jumlah pengguna berdasarkan role
+$sql_pengajar = "SELECT COUNT(*) as total FROM users WHERE role = 'pengajar'";
+$sql_murid    = "SELECT COUNT(*) as total FROM users WHERE role = 'murid'";
+
+$jumlah_pengajar = 0;
+$jumlah_murid    = 0;
+
+if ($result = $conn->query($sql_pengajar)) {
+    $row = $result->fetch_assoc();
+    $jumlah_pengajar = $row['total'];
+}
+if ($result = $conn->query($sql_murid)) {
+    $row = $result->fetch_assoc();
+    $jumlah_murid = $row['total'];
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -76,7 +97,7 @@
         <img src="img/ic-student 1.png" class="w-16 h-16" />
         <div class="text-left">
           <p class="text-base">Murid Terdaftar</p>
-          <h3 class="text-2xl font-bold">204.501</h3>
+          <h3 class="text-2xl font-bold"><?php echo number_format($jumlah_murid); ?></h3>
         </div>
       </div>
 
@@ -85,7 +106,7 @@
         <img src="img/ic-parent 1.png" class="w-16 h-16" />
         <div class="text-left">
           <p class="text-base">Pengajar Terdaftar</p>
-          <h3 class="text-2xl font-bold">150.041</h3>
+          <h3 class="text-2xl font-bold"><?php echo number_format($jumlah_pengajar); ?></h3>
         </div>
       </div>
 
