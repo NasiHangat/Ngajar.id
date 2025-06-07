@@ -40,10 +40,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     header("Location: Murid/dashboard.php");
                     break;
                 case 'pengajar':
-                    header("Location: dashboard_pengajar.php");
+                    header("Location: Pengajar/dashboard.php");
                     break;
                 case 'admin':
-                    header("Location: dashboard_admin.php");
+                    header("Location: Admin/dashboard.php");
                     break;
                 default:
                     echo "<script>alert('Role tidak dikenali.');</script>";
