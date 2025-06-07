@@ -1,3 +1,10 @@
+<?php
+include 'Includes/DBkoneksi.php';
+include 'Includes/Session.php';
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="id">
 <head>

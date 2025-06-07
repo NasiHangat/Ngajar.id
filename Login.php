@@ -1,3 +1,69 @@
+<?php
+session_start();
+include 'Includes/DBkoneksi.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email    = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
+
+    if (empty($email) || empty($password)) {
+        echo "<script>alert('Semua field wajib diisi!'); window.history.back();</script>";
+        exit;
+    }
+
+    // Ambil data user dari DB
+    $stmt = $conn->prepare("SELECT user_id, name, email, password, role, status FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Cek jika user ditemukan
+    if ($result->num_rows === 1) {
+        $user = $result->fetch_assoc();
+
+        // Verifikasi password
+        if (password_verify($password, $user['password'])) {
+            // Cek status aktif
+            if ($user['status'] !== 'aktif') {
+                echo "<script>alert('Akun Anda tidak aktif.'); window.history.back();</script>";
+                exit;
+            }
+
+            // Set session
+            $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['name']    = $user['name'];
+            $_SESSION['role']    = $user['role'];
+
+            // Redirect berdasarkan role
+            switch ($user['role']) {
+                case 'siswa':
+                    header("Location: Murid/dashboard.php");
+                    break;
+                case 'pengajar':
+                    header("Location: dashboard_pengajar.php");
+                    break;
+                case 'admin':
+                    header("Location: dashboard_admin.php");
+                    break;
+                default:
+                    echo "<script>alert('Role tidak dikenali.');</script>";
+                    break;
+            }
+            exit;
+
+        } else {
+            echo "<script>alert('Password salah.'); window.history.back();</script>";
+            exit;
+        }
+
+    } else {
+        echo "<script>alert('Email tidak ditemukan.'); window.history.back();</script>";
+        exit;
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="id">
 <?php include 'Includes/DBkoneksi.php'; ?>

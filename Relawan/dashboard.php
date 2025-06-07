@@ -1,4 +1,9 @@
 <?php
+<?php
+include 'Includes/DBkoneksi.php';
+include 'Includes/Session.php';
+
+
 $namaPengguna = "Kak Azis";
 ?>
 
