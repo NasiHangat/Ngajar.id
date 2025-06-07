@@ -8,7 +8,7 @@
 <body class="bg-white">
   <header class="shadow-md">
     <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-      <a href="index.php" class="text-teal-500 font-bold text-lg">Ngajar.Id</a>
+      <a href="index.php" class="text-teal-500 font-bold text-xl">Ngajar.Id</a>
 
       <nav class="flex space-x-6 text-sm text-gray-900 font-medium">
         <a href='index.php' class="hover:text-teal-500">Home</a>
