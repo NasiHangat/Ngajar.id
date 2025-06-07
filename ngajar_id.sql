@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 04 Jun 2025 pada 18.26
+-- Waktu pembuatan: 07 Jun 2025 pada 12.56
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -150,6 +150,20 @@ CREATE TABLE `topup` (
   `tanggal` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Trigger `topup`
+--
+DELIMITER $$
+CREATE TRIGGER `after_topup_insert` AFTER INSERT ON `topup` FOR EACH ROW BEGIN
+  INSERT INTO token (user_id, jumlah, last_update)
+  VALUES (NEW.user_id, NEW.jumlah_token, NOW())
+  ON DUPLICATE KEY UPDATE 
+    jumlah = jumlah + NEW.jumlah_token,
+    last_update = NOW();
+END
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -171,7 +185,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `role`, `status`, `created_at`) VALUES
-(19, 'A', 'D@gmail.com', '$2y$10$5VffwNGmfK.BoouYo9.fRO9bHdTO5yVQVFPh8TfycncQuODsOknSq', 'murid', 'aktif', '2025-06-04 16:22:19');
+(19, 'A', 'D@gmail.com', '$2y$10$5VffwNGmfK.BoouYo9.fRO9bHdTO5yVQVFPh8TfycncQuODsOknSq', 'murid', 'aktif', '2025-06-04 16:22:19'),
+(21, 'Maman Ganteng Gila Abis', 'c@gmail.com', '$2y$10$J7eY7UHSOVMMfmK8tDzy9OOLMLSSJw5ctfNYQC4pZKdxXijRDY472', 'pengajar', 'aktif', '2025-06-07 05:50:39'),
+(22, 'Azis', 'muhammadabdulazis747@gmail.com', '$2y$10$0iDFaPLbu/YPYxXh.fK04O8rUx08mNkiU6iDPrLVkqk3EiStJcf12', 'murid', 'aktif', '2025-06-07 08:20:16'),
+(23, 'Maman Tamvan Abis', 'mamanganteng@gmail.com', '$2y$10$SufD6HCgSP9V60/uBJ7VP.NUwtsdywdtRwCBbpEyGGAcszAY5kbhy', 'admin', 'aktif', '2025-06-07 10:13:33'),
+(24, 'tolol', 'anjing@gmail.com', '$2y$10$yWzhLY.hVgNaF8BXX7VMFeg.mOQUtQ0zPJM8PTzzRxCTjURUeIjTa', 'pengajar', 'aktif', '2025-06-07 10:53:17'),
+(25, 'e', 'e@gmail.com', '$2y$10$ejBRXwCK.z1GiCOrxlD/eeOryFLyYCiKFQUfFBmjjibBjWCmzKzwq', 'murid', 'aktif', '2025-06-07 10:54:21');
 
 --
 -- Indexes for dumped tables
@@ -304,7 +323,7 @@ ALTER TABLE `topup`
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
