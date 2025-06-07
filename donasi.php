@@ -37,7 +37,7 @@ $result_riwayat = $conn->query($sql_riwayat);
     </script>
 </head>
 
-<body class="flex flex-col min-h-screen justify- font-roboto">
+<body class=" min-h-screen font-roboto">
 
     <header>
         <?php include 'includes/Header.php'; ?>
@@ -46,8 +46,8 @@ $result_riwayat = $conn->query($sql_riwayat);
     <div class="max-w-6xl mx-auto p-6">
         <!-- Total Donasi -->
         <div class="bg-teal-600 text-white text-center py-10 rounded-lg mb-8">
-            <h2 class="text-xl font-bold uppercase mb-2">Total Donasi</h2>
-            <p class="text-4xl md:text-5xl font-bold">Rp <?php echo number_format($total_donasi, 0, ',', '.'); ?>,00</p>
+            <h2 class="text-6xl font-bold uppercase mb-2">Total Donasi</h2>
+            <p class="text-4xl md:text-7xl font-bold">Rp <?php echo number_format($total_donasi, 0, ',', '.'); ?>,00</p>
         </div>
 
         <!-- Riwayat Donasi -->
