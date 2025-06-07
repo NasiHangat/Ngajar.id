@@ -22,7 +22,7 @@ $menus = [
         ['label' => 'Dashboard', 'icon' => 'fa-home', 'url' => '../admin/dashboard.php'],
         ['label' => 'Kelola Pengguna', 'icon' => 'fa-users-cog', 'url' => '../admin/kelola_pengguna.php'],
         ['label' => 'Kelas', 'icon' => 'fa-chalkboard-teacher', 'url' => '../admin/kelas.php'],
-        ['label' => 'Donasi', 'icon' => 'fa-donate', 'url' => '../admin/donasi.php'],
+        ['label' => 'Donasi', 'icon' => 'fa-donate', 'url' => '../admin/admin_donasi.php'],
     ]
 ];
 

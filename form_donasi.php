@@ -1,6 +1,5 @@
-<?php 
-
-?>;
+<?php include 'Includes/session_check.php'; ?>
+<?php include 'Includes/DBkoneksi.php'; ?>
 
 <!DOCTYPE html>
 <html lang="id">
@@ -47,7 +46,7 @@
                 </div>
             </div>
         </header>
-        <?php include "Includes/pengajar_sidebar.php" ?>;
+        <?php include "Includes/sidebar.php" ?>
     </div>
 </script>
 </body>
