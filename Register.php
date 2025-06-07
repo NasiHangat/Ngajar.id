@@ -38,9 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("ssss", $nama, $email, $password_hash, $role);
 
         if ($stmt->execute()) {
-            echo "<script>alert('Registrasi berhasil!'); window.location.href='login.php';</script>";
-            header("Location: login.php?success=1");
-            exit;
+          echo "<script>alert('Registrasi berhasil!'); window.location.href='login.php';</script>";
+          exit;
         } else {
             echo "<script>alert('Terjadi kesalahan: {$stmt->error}');</script>";
         }

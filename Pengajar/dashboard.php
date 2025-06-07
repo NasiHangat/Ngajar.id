@@ -1,10 +1,10 @@
 <?php
-<?php
 include 'Includes/DBkoneksi.php';
 include 'Includes/Session.php';
 
+session_start();
+$namaPengguna = $_SESSION['nama']; // Jika ingin tampilkan "Kak Azis"
 
-$namaPengguna = "Kak Azis";
 ?>
 
 <!DOCTYPE html>
@@ -58,7 +58,7 @@ $namaPengguna = "Kak Azis";
                 </div>
             </div>
         </header>
-        <?php include "sidebar.php" ?>;
+        <?php include "sidebar.php" ?>
         <main class="flex-grow">
             <div class="max-w-6xl mx-auto px-4 py-12">
                 
@@ -68,7 +68,7 @@ $namaPengguna = "Kak Azis";
                         <i class="fas fa-user-circle text-6xl sm:text-7xl opacity-80"></i>
                     </div>
                     <div>
-                        <h2 class="text-2xl sm:text-3xl font-semibold mb-2">Terimakasih, John Doe</h2>
+                        <h2 class="text-2xl sm:text-3xl font-semibold mb-2">Terimakasih, <?php echo htmlspecialchars($namaPengguna); ?></h2>
                         <p class="text-sm sm:text-base opacity-90">Idealisme adalah kemewahan terakhir yang hanya dimiliki oleh pemuda.</p>
                     </div>
                 </div>

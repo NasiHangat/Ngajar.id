@@ -24,32 +24,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Verifikasi password
         if (password_verify($password, $user['password'])) {
             // Cek status aktif
-            if ($user['status'] !== 'aktif') {
-                echo "<script>alert('Akun Anda tidak aktif.'); window.history.back();</script>";
+              if (password_verify($password, $user['password'])) {
+                if ($user['status'] !== 'aktif') {
+                    echo "<script>alert('Akun Anda tidak aktif.'); window.history.back();</script>";
+                    exit;
+                }
+
+                // SET SESSION 
+                session_start();
+                $_SESSION['user_id'] = $user['user_id'];
+                $_SESSION['nama']    = $user['name'];
+                $_SESSION['role']    = $user['role'];
+
+                // Redirect berdasarkan role
+                switch ($user['role']) {
+                    case 'murid':
+                        header("Location: Murid/dashboard.php");
+                        break;
+                    case 'pengajar':
+                        header("Location: Pengajar/dashboard.php");
+                        break;
+                    case 'admin':
+                        header("Location: Admin/dashboard.php");
+                        break;
+                    default:
+                        echo "<script>alert('Role tidak dikenali.');</script>";
+                        break;
+                }
                 exit;
-            }
-
-            // Set session
-            $_SESSION['user_id'] = $user['user_id'];
-            $_SESSION['name']    = $user['name'];
-            $_SESSION['role']    = $user['role'];
-
-            // Redirect berdasarkan role
-            switch ($user['role']) {
-                case 'murid':
-                    header("Location: Murid/dashboard.php");
-                    break;
-                case 'pengajar':
-                    header("Location: Pengajar/dashboard.php");
-                    break;
-                case 'admin':
-                    header("Location: Admin/dashboard.php");
-                    break;
-                default:
-                    echo "<script>alert('Role tidak dikenali.');</script>";
-                    break;
-            }
-            exit;
+            } exit;
 
         } else {
             echo "<script>alert('Password salah.'); window.history.back();</script>";
