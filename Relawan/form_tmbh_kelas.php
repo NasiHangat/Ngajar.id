@@ -1,3 +1,15 @@
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        roboto: ['"Roboto Slab"', 'serif'],
+                    }
+                }
+            }
+        }
+</script>
 <div id="modalTambahKelas" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
             <div class="bg-white rounded-lg shadow-xl w-full max-w-md mx-4">
                 <!-- Modal Header -->
