@@ -13,7 +13,7 @@ include 'Includes/Session.php';
     <title>Dashboard - Ngajar.ID</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../Relawan/warna.css">
+    <link rel="stylesheet" href="styles/warna.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {

@@ -1,11 +1,5 @@
-<?php
-include 'Includes/DBkoneksi.php';
-include 'Includes/Session.php';
-
-session_start();
-$namaPengguna = $_SESSION['nama']; // Jika ingin tampilkan "Kak Azis"
-
-?>
+<?php include '../Includes/session_check.php'; ?>
+<?php include '../Includes/DBkoneksi.php'; ?>
 
 <!DOCTYPE html>
 <html lang="id">
@@ -15,7 +9,7 @@ $namaPengguna = $_SESSION['nama']; // Jika ingin tampilkan "Kak Azis"
     <title>Dashboard - Ngajar.ID</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="warna.css">
+    <link rel="stylesheet" href="../styles/warna.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -58,7 +52,7 @@ $namaPengguna = $_SESSION['nama']; // Jika ingin tampilkan "Kak Azis"
                 </div>
             </div>
         </header>
-        <?php include "sidebar.php" ?>
+        <?php include "../Includes/sidebar.php" ?>
         <main class="flex-grow">
             <div class="max-w-6xl mx-auto px-4 py-12">
                 
@@ -164,8 +158,6 @@ $namaPengguna = $_SESSION['nama']; // Jika ingin tampilkan "Kak Azis"
             </div>
         </main>
     </div>
-<script src="validasi_sidebar.js">
     
-</script>
 </body>
 </html>
