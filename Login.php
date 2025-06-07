@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Redirect berdasarkan role
             switch ($user['role']) {
-                case 'siswa':
+                case 'murid':
                     header("Location: Murid/dashboard.php");
                     break;
                 case 'pengajar':
