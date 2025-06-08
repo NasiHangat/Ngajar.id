@@ -28,7 +28,11 @@ $menus = [
 
 $menuItems = $menus[$role] ?? [];
 ?>
-
+<style>
+    body {
+    font-family: 'Roboto Slab', serif;
+    }
+</style>
 <div id="sidebar" class="w-64 h-screen bg-teal-600 text-white flex flex-col fixed z-50 transform -translate-x-full sidebar-transition">
     <div class="flex items-center justify-center px-6 py-6 border-b border-white/20">
         <h1 class="text-2xl font-bold font-robotoSlab text-center">Ngajar.Id</h1>
