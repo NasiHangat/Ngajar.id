@@ -39,7 +39,7 @@ if ($_SESSION['role'] !== 'murid') {
         </div>
     </div>
     </header>
-    <?php include "sidebar.php"?>
+    <?php include "../Includes/sidebar.php"?>
     <div class="bg-white py-4">
     <div class="bg-teal-500 py-4">
         <div class="max-w-6xl mx-auto px-4 flex items-start justify-between">
@@ -67,8 +67,8 @@ if ($_SESSION['role'] !== 'murid') {
             <section class="mb-8">
                 <h3 class="text-2xl font-bold text-teal-500 py-2">Pembelajaran</h3>
                 <div class="flex space-x-3 my-4">
-                    <a href="modul.php" class="bg-teal-500 text-white px-6 py-2 rounded-lg text-sm font-bold border-l-2 border-r-2 border-b-4 border-[var(--border-blue-dark)] shadow-md" style="--border-blue-dark: #003D4E;">Modul</a>
-                    <a href="class.php" class="bg-white text-teal-500 px-7 py-2 rounded-lg text-sm font-bold border-l-2 border-r-2 border-b-4 border-[var(--border-blue-dark)] shadow-md" style="--border-blue-dark: #003D4E;">Kelas</a>
+                    <a href="murid_modul.php" class="bg-teal-500 text-white px-6 py-2 rounded-lg text-sm font-bold border-l-2 border-r-2 border-b-4 border-[var(--border-blue-dark)] shadow-md" style="--border-blue-dark: #003D4E;">Modul</a>
+                    <a href="murid_class.php" class="bg-white text-teal-500 px-7 py-2 rounded-lg text-sm font-bold border-l-2 border-r-2 border-b-4 border-[var(--border-blue-dark)] shadow-md" style="--border-blue-dark: #003D4E;">Kelas</a>
                 </div>
                 <div>
                     <div class="mb-3">

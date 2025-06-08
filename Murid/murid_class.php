@@ -30,7 +30,7 @@
         </div>
     </div>
     </header>
-    <?php include "sidebar.php"?>
+    <?php include "../Includes/sidebar.php"?>
     <div class="bg-teal-500 py-4">
         <div class="max-w-6xl mx-auto px-4 flex items-start justify-between">
             <div class="flex items-center space-x-4">
