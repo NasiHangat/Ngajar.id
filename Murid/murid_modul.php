@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modul - Ngajar.ID</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -43,7 +42,7 @@
                     <!-- Token dan tombol tambah diletakkan di bawah -->
                     <div class="mt-2 flex items-center space-x-2">
                         <div class="bg-white text-teal-500 text-xs font-semibold px-2.5 py-1 rounded-lg flex items-center">
-                            <img src="coin.png" class="mr-1.5 w-4"></img> 20
+                            <img src="../img/coin.png" class="mr-1.5 w-4"></img> 20
                         </div>
                         <button class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center">
                             <i class="fas fa-plus text-sm"></i>
@@ -81,7 +80,7 @@
             <!-- Modul Pembelajaran Cards -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-14">
                 <div class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
-                    <div class="absolute translate-x-[-8px] z-0 w-full h-9/10 bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl"></div>
+                    <div class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl"></div>
                     <div class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl"></div>
                     <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
                         <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl" src="https://placehold.co/160x90" alt="Math">
@@ -91,7 +90,7 @@
                     </div>
                 </div>
                 <div class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
-                    <div class="absolute translate-x-[-8px] z-0 w-full h-9/10 bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl"></div>
+                    <div class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl"></div>
                     <div class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl"></div>
                     <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
                         <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl" src="https://placehold.co/160x90" alt="Math">
@@ -101,7 +100,7 @@
                     </div>
                 </div>
                 <div class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
-                    <div class="absolute translate-x-[-8px] z-0 w-full h-9/10 bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl"></div>
+                    <div class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl"></div>
                     <div class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl"></div>
                     <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
                         <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl" src="https://placehold.co/160x90" alt="Math">
@@ -111,7 +110,17 @@
                     </div>
                 </div>
                 <div class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
-                    <div class="absolute translate-x-[-8px] z-0 w-full h-9/10 bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl"></div>
+                    <div class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl"></div>
+                    <div class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl"></div>
+                    <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
+                        <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl" src="https://placehold.co/160x90" alt="Math">
+                        <h3 class="text-emerald-500 text-lg font-bold mt-4 text-left">Aljabar Linear</h3>
+                        <p class="text-emerald-500 text-sm font-light mt-2 text-left">Deskripsi Singkat</p>
+                        <p class="text-emerald-500 py-5 text-sm font-light mt-2 text-right">8 Soal</p>
+                    </div>
+                </div>
+                <div class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
+                    <div class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl"></div>
                     <div class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl"></div>
                     <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
                         <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl" src="https://placehold.co/160x90" alt="Math">
@@ -121,7 +130,6 @@
                     </div>
                 </div>
             </div>
-            
         </section>
 
         <section class="mb-8">
@@ -132,10 +140,9 @@
                 <button class="bg-teal-500 text-white px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">CPNS</button>
                 <button class="bg-white text-teal-500 px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">UTBK</button>
             </div>
-
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-14">
                 <div class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
-                    <div class="absolute translate-x-[-8px] z-0 w-full h-9/10 bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl"></div>
+                    <div class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl"></div>
                     <div class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl"></div>
                     <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
                         <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl" src="https://placehold.co/160x90" alt="Math">
@@ -145,7 +152,7 @@
                     </div>
                 </div>
                 <div class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
-                    <div class="absolute translate-x-[-8px] z-0 w-full h-9/10 bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl"></div>
+                    <div class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl"></div>
                     <div class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl"></div>
                     <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
                         <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl" src="https://placehold.co/160x90" alt="Math">
@@ -155,7 +162,7 @@
                     </div>
                 </div>
                 <div class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
-                    <div class="absolute translate-x-[-8px] z-0 w-full h-9/10 bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl"></div>
+                    <div class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl"></div>
                     <div class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl"></div>
                     <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
                         <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl" src="https://placehold.co/160x90" alt="Math">
@@ -165,7 +172,17 @@
                     </div>
                 </div>
                 <div class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
-                    <div class="absolute translate-x-[-8px] z-0 w-full h-9/10 bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl"></div>
+                    <div class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl"></div>
+                    <div class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl"></div>
+                    <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
+                        <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl" src="https://placehold.co/160x90" alt="Math">
+                        <h3 class="text-emerald-500 text-lg font-bold mt-4 text-left">Aljabar Linear</h3>
+                        <p class="text-emerald-500 text-sm font-light mt-2 text-left">Deskripsi Singkat</p>
+                        <p class="text-emerald-500 py-5 text-sm font-light mt-2 text-right">8 Soal</p>
+                    </div>
+                </div>
+                <div class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
+                    <div class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl"></div>
                     <div class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl"></div>
                     <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
                         <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl" src="https://placehold.co/160x90" alt="Math">
