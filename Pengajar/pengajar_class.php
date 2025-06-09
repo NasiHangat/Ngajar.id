@@ -25,7 +25,7 @@
             </div>
         </header>
         <?php include "../Includes/sidebar.php"?>
-        <main class="flex-grow">
+        <main class="flex-grow flex-col min-h-screen p-4 sm:p-8">
             <div class="max-w-6xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
                 <div class="mb-6">
                     <button id="tambahKelasBtn" class="bg-teal-500 text-white px-4 py-2 rounded-lg font-bold flex items-center gap-2 hover:bg-teal-600 transition-colors shadow-md">
