@@ -41,7 +41,7 @@ if ($_SESSION['role'] !== 'murid') {
     </header>
     <?php include "../Includes/sidebar.php"?>
     <div class="bg-white py-4">
-    <div class="bg-teal-500 py-4">
+    <div class="max-w-6xl bg-gray-100 mx-auto px-4 py-12 bg-teal-500 py-4 rounded">
         <div class="max-w-6xl mx-auto px-4 flex items-start justify-between">
             <div class="flex items-center space-x-4">
                 <img src="https://via.placeholder.com/56" alt="Foto Profil Danul"

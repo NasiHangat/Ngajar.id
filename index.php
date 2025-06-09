@@ -9,12 +9,12 @@ $jumlah_pengajar = 0;
 $jumlah_murid    = 0;
 
 if ($result = $conn->query($sql_pengajar)) {
-    $row = $result->fetch_assoc();
-    $jumlah_pengajar = $row['total'];
+  $row = $result->fetch_assoc();
+  $jumlah_pengajar = $row['total'];
 }
 if ($result = $conn->query($sql_murid)) {
-    $row = $result->fetch_assoc();
-    $jumlah_murid = $row['total'];
+  $row = $result->fetch_assoc();
+  $jumlah_murid = $row['total'];
 }
 ?>
 
@@ -89,10 +89,8 @@ if ($result = $conn->query($sql_murid)) {
     </div>
   </section>
 
-  <section class="bg-gray-100 py-10">
-    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-around items-center gap-8">
-
-      <!-- Murid Terdaftar -->
+  <section class="max-w-6xl bg-gray-100 mx-auto px-4 py-12 rounded">
+    <div class="px-4 flex flex-col md:flex-row justify-around items-center gap-8">
       <div class="flex items-center gap-6">
         <img src="img/ic-student 1.png" class="w-16 h-16" />
         <div class="text-left">
@@ -101,7 +99,6 @@ if ($result = $conn->query($sql_murid)) {
         </div>
       </div>
 
-      <!-- Pengajar Terdaftar -->
       <div class="flex items-center gap-6">
         <img src="img/ic-parent 1.png" class="w-16 h-16" />
         <div class="text-left">
@@ -109,7 +106,6 @@ if ($result = $conn->query($sql_murid)) {
           <h3 class="text-2xl font-bold"><?php echo number_format($jumlah_pengajar); ?></h3>
         </div>
       </div>
-
     </div>
   </section>
 
@@ -133,7 +129,7 @@ if ($result = $conn->query($sql_murid)) {
     </div>
   </section>
 
-  <section class="text-center py-12">
+  <section class="max-w-6xl mx-auto px-4 py-12 text-center  ">
     <h2 class="text-lg font-semibold mb-2">TUNGGU APA LAGI</h2>
     <p class="text-sm mb-6">Belajar dan Mengajar Di Ngajar.ID</p>
     <a href="#" class="bg-teal-500 text-white px-6 py-2 rounded hover:bg-teal-600 text-sm font-medium">

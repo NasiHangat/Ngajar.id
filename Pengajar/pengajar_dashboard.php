@@ -36,7 +36,9 @@ $namaPengguna = "Kak Azis";
                 </div>
             </div>
         </header>
-        <?php include "sidebar.php" ?>
+
+        <?php include "../includes/sidebar.php" ?>
+
         <main class="flex-grow">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div class="bg-teal-500 text-white p-6 sm:p-8 rounded-xl shadow-lg mb-10 flex items-center space-x-6">
