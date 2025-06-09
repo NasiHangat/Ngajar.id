@@ -43,7 +43,7 @@ $result_riwayat = $conn->query($sql_riwayat);
         <?php include 'includes/Header.php'; ?>
     </header>
 
-    <div class="max-w-6xl mx-auto p-6">
+    <div class="max-w-6xl mx-auto px-4 py-4">
         <!-- Total Donasi -->
         <div class="bg-teal-600 text-white text-center py-10 rounded-lg mb-8">
             <h2 class="text-5xl font-bold uppercase mb-2">Total Donasi</h2>
