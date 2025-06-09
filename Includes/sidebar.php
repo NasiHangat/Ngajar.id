@@ -33,7 +33,7 @@ $menuItems = $menus[$role] ?? [];
     font-family: 'Roboto Slab', serif;
     }
 </style>
-<div id="sidebar" class="w-64 h-screen bg-teal-600 text-white flex flex-col fixed z-50 transform -translate-x-full sidebar-transition">
+<aside id="sidebar" class="fixed top-0 left-0 w-64 h-screen bg-teal-600 text-white flex flex-col z-50 transform -translate-x-full transition-transform duration-300 ease-in-out">
     <div class="flex items-center justify-center px-6 py-6 border-b border-white/20">
         <h1 class="text-2xl font-bold font-robotoSlab text-center">Ngajar.Id</h1>
     </div>
@@ -41,7 +41,7 @@ $menuItems = $menus[$role] ?? [];
     <nav class="mt-6 flex-1 space-y-4 px-6">
         <?php foreach ($menuItems as $menu): ?>
             <a href="<?= $menu['url'] ?>" class="flex items-center space-x-4 hover:text-white/80">
-                <i class="fas <?= $menu['icon'] ?> text-lg"></i>
+                <i class="fas <?= $menu['icon'] ?> text-lg w-5"></i>
                 <span class="text-base"><?= $menu['label'] ?></span>
             </a>
         <?php endforeach; ?>
@@ -53,7 +53,7 @@ $menuItems = $menus[$role] ?? [];
             <span class="text-base">Logout</span>
         </a>
     </div>
-</div>
+</aside>
 
 <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
 <script src="../js/validasi_sidebar.js"></script>
