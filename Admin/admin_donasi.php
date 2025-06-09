@@ -25,15 +25,16 @@ $result_riwayat = $conn->query($sql_riwayat);
     <title>Donasi</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
-        font-family: 'Roboto Slab', serif;
+            font-family: 'Roboto Slab', serif;
         }
     </style>
 </head>
 
-<body class="flex flex-col min-h-screen justify- font-roboto">
-    <div class="flex flex-col min-h-screen">
+<body class="min-h-screen font-roboto">
+    <div class="flex flex-col">
         <header class="bg-white shadow-sm sticky top-0 z-30">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
                 <div class="flex items-center space-x-4">
@@ -43,20 +44,31 @@ $result_riwayat = $conn->query($sql_riwayat);
                     <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Dashboard</h1>
                 </div>
                 <div class="flex items-center space-x-2 sm:space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Mau liat apa?" class="bg-white border border-gray-300 text-sm rounded-full py-2 px-4 pl-10 focus:outline-none focus:border-teal-600 w-32 sm:w-64 transition-all">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-search text-teal-500 opacity-75"></i>
+                        </div>
+                    </div>
                     <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-bell text-xl"></i></button>
                     <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-user-circle text-xl"></i></button>
                 </div>
             </div>
         </header>
-        <?php include "../Includes/sidebar.php" ?>;
-        <div class="max-w-6xl mx-auto p-6">
+    </div>
+
+    <?php include "../Includes/sidebar.php" ?>;
+
+    <div class="max-w-6xl mx-auto px-4 py-4">
         <!-- Total Donasi -->
         <div class="bg-teal-600 text-white text-center py-10 rounded-lg mb-8">
-            <h2 class="text-xl font-bold uppercase mb-2">Total Donasi</h2>
-            <p class="text-4xl md:text-5xl font-bold">Rp <?php echo number_format($total_donasi, 0, ',', '.'); ?>,00</p>
+            <h2 class="text-5xl font-bold uppercase mb-2">Total Donasi</h2>
+            <p class="text-5xl md:text-7xl font-bold">Rp <?php echo number_format($total_donasi, 0, ',', '.'); ?>,00</p>
         </div>
+
         <!-- Riwayat Donasi -->
-        <h3 class="text-teal-600 text-2xl rounded-full font-bold text-center mb-4">Riwayat Donasi</h3>
+        <h3 class="text-teal-600 text-2xl font-bold text-center mb-4">Riwayat Donasi</h3>
+
         <div class="mx-w-6xl overflow-x-auto">
             <table class="w-full table-auto border border-teal-500 text-center">
                 <thead class="bg-white text-teal-600 font-bold">
@@ -67,22 +79,24 @@ $result_riwayat = $conn->query($sql_riwayat);
                     </tr>
                 </thead>
                 <tbody>
-                <?php if ($result_riwayat && $result_riwayat->num_rows > 0): ?>
-                    <?php while($row = $result_riwayat->fetch_assoc()): ?>
-                    <tr>
-                        <td class="border border-teal-300 px-4 py-2"><?php echo htmlspecialchars($row['nama']); ?></td>
-                        <td class="border border-teal-300 px-4 py-2">Rp <?php echo number_format($row['jumlah'], 0, ',', '.'); ?>,00</td>
-                        <td class="border border-teal-300 px-4 py-2"><?php echo date('d-m-Y H:i', strtotime($row['tanggal'])); ?></td>
-                    </tr>
-                    <?php endwhile; ?>
-                <?php else: ?>
-                    <tr>
-                    <td colspan="3" class="border border-teal-300 px-4 py-2 text-gray-500">Belum ada donasi tercatat.</td>
-                    </tr>
-                <?php endif; ?>
+                    <?php if ($result_riwayat && $result_riwayat->num_rows > 0): ?>
+                        <?php while ($row = $result_riwayat->fetch_assoc()): ?>
+                            <tr>
+                                <td class="border border-teal-300 px-4 py-2"><?php echo htmlspecialchars($row['nama']); ?></td>
+                                <td class="border border-teal-300 px-4 py-2">Rp <?php echo number_format($row['jumlah'], 0, ',', '.'); ?>,00</td>
+                                <td class="border border-teal-300 px-4 py-2"><?php echo date('d-m-Y H:i', strtotime($row['tanggal'])); ?></td>
+                            </tr>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="3" class="border border-teal-300 px-4 py-2 text-gray-500">Belum ada donasi tercatat.</td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
+
             </table>
         </div>
     </div>
 </body>
+
 </html>
