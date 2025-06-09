@@ -10,7 +10,7 @@
 </head>
 <body >
     <header class="bg-white shadow-sm sticky top-0 z-30 shadow-lg">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center space-x-3 sm:space-x-4">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center space-x-3 sm:space-x-4">
             <div>
             <button id="hamburgerButton" class="text-teal-500">
                     <i class="fas fa-bars text-xl"></i>
@@ -31,7 +31,7 @@
     </header>
     <?php include "../Includes/sidebar.php"?>
     <div class="bg-teal-500 py-4">
-        <div class="max-w-6xl mx-auto px-4 sm:px-4 flex items-start justify-between">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 flex items-start justify-between">
             <div class="flex items-center space-x-4">
                 <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white flex items-center justify-center">
                     <i class="fa-regular fa-user text-teal-500 text-3xl"></i>
