@@ -9,7 +9,6 @@ $menus = [
         ['label' => 'Dashboard', 'icon' => 'fa-home', 'url' => '../pengajar/pengajar_dashboard.php'],
         ['label' => 'Kelas Saya', 'icon' => 'fa-book-open', 'url' => '../pengajar/pengajar_class.php'],
         ['label' => 'Modul', 'icon' => 'fa-book', 'url' => '../pengajar/pengajar_modul.php'],
-        ['label' => 'Kalender', 'icon' => 'fa-calendar-alt', 'url' => '../pengajar/pengajar_calender.php'],
         ['label' => 'Donasi', 'icon' => 'fa-donate', 'url' => '../form_donasi.php'],
     ],
     'murid' => [
