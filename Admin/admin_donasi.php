@@ -26,11 +26,6 @@ $result_riwayat = $conn->query($sql_riwayat);
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body {
-            font-family: 'Roboto Slab', serif;
-        }
-    </style>
 </head>
 
 <body class="min-h-screen font-roboto">
