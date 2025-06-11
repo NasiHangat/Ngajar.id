@@ -5,6 +5,18 @@ if ($_SESSION['role'] !== 'murid') {
     header("Location: unauthorized.php");
     exit;
 }
+
+$id_pengguna = $_SESSION['user_id'] ?? null;
+$namaPengguna = "";
+
+if ($id_pengguna) {
+    $stmt = $conn->prepare("SELECT name FROM users WHERE user_id = ?");
+    $stmt->bind_param("i", $id_pengguna);
+    $stmt->execute();
+    $stmt->bind_result($namaPengguna);
+    $stmt->fetch();
+    $stmt->close();
+}
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +60,7 @@ if ($_SESSION['role'] !== 'murid') {
                     <i class="fa-regular fa-user text-teal-500 text-3xl"></i>
                 </div>
                 <div class="text-white">
-                    <h2 class="font-bold text-base sm:text-lg leading-tight">Danul</h2>
+                    <h2 class="font-bold text-base sm:text-lg leading-tight"><?php echo $namaPengguna; ?></h2>
                     <p class="text-white-200 opacity-70 text-xs sm:text-sm leading-tight">Pelajar</p>
                     <div class="mt-2 flex items-center space-x-2">
                         <div class="bg-white text-teal-500 text-xs font-semibold px-2.5 py-1 rounded-lg flex items-center">
@@ -66,7 +78,8 @@ if ($_SESSION['role'] !== 'murid') {
     <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <section class="mb-8">
             <h3 class="text-2xl font-bold text-teal-500 py-2">Pembelajaran</h3>
-            <div class="flex space-x-3 my-4">
+            <div class="flex space-x-3 my-4"> 
+                <!-- jadiin hover button,buat dua daunya putih terus hover jadi hijau -->
                 <a href="murid_modul.php" class="bg-teal-500 text-white px-6 py-2 rounded-lg text-sm font-bold border-l-2 border-r-2 border-b-4 border-[var(--border-blue-dark)] shadow-md" style="--border-blue-dark: #003D4E;">Modul</a>
                 <a href="murid_class.php" class="bg-white text-teal-500 px-7 py-2 rounded-lg text-sm font-bold border-l-2 border-r-2 border-b-4 border-[var(--border-blue-dark)] shadow-md" style="--border-blue-dark: #003D4E;">Kelas</a>
             </div>
@@ -110,7 +123,7 @@ if ($_SESSION['role'] !== 'murid') {
             <section>
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-xl font-bold text-teal-500">Modul Premium</h3>
-                    <a href="#" class="text-teal-500 text-sm font-bold flex items-center">Lihat Semua <i class="fas fa-chevron-right ml-2 text-xs"></i></a>
+                    <a href="murid_modul.php" class="text-teal-500 text-sm font-bold flex items-center">Lihat Semua <i class="fas fa-chevron-right ml-2 text-xs"></i></a>
                 </div>
                 <div class="relative">
                     <div class="absolute top-2 right-2 w-full h-full bg-[#003F4A] rounded-lg z-0"></div>
@@ -160,7 +173,7 @@ if ($_SESSION['role'] !== 'murid') {
             <section>
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-xl font-bold text-teal-500">Terakhir Dipelajari</h3>
-                    <a href="#" class="text-teal-500 text-sm font-bold flex items-center">Lihat Semua <i class="fas fa-chevron-right ml-2 text-xs"></i></a>
+                    <a href="murid_modul.php" class="text-teal-500 text-sm font-bold flex items-center">Lihat Semua <i class="fas fa-chevron-right ml-2 text-xs"></i></a>
                 </div>
                 <div class="relative">
                     <div class="absolute top-2 right-2 w-full h-full bg-[#003F4A] rounded-lg z-0"></div>
