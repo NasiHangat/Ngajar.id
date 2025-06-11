@@ -2,8 +2,40 @@
 <?php include '../Includes/DBkoneksi.php'; ?>
 
 <?php
-$namaPengguna = "Kak Azis";
+$id_pengguna = $_SESSION['user_id'] ?? null;
+$namaPengguna = "";
+
+if ($id_pengguna) {
+    $stmt = $conn->prepare("SELECT name FROM users WHERE user_id = ?");
+    $stmt->bind_param("i", $id_pengguna);
+    $stmt->execute();
+    $stmt->bind_result($namaPengguna);
+    $stmt->fetch();
+    $stmt->close();
+}
+// Pemanggilan prosedur untuk mendapatkan statistik pengajar
+$stmt = $conn->prepare("CALL get_pengajar_statistik(?)");
+$stmt->bind_param("i", $id_pengguna);
+$stmt->execute();
+
+$stmt->store_result();
+$stmt->bind_result($total_kelas);
+$stmt->fetch();
+// Pindah ke hasil ke-2
+$stmt->next_result();
+$stmt->store_result();
+$stmt->bind_result($total_modul);
+$stmt->fetch();
+// Pindah ke hasil ke-3
+$stmt->next_result();
+$stmt->store_result();
+$stmt->bind_result($total_siswa);
+$stmt->fetch();
+
+$stmt->close();
+
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -57,28 +89,21 @@ $namaPengguna = "Kak Azis";
                         <i class="fas fa-graduation-cap text-3xl opacity-80"></i>
                         <div>
                             <p class="text-sm font-medium opacity-90">Total Kelas Dibina</p>
-                            <p class="text-2xl font-bold">100</p>
+                            <p class="text-2xl font-bold"><?php echo $total_kelas; ?></p>
                         </div>
                     </div>
                     <div class="bg-teal-500 text-white p-5 rounded-xl shadow-md flex items-center space-x-4 hover:shadow-lg hover:-translate-y-1 transition-all">
                         <i class="fas fa-book text-3xl opacity-80"></i>
                         <div>
                             <p class="text-sm font-medium opacity-90">Modul Yang Dibuat</p>
-                            <p class="text-2xl font-bold">100</p>
-                        </div>
-                    </div>
-                    <div class="bg-teal-500 text-white p-5 rounded-xl shadow-md flex items-center space-x-4 hover:shadow-lg hover:-translate-y-1 transition-all">
-                        <i class="fas fa-clock text-3xl opacity-80"></i>
-                        <div>
-                            <p class="text-sm font-medium opacity-90">Jam Mengajar</p>
-                            <p class="text-2xl font-bold">100</p>
+                            <p class="text-2xl font-bold"><?php echo $total_modul; ?></p>
                         </div>
                     </div>
                     <div class="bg-teal-500 text-white p-5 rounded-xl shadow-md flex items-center space-x-4 hover:shadow-lg hover:-translate-y-1 transition-all">
                         <i class="fas fa-users text-3xl opacity-80"></i>
                         <div>
-                            <p class="text-sm font-medium opacity-90">Siswa Terbantu</p>
-                            <p class="text-2xl font-bold">100</p>
+                            <p class="text-sm font-medium opacity-90">Siswa Yang Mengikuti Kelas</p>
+                            <p class="text-2xl font-bold"><?php echo $total_siswa; ?></p>
                         </div>
                     </div>
                 </div>
