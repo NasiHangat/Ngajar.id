@@ -58,7 +58,7 @@ if ($id_pengguna) {
                     <i class="fa-regular fa-user text-teal-500 text-3xl"></i>
                 </div>
                 <div class="text-white">
-                    <h2 class="font-bold text-base sm:text-lg leading-tight ">Danul</h2>
+                    <h2 class="font-bold text-base sm:text-lg leading-tight "><?php echo $namaPengguna; ?></h2>
                     <p class="text-white-200 opacity-70 text-xs sm:text-sm leading-tight">Pelajar</p>
                     <!-- Token dan tombol tambah diletakkan di bawah -->
                     <div class="mt-2 flex items-center space-x-2">
