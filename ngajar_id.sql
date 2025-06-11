@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 07 Jun 2025 pada 12.56
+-- Waktu pembuatan: 11 Jun 2025 pada 11.04
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -20,6 +20,30 @@ SET time_zone = "+00:00";
 --
 -- Database: `ngajar_id`
 --
+
+DELIMITER $$
+--
+-- Prosedur
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_pengajar_statistik` (IN `pengajarId` INT)   BEGIN
+    
+    SELECT COUNT(*) AS total_kelas
+    FROM kelas
+    WHERE pengajar_id = pengajarId;
+
+    
+    SELECT COUNT(*) AS total_modul
+    FROM modul
+    WHERE dibuat_oleh = pengajarId;
+
+    
+    SELECT COUNT(DISTINCT kp.siswa_id) AS total_siswa
+    FROM kelas k
+    JOIN kelas_peserta kp ON k.kelas_id = kp.kelas_id
+    WHERE k.pengajar_id = pengajarId;
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -45,11 +69,18 @@ CREATE TABLE `kelas` (
   `pengajar_id` int(11) DEFAULT NULL,
   `judul` varchar(150) DEFAULT NULL,
   `deskripsi` text DEFAULT NULL,
-  `jadwal` datetime DEFAULT NULL,
-  `link_meeting` varchar(255) DEFAULT NULL,
   `status` enum('aktif','selesai','ditolak') DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `kelas`
+--
+
+INSERT INTO `kelas` (`kelas_id`, `pengajar_id`, `judul`, `deskripsi`, `status`, `created_at`) VALUES
+(1, 20, 'Anjay', 'a', 'aktif', '2025-06-11 08:36:53'),
+(2, 20, 'memek', 'ewean enak', 'aktif', '2025-06-11 08:44:47'),
+(3, 20, 'syahdan', 'nabila', 'aktif', '2025-06-11 08:45:27');
 
 -- --------------------------------------------------------
 
@@ -150,20 +181,6 @@ CREATE TABLE `topup` (
   `tanggal` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Trigger `topup`
---
-DELIMITER $$
-CREATE TRIGGER `after_topup_insert` AFTER INSERT ON `topup` FOR EACH ROW BEGIN
-  INSERT INTO token (user_id, jumlah, last_update)
-  VALUES (NEW.user_id, NEW.jumlah_token, NOW())
-  ON DUPLICATE KEY UPDATE 
-    jumlah = jumlah + NEW.jumlah_token,
-    last_update = NOW();
-END
-$$
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -186,11 +203,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `role`, `status`, `created_at`) VALUES
 (19, 'A', 'D@gmail.com', '$2y$10$5VffwNGmfK.BoouYo9.fRO9bHdTO5yVQVFPh8TfycncQuODsOknSq', 'murid', 'aktif', '2025-06-04 16:22:19'),
-(21, 'Maman Ganteng Gila Abis', 'c@gmail.com', '$2y$10$J7eY7UHSOVMMfmK8tDzy9OOLMLSSJw5ctfNYQC4pZKdxXijRDY472', 'pengajar', 'aktif', '2025-06-07 05:50:39'),
-(22, 'Azis', 'muhammadabdulazis747@gmail.com', '$2y$10$0iDFaPLbu/YPYxXh.fK04O8rUx08mNkiU6iDPrLVkqk3EiStJcf12', 'murid', 'aktif', '2025-06-07 08:20:16'),
-(23, 'Maman Tamvan Abis', 'mamanganteng@gmail.com', '$2y$10$SufD6HCgSP9V60/uBJ7VP.NUwtsdywdtRwCBbpEyGGAcszAY5kbhy', 'admin', 'aktif', '2025-06-07 10:13:33'),
-(24, 'tolol', 'anjing@gmail.com', '$2y$10$yWzhLY.hVgNaF8BXX7VMFeg.mOQUtQ0zPJM8PTzzRxCTjURUeIjTa', 'pengajar', 'aktif', '2025-06-07 10:53:17'),
-(25, 'e', 'e@gmail.com', '$2y$10$ejBRXwCK.z1GiCOrxlD/eeOryFLyYCiKFQUfFBmjjibBjWCmzKzwq', 'murid', 'aktif', '2025-06-07 10:54:21');
+(20, 'asd', 'a@gmail.com', '$2y$10$JM5wbLRDkaxwFlxIkPIyaO7g36UbyieO5CVXjQwDTg48xKD7CUhm6', 'pengajar', 'aktif', '2025-06-11 07:30:53');
 
 --
 -- Indexes for dumped tables
@@ -281,7 +294,7 @@ ALTER TABLE `donasi`
 -- AUTO_INCREMENT untuk tabel `kelas`
 --
 ALTER TABLE `kelas`
-  MODIFY `kelas_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `kelas_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `kelas_peserta`
@@ -323,7 +336,7 @@ ALTER TABLE `topup`
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

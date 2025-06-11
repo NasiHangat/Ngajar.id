@@ -1,3 +1,24 @@
+<?php
+session_start();
+include "../Includes/DBkoneksi.php";
+
+// Pastikan pengajar sudah login
+$pengajar_id = $_SESSION['user_id'] ?? null;
+$kelas = [];
+
+if ($pengajar_id) {
+    $stmt = $conn->prepare("SELECT kelas_id, judul, deskripsi FROM kelas WHERE pengajar_id = ?");
+    $stmt->bind_param("i", $pengajar_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $kelas[] = $row;
+    }
+    $stmt->close();
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -53,15 +74,33 @@
         
                 <!-- Grid Kartu Kelas -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-white rounded-xl shadow-md p-6 flex flex-col sm:flex-row items-center gap-6 border-l-8 border-teal-500">
-                        <img class="w-28 h-28 rounded-md object-cover flex-shrink-0" src="https://placehold.co/109x109/EEEEEE/333333?text=Crypto" alt="Fundamental Crypto" />
-                        <div class="flex-grow w-full"><h3 class="text-2xl font-bold mb-2 text-teal-600">Fundamental Crypto</h3><div class="space-y-1 text-base font-bold text-gray-600"><p>20 siswa</p><p>100 jam</p><p>5 Modul</p></div><div class="flex items-center gap-3 mt-4"><button class="bg-teal-500 text-white px-3 py-1.5 rounded-md text-xs font-bold flex items-center gap-2 hover:bg-teal-600 transition-colors"><i class="fas fa-pencil-alt"></i><span>Edit Kelas</span></button><button class="bg-red-500 text-white px-3 py-1.5 rounded-md text-xs font-bold flex items-center gap-2 hover:bg-red-600 transition-colors"><i class="fas fa-trash-alt"></i><span>Delete Kelas</span></button></div></div>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-md p-6 flex flex-col sm:flex-row items-center gap-6 border-l-8 border-teal-500">
-                        <img class="w-28 h-28 rounded-md object-cover flex-shrink-0" src="https://placehold.co/109x109/EEEEEE/333333?text=Aljabar" alt="Aljabar Linear" />
-                        <div class="flex-grow w-full"><h3 class="text-2xl font-bold mb-2 text-teal-600">Aljabar Linear</h3><div class="space-y-1 text-base font-bold text-gray-600"><p>35 siswa</p><p>80 jam</p><p>8 Modul</p></div><div class="flex items-center gap-3 mt-4"><button class="bg-teal-500 text-white px-3 py-1.5 rounded-md text-xs font-bold flex items-center gap-2 hover:bg-teal-600 transition-colors"><i class="fas fa-pencil-alt"></i><span>Edit Kelas</span></button><button class="bg-red-500 text-white px-3 py-1.5 rounded-md text-xs font-bold flex items-center gap-2 hover:bg-red-600 transition-colors"><i class="fas fa-trash-alt"></i><span>Delete Kelas</span></button></div></div>
-                    </div>
+                    <?php if (!empty($kelas)): ?>
+                        <?php foreach ($kelas as $item): ?>
+                            <div class="bg-white rounded-xl shadow-md p-6 flex flex-col sm:flex-row items-center gap-6 border-l-8 border-teal-500">
+                                <img class="w-28 h-28 rounded-md object-cover flex-shrink-0" src="https://placehold.co/109x109/EEEEEE/333333?text=Kelas" alt="<?= htmlspecialchars($item['judul']) ?>" />
+                                <div class="flex-grow w-full">
+                                    <h3 class="text-2xl font-bold mb-2 text-teal-600"><?= htmlspecialchars($item['judul']) ?></h3>
+                                    <div class="space-y-1 text-base font-bold text-gray-600">
+                                        <p>Jumlah siswa: -</p>
+                                        <p>Jam Mengajar: -</p>
+                                        <p>Modul: -</p>
+                                    </div>
+                                    <div class="flex items-center gap-3 mt-4">
+                                        <a href="edit_kelas.php?id=<?= $item['kelas_id'] ?>" class="bg-teal-500 text-white px-3 py-1.5 rounded-md text-xs font-bold flex items-center gap-2 hover:bg-teal-600 transition-colors">
+                                            <i class="fas fa-pencil-alt"></i><span>Edit Kelas</span>
+                                        </a>
+                                        <a href="hapus_kelas.php?id=<?= $item['kelas_id'] ?>" onclick="return confirm('Yakin ingin menghapus kelas ini?')" class="bg-red-500 text-white px-3 py-1.5 rounded-md text-xs font-bold flex items-center gap-2 hover:bg-red-600 transition-colors">
+                                            <i class="fas fa-trash-alt"></i><span>Delete Kelas</span>
+                                        </a>
+                                    </div>
                 </div>
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p class="text-gray-500 text-center col-span-full">Belum ada kelas yang dibuat.</p>
+    <?php endif; ?>
+</div>
+
             </div>
         </main>
     </div>
@@ -123,14 +162,31 @@
             e.preventDefault();
             const namaKelas = document.getElementById('namaKelas').value;
             const deskripsiKelas = document.getElementById('deskripsiKelas').value;
-            
-            console.log('Nama Kelas:', namaKelas);
-            console.log('Deskripsi:', deskripsiKelas);
-            
-            alert('Kelas berhasil ditambahkan!'); // Menggunakan alert sementara
-            
-            closeModalFunc();
+
+            // Kirim data ke PHP
+            fetch('../proses_tambah_kelas.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({
+                    namaKelas: namaKelas,
+                    deskripsiKelas: deskripsiKelas
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                if (data.status === 'success') {
+                    closeModalFunc();
+                    // Optional: reload halaman agar kelas muncul
+                    location.reload();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan!');
+            });
         });
+
     </script>
 </body>
 </html>
