@@ -29,8 +29,6 @@ function animateCounter(element, current, target, increment) {
         element.textContent = target;
     }
 }
-
-// Initialize Charts
 function initializeCharts() {
     const chartData = JSON.parse(localStorage.getItem('chartData') || '{}');
     
