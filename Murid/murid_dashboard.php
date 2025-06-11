@@ -72,10 +72,8 @@ if ($_SESSION['role'] !== 'murid') {
             </div>
             <div>
                 <div class="mb-3">
-                    <a href="#" class="inline-flex items-center text-xl font-bold text-teal-500 hover:text-opacity-80 transition-colors">
-                        <span>Modul Pembelajaran</span>
-                        <i class="fas fa-chevron-right ml-2 text-base"></i>
-                    </a>
+                    <h3 class="inline-flex items-center text-xl font-bold text-teal-500">
+                    <span>Modul Pembelajaran<span>
                 </div>
                 <div class="border-l-4 border-r-4 border-b-4 border-[#003F4A] shadow-lg rounded-xl p-4 bg-white">
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
