@@ -98,7 +98,7 @@ if ($id_pengguna) {
                     </div>
                     <div class="border-l-4 border-r-4 border-b-4 border-[#003F4A] shadow-lg rounded-xl p-4 bg-white">
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            <a href="#" class="block bg-white p-3 rounded-lg border-l-4 border-b-2 border-t-2 border-[#003F4A] shadow-sm hover:shadow-md transition-shadow text-center">
+                            <a href="murid_modul.php" class="block bg-white p-3 rounded-lg border-l-4 border-b-2 border-t-2 border-[#003F4A] shadow-sm hover:shadow-md transition-shadow text-center">
                                 <p class="text-sm font-bold text-teal-500">Matematika</p>
                             </a>
                             <a href="#" class="block bg-gray-50 p-3 rounded-lg border-l-4 border-b-2 border-t-2 border-[#003F4A] shadow-sm hover:shadow-md transition-shadow text-center">
