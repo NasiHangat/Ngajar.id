@@ -29,7 +29,7 @@
                     <button id="hamburgerButton" class="text-teal-500 focus:outline-none mt-1">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
-                    <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Dashboard</h1>
+                    <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Modul</h1>
                 </div>
                 <div class="flex items-center space-x-2 sm:space-x-4">
                     <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-bell text-xl"></i></button>
@@ -39,7 +39,6 @@
         </header>
 
         <?php include "../Includes/sidebar.php" ?>
-
         <div class="bg-teal-500 py-4">
             <div class="max-w-6xl mx-auto px-4 sm:px-8 flex items-start justify-between">
                 <div class="flex items-center space-x-4">
@@ -62,6 +61,25 @@
             </div>
         </div>
 
-        
-    </body>
+        <div class="max-w-4xl mx-auto bg-white border-2 border-teal-700 shadow-lg rounded-xl p-8">
+            <h1 class="text-2xl md:text-3xl font-bold text-teal-800 mb-4">Aljabar Linear</h1>
+
+            <p class="text-gray-700 text-base md:text-lg leading-relaxed mb-6">
+                Cabang dari matematika yang mempelajari sistem persamaan linear dan objek-objek matematika yang dapat direpresentasikan dalam bentuk vektor dan matriks. Aljabar linear digunakan secara luas dalam berbagai bidang seperti fisika, teknik, ilmu komputer, ekonomi, dan statistik.
+            </p>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <button class="bg-white border-2 border-gray-300 hover:border-teal-500 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-sm transition">Vektor</button>
+                <button class="bg-white border-2 border-gray-300 hover:border-teal-500 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-sm transition">Matriks</button>
+                <button class="bg-white border-2 border-gray-300 hover:border-teal-500 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-sm transition">Sistem Persamaan Linear</button>
+                <button class="bg-white border-2 border-gray-300 hover:border-teal-500 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-sm transition">Transformasi Linear</button>
+                <button class="bg-white border-2 border-gray-300 hover:border-teal-500 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-sm transition">Vektor</button>
+                <button class="bg-white border-2 border-gray-300 hover:border-teal-500 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-sm transition">Matriks</button>
+                <button class="bg-white border-2 border-gray-300 hover:border-teal-500 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-sm transition">Sistem Persamaan Linear</button>
+                <button class="bg-white border-2 border-gray-300 hover:border-teal-500 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-sm transition">Transformasi Linear</button>
+            </div>
+        </div>
+
+</body>
+
 </html>
