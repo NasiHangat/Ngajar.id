@@ -99,12 +99,12 @@ if ($pengajar_id) {
                                         <p>Modul: -</p>
                                     </div>
                                     <div class="flex items-center gap-3 mt-4">
-                                        <a href="edit_kelas.php?id=<?= $item['kelas_id'] ?>" class="bg-teal-500 text-white px-3 py-1.5 rounded-md text-xs font-bold flex items-center gap-2 hover:bg-teal-600 transition-colors">
+                                        <button id="editKelasBtn" <?= $item['kelas_id'] ?>" class="bg-teal-500 text-white px-3 py-1.5 rounded-md text-xs font-bold flex items-center gap-2 hover:bg-teal-600 transition-colors">
                                             <i class="fas fa-pencil-alt"></i><span>Edit Kelas</span>
-                                        </a>
-                                        <a href="hapus_kelas.php?id=<?= $item['kelas_id'] ?>" onclick="return confirm('Yakin ingin menghapus kelas ini?')" class="bg-red-500 text-white px-3 py-1.5 rounded-md text-xs font-bold flex items-center gap-2 hover:bg-red-600 transition-colors">
+                                        </button>
+                                        <button href="hapus_kelas.php?id=<?= $item['kelas_id'] ?>" onclick="return confirm('Yakin ingin menghapus kelas ini?')" class="bg-red-500 text-white px-3 py-1.5 rounded-md text-xs font-bold flex items-center gap-2 hover:bg-red-600 transition-colors">
                                             <i class="fas fa-trash-alt"></i><span>Delete Kelas</span>
-                                        </a>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -122,84 +122,171 @@ if ($pengajar_id) {
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-md transform transition-all">
             <div class="bg-teal-500 text-white px-6 py-4 rounded-t-xl flex items-center justify-between">
                 <h3 class="text-xl font-bold">Buat Kelas</h3>
-                <button id="closeModal" class="text-white hover:text-gray-200 text-2xl"><i class="fas fa-times"></i></button>
+                <button id="closeModalTambah" class="text-white hover:text-gray-200 text-2xl"><i class="fas fa-times"></i></button>
             </div>
             <div class="p-6">
                 <form id="formTambahKelas" class="space-y-4">
-                    <div><label class="block text-sm font-medium text-gray-700 mb-2">Nama</label><input type="text" id="namaKelas" placeholder="Nama Kelas" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500" required></div>
-                    <div><label class="block text-sm font-medium text-gray-700 mb-2">Deskripsi</label><textarea id="deskripsiKelas" placeholder="Deskripsi Kelas" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 resize-none"></textarea></div>
-                    <div class="flex gap-3 pt-4"><button type="button" id="batalBtn" class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors font-medium">Batal</button><button type="submit" class="flex-1 px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition-colors font-medium">Buat</button></div>
+                    <div><label class="block text-sm font-medium text-gray-700 mb-2">Nama</label><input type="text" id="namaKelasTambah" placeholder="Nama Kelas" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500" required></div>
+                    <div><label class="block text-sm font-medium text-gray-700 mb-2">Deskripsi</label><textarea id="deskripsiKelasTambah" placeholder="Deskripsi Kelas" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 resize-none"></textarea></div>
+                    <div class="flex gap-3 pt-4"><button type="button" id="batalBtnTambah" class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors font-medium">Batal</button><button type="submit" class="flex-1 px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition-colors font-medium">Buat</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalEditKelas" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md transform transition-all">
+            <div class="bg-teal-500 text-white px-6 py-4 rounded-t-xl flex items-center justify-between">
+                <h3 class="text-xl font-bold">Edit Kelas</h3>
+                <button id="closeModalEdit" class="text-white hover:text-gray-200 text-2xl"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="p-6">
+                <form id="formEditKelas" class="space-y-4">
+                    <div><label class="block text-sm font-medium text-gray-700 mb-2">Nama</label><input type="text" id="namaKelasEdit" placeholder="Nama Kelas" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500" required></div>
+                    <div><label class="block text-sm font-medium text-gray-700 mb-2">Deskripsi</label><textarea id="deskripsiKelasEdit" placeholder="Deskripsi Kelas" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 resize-none"></textarea></div>
+                    <div class="flex gap-3 pt-4"><button type="button" id="batalBtnEdit" class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors font-medium">Batal</button><button type="submit" class="flex-1 px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition-colors font-medium">Simpan</button></div>
                 </form>
             </div>
         </div>
     </div>
 
     <script>
-        // --- Modal Logic ---
-        const tambahKelasBtn = document.getElementById('tambahKelasBtn');
-        const modal = document.getElementById('modalTambahKelas');
-        const closeModalBtn = document.getElementById('closeModal');
-        const batalBtn = document.getElementById('batalBtn');
-        const form = document.getElementById('formTambahKelas');
+        // --- Modal Logic for Tambah Kelas ---
+        const tambahKelasBtn = document.getElementById('tambahKelasBtn'); // Assuming you have a button with this ID to open the "add" modal
+        const modalTambah = document.getElementById('modalTambahKelas');
+        const closeModalTambahBtn = document.getElementById('closeModalTambah');
+        const batalBtnTambah = document.getElementById('batalBtnTambah');
+        const formTambah = document.getElementById('formTambahKelas');
 
-        function openModal() {
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+        function openModalTambah() {
+            modalTambah.classList.remove('hidden');
+            modalTambah.classList.add('flex');
             document.body.style.overflow = 'hidden';
         }
 
-        function closeModalFunc() {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
+        function closeModalTambahFunc() {
+            modalTambah.classList.add('hidden');
+            modalTambah.classList.remove('flex');
             document.body.style.overflow = 'auto';
-            form.reset();
+            formTambah.reset();
         }
 
-        tambahKelasBtn.addEventListener('click', openModal);
-        closeModalBtn.addEventListener('click', closeModalFunc);
-        batalBtn.addEventListener('click', closeModalFunc);
+        if (tambahKelasBtn) { // Check if the button exists before adding event listener
+            tambahKelasBtn.addEventListener('click', openModalTambah);
+        }
+        closeModalTambahBtn.addEventListener('click', closeModalTambahFunc);
+        batalBtnTambah.addEventListener('click', closeModalTambahFunc);
 
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModalFunc();
+        modalTambah.addEventListener('click', (e) => {
+            if (e.target === modalTambah) {
+                closeModalTambahFunc();
             }
         });
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-                closeModalFunc();
+            if (e.key === 'Escape' && !modalTambah.classList.contains('hidden')) {
+                closeModalTambahFunc();
             }
         });
 
-        form.addEventListener('submit', (e) => {
+        formTambah.addEventListener('submit', (e) => {
             e.preventDefault();
-            const namaKelas = document.getElementById('namaKelas').value;
-            const deskripsiKelas = document.getElementById('deskripsiKelas').value;
+            const namaKelas = document.getElementById('namaKelasTambah').value;
+            const deskripsiKelas = document.getElementById('deskripsiKelasTambah').value;
 
-            // Kirim data ke PHP
+        // Kirim data ke PHP
             fetch('../proses_tambah_kelas.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: new URLSearchParams({
-                        namaKelas: namaKelas,
-                        deskripsiKelas: deskripsiKelas
-                    })
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    namaKelas: namaKelas,
+                    deskripsiKelas: deskripsiKelas
                 })
-                .then(response => response.json())
-                .then(data => {
-                    alert(data.message);
-                    if (data.status === 'success') {
-                        closeModalFunc();
-                        // Optional: reload halaman agar kelas muncul
-                        location.reload();
-                    }
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                if (data.status === 'success') {
+                    closeModalTambahFunc();
+                    // Optional: reload halaman agar kelas muncul
+                    location.reload();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan!');
+            });
+        });
+
+        // --- Modal Logic for Edit Kelas ---
+        const editKelasBtn = document.getElementById('editKelasBtn'); // Assuming you have a button with this ID to open the "edit" modal
+        const modalEdit = document.getElementById('modalEditKelas');
+        const closeModalEditBtn = document.getElementById('closeModalEdit');
+        const batalBtnEdit = document.getElementById('batalBtnEdit');
+        const formEdit = document.getElementById('formEditKelas');
+
+        function openModalEdit() {
+            modalEdit.classList.remove('hidden');
+            modalEdit.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModalEditFunc() {
+            modalEdit.classList.add('hidden');
+            modalEdit.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+            formEdit.reset();
+        }
+
+        if (editKelasBtn) { 
+            editKelasBtn.addEventListener('click', openModalEdit);
+        }
+        closeModalEditBtn.addEventListener('click', closeModalEditFunc);
+        batalBtnEdit.addEventListener('click', closeModalEditFunc);
+
+        modalEdit.addEventListener('click', (e) => {
+            if (e.target === modalEdit) {
+                closeModalEditFunc();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modalEdit.classList.contains('hidden')) {
+                closeModalEditFunc();
+            }
+        });
+
+        formEdit.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const namaKelas = document.getElementById('namaKelasEdit').value;
+            const deskripsiKelas = document.getElementById('deskripsiKelasEdit').value;
+
+            // Kirim data ke PHP untuk update
+            fetch('../proses_edit_kelas.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    namaKelas: namaKelas,
+                    deskripsiKelas: deskripsiKelas
                 })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Terjadi kesalahan!');
-                });
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                if (data.status === 'success') {
+                    closeModalEditFunc();
+                    // Optional: reload halaman agar perubahan muncul
+                    location.reload();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat mengedit!');
+            });
         });
     </script>
     <footer>
