@@ -1,11 +1,25 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <title>Ngajar.Id</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            roboto: ['"Roboto Slab"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body class="bg-white">
+
+<body class="bg-white font-roboto">
   <header class="shadow-md">
     <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
       <a href="index.php" class="text-teal-500 font-bold text-xl">Ngajar.Id</a>
@@ -23,4 +37,5 @@
     </div>
   </header>
 </body>
+
 </html>
