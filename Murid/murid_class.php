@@ -161,7 +161,7 @@ if ($id_pengguna) {
             </section>
         </main>
         <footer>
-            <?php include 'Includes/Footer.php'; ?>
+            <?php include '../Includes/Footer.php'; ?>
         </footer>
 </body>
 

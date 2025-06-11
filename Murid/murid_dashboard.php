@@ -232,8 +232,7 @@ if ($id_pengguna) {
             </div>
         </main>
         <footer>
-            <?php include 'includes/Footer.php'; ?>
+            <?php include '../includes/Footer.php'; ?>
         </footer>
 </body>
-
 </html>
