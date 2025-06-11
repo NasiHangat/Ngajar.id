@@ -3,21 +3,34 @@
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modul Relawan - Ngajar.ID</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        roboto: ['"Roboto Slab"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="bg-white">
+
+<body class="bg-white-50 font-roboto">
     <div class="flex flex-col min-h-screen">
         <header class="bg-white shadow-sm sticky top-0 z-30">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
                 <div class="flex items-center space-x-4">
-                    <button id="hamburgerButton" class="text-teal-500 focus:outline-none">
-                        <i class="fas fa-bars text-xl mt-1"></i>
+                    <button id="hamburgerButton" class="text-teal-500 focus:outline-none mt-1">
+                        <i class="fas fa-bars text-xl"></i>
                     </button>
                     <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Modul</h1>
                 </div>
@@ -54,7 +67,7 @@
                         </div>
                     </div>
                 </div>
-        
+
                 <!-- Grid Kartu Kelas -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- Kartu 1 -->
@@ -113,7 +126,7 @@
             <div class="p-6">
                 <form id="formTambahModul" class="space-y-4">
                     <div><label for="namaModul" class="block text-sm font-medium text-teal-500 mb-2">Nama Modul</label><input type="text" id="namaModul" placeholder="Contoh: Pengenalan Vektor" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500" required></div>
-                    
+
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label for="kelasInduk" class="block text-sm font-medium text-teal-500  mb-2">Untuk Kelas</label>
@@ -134,7 +147,7 @@
                     <div><label for="deskripsiModul" class="block text-sm font-medium text-teal-500 mb-2">Deskripsi</label><textarea id="deskripsiModul" placeholder="Jelaskan isi singkat dari modul ini" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"></textarea></div>
                     <div>
                         <label for="fileModul" class="block text-sm font-medium text-teal-500 mb-2">Upload File</label>
-                        <input type="file" id="fileModul" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100"/>
+                        <input type="file" id="fileModul" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100" />
                     </div>
                     <div class="flex gap-3 pt-4"><button type="button" id="batalBtn" class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors font-medium">Batal</button><button type="submit" class="flex-1 px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition-colors font-medium">Tambah Modul</button></div>
                 </form>
@@ -184,16 +197,17 @@
             const namaModul = document.getElementById('namaModul').value;
             const kelasInduk = document.getElementById('kelasInduk').value;
             // ... get other form values
-            
+
             console.log('Nama Modul:', namaModul);
             console.log('Kelas Induk:', kelasInduk);
-            
+
             // Menggunakan alert sementara, di dunia nyata ini akan diganti dengan notifikasi yang lebih baik
             alert('Modul "' + namaModul + '" berhasil ditambahkan!');
-            
+
             closeModalFunc();
         });
     </script>
-</script>
+    </script>
 </body>
+
 </html>

@@ -21,15 +21,28 @@ if ($pengajar_id) {
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manajemen Kelas - Ngajar.ID</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        roboto: ['"Roboto Slab"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="bg-white">
+
+<body class="bg-white-50 font-roboto">
     <div class="flex flex-col min-h-screen">
         <header class="bg-white shadow-sm sticky top-0 z-30">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
@@ -37,15 +50,15 @@ if ($pengajar_id) {
                     <button id="hamburgerButton" class="text-teal-500 focus:outline-none mt-1">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
-                    <h1 class="text-xl font-bold text-teal-500 hidden sm:block">My Class</h1>
+                    <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Kelas</h1>
                 </div>
                 <div class="flex items-center space-x-2 sm:space-x-4">
-                    <button class="text-teal-500 hover:text-teal-600 p-2 rounded-full"><i class="fas fa-bell text-xl"></i></button>
-                    <button class="text-teal-500 hover:text-teal-600 p-2 rounded-full"><i class="fas fa-user-circle text-xl"></i></button>
+                    <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-bell text-xl"></i></button>
+                    <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-user-circle text-xl"></i></button>
                 </div>
             </div>
         </header>
-        <?php include "../Includes/sidebar.php"?>
+        <?php include "../Includes/sidebar.php" ?>
         <main class="flex-grow flex-col min-h-screen p-4 sm:p-8">
             <div class="max-w-6xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
                 <div class="mb-6">
@@ -71,7 +84,7 @@ if ($pengajar_id) {
                         </div>
                     </header>
                 </div>
-        
+
                 <!-- Grid Kartu Kelas -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <?php if (!empty($kelas)): ?>
@@ -93,13 +106,13 @@ if ($pengajar_id) {
                                             <i class="fas fa-trash-alt"></i><span>Delete Kelas</span>
                                         </a>
                                     </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class="text-gray-500 text-center col-span-full">Belum ada kelas yang dibuat.</p>
+                    <?php endif; ?>
                 </div>
-            </div>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <p class="text-gray-500 text-center col-span-full">Belum ada kelas yang dibuat.</p>
-    <?php endif; ?>
-</div>
 
             </div>
         </main>
@@ -165,28 +178,30 @@ if ($pengajar_id) {
 
             // Kirim data ke PHP
             fetch('../proses_tambah_kelas.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams({
-                    namaKelas: namaKelas,
-                    deskripsiKelas: deskripsiKelas
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({
+                        namaKelas: namaKelas,
+                        deskripsiKelas: deskripsiKelas
+                    })
                 })
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message);
-                if (data.status === 'success') {
-                    closeModalFunc();
-                    // Optional: reload halaman agar kelas muncul
-                    location.reload();
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Terjadi kesalahan!');
-            });
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    if (data.status === 'success') {
+                        closeModalFunc();
+                        // Optional: reload halaman agar kelas muncul
+                        location.reload();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan!');
+                });
         });
-
     </script>
 </body>
+
 </html>

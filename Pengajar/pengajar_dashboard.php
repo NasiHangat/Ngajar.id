@@ -38,15 +38,28 @@ $stmt->close();
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Relawan - Ngajar.ID</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        roboto: ['"Roboto Slab"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="bg-white">
+
+<body class="bg-white-50 font-roboto">
     <div class="flex flex-col min-h-screen">
         <header class="bg-white shadow-sm sticky top-0 z-30">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
@@ -57,12 +70,6 @@ $stmt->close();
                     <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Dashboard</h1>
                 </div>
                 <div class="flex items-center space-x-2 sm:space-x-4">
-                    <div class="relative">
-                        <input type="text" placeholder="Mau liat apa?" class="bg-white border border-gray-300 text-sm rounded-full py-2 px-4 pl-10 focus:outline-none focus:border-teal-600 w-32 sm:w-64 transition-all">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i class="fas fa-search text-teal-500 opacity-75"></i>
-                        </div>
-                    </div>
                     <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-bell text-xl"></i></button>
                     <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-user-circle text-xl"></i></button>
                 </div>
@@ -76,7 +83,7 @@ $stmt->close();
                 <div class="bg-teal-500 text-white p-6 sm:p-8 rounded-xl shadow-lg mb-10 flex items-center space-x-6">
                     <div>
                         <img src="https://via.placeholder.com/56" alt="Foto Profil Danul"
-                        class="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-white object-cover">
+                            class="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-white object-cover">
                     </div>
                     <div>
                         <h2 class="text-2xl sm:text-3xl font-semibold mb-1">Terimakasih, <?php echo $namaPengguna; ?></h2>
@@ -114,11 +121,20 @@ $stmt->close();
                     <div class="lg:col-span-2 bg-white p-6 sm:p-7 rounded-xl shadow-md">
                         <h3 class="text-xl font-semibold text-teal-500 mb-6">Kegiatan Terbaru</h3>
                         <div class="space-y-5">
-                            <div class="flex items-start space-x-4"><p class="text-sm text-gray-500 whitespace-nowrap pt-1 w-20">23 Maret</p><p class="text-base text-gray-700">Mengunggah Modul "<span class="font-medium text-teal-500">Belajar Crypto</span>"</p></div>
+                            <div class="flex items-start space-x-4">
+                                <p class="text-sm text-gray-500 whitespace-nowrap pt-1 w-20">23 Maret</p>
+                                <p class="text-base text-gray-700">Mengunggah Modul "<span class="font-medium text-teal-500">Belajar Crypto</span>"</p>
+                            </div>
                             <div class="border-t border-gray-100"></div>
-                            <div class="flex items-start space-x-4"><p class="text-sm text-gray-500 whitespace-nowrap pt-1 w-20">22 Maret</p><p class="text-base text-gray-700">Membuat kelas baru "<span class="font-medium text-teal-500">Matematika Dasar</span>"</p></div>
+                            <div class="flex items-start space-x-4">
+                                <p class="text-sm text-gray-500 whitespace-nowrap pt-1 w-20">22 Maret</p>
+                                <p class="text-base text-gray-700">Membuat kelas baru "<span class="font-medium text-teal-500">Matematika Dasar</span>"</p>
+                            </div>
                             <div class="border-t border-gray-100"></div>
-                            <div class="flex items-start space-x-4"><p class="text-sm text-gray-500 whitespace-nowrap pt-1 w-20">21 Maret</p><p class="text-base text-gray-700">Menyelesaikan modul "<span class="font-medium text-teal-500">Aljabar Linear</span>"</p></div>
+                            <div class="flex items-start space-x-4">
+                                <p class="text-sm text-gray-500 whitespace-nowrap pt-1 w-20">21 Maret</p>
+                                <p class="text-base text-gray-700">Menyelesaikan modul "<span class="font-medium text-teal-500">Aljabar Linear</span>"</p>
+                            </div>
                         </div>
                     </div>
 
@@ -128,11 +144,17 @@ $stmt->close();
                         <div class="space-y-4">
                             <div class="border border-gray-200 rounded-lg p-4 flex items-center space-x-4 hover:shadow-sm hover:border-teal-500 transition-all">
                                 <div class="p-3 bg-teal-100 rounded-lg flex-shrink-0"><i class="fas fa-chalkboard-teacher text-2xl text-teal-600"></i></div>
-                                <div><h4 class="font-semibold text-base text-gray-800">Aljabar Linear</h4><p class="text-sm text-gray-500">25 siswa aktif</p></div>
+                                <div>
+                                    <h4 class="font-semibold text-base text-gray-800">Aljabar Linear</h4>
+                                    <p class="text-sm text-gray-500">25 siswa aktif</p>
+                                </div>
                             </div>
                             <div class="border border-gray-200 rounded-lg p-4 flex items-center space-x-4 hover:shadow-sm hover:border-teal-500 transition-all">
                                 <div class="p-3 bg-teal-100 rounded-lg flex-shrink-0"><i class="fas fa-calculator text-2xl text-teal-500"></i></div>
-                                <div><h4 class="font-semibold text-base text-gray-800">Matematika Dasar</h4><p class="text-sm text-gray-500">18 siswa aktif</p></div>
+                                <div>
+                                    <h4 class="font-semibold text-base text-gray-800">Matematika Dasar</h4>
+                                    <p class="text-sm text-gray-500">18 siswa aktif</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -141,4 +163,5 @@ $stmt->close();
         </main>
     </div>
 </body>
+
 </html>
