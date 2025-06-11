@@ -6,8 +6,9 @@ include '../Includes/session_check.php';
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-    
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Ngajar.ID</title>
@@ -15,6 +16,7 @@ include '../Includes/session_check.php';
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body class="bg-white-50 font-roboto">
     <div class="flex flex-col min-h-screen">
         <header class="bg-white shadow-sm sticky top-0 z-30">
@@ -31,7 +33,7 @@ include '../Includes/session_check.php';
                 </div>
             </div>
         </header>
-        <?php include "../Includes/sidebar.php"?>
+        <?php include "../Includes/sidebar.php" ?>
         <div class="bg-dashboard-section">
             <div class="max-w-6xl mx-auto px-4 py-6">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -51,7 +53,11 @@ include '../Includes/session_check.php';
                         <p class="text-base font-semibold">Total Siswa</p>
                         <p class="text-3xl font-bold mt-1">100</p>
                     </div>
-                </div> </div> </div> <div class="bg-white shadow-sm"> <div class="max-w-6xl mx-auto px-4 py-8">
+                </div>
+            </div>
+        </div>
+        <div class="bg-white shadow-sm">
+            <div class="max-w-6xl mx-auto px-4 py-8">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
                     <div class="flex flex-col items-start">
                         <h3 class="text-lg font-semibold text-teal-500 leading-tight">Statistik Top Up Token</h3>
@@ -63,6 +69,9 @@ include '../Includes/session_check.php';
             </div>
         </div>
     </div>
-<script></script>
+    <footer>
+        <?php include 'includes/Footer.php'; ?>
+    </footer>
 </body>
+
 </html>

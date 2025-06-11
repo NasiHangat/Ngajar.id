@@ -162,6 +162,10 @@ $stmt->close();
             </div>
         </main>
     </div>
+
+    <footer>
+        <?php include 'includes/Footer.php'; ?>
+    </footer>
 </body>
 
 </html>

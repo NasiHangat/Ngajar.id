@@ -231,6 +231,9 @@ if ($id_pengguna) {
                 </section>
             </div>
         </main>
+        <footer>
+            <?php include 'includes/Footer.php'; ?>
+        </footer>
 </body>
 
 </html>

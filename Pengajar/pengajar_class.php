@@ -202,6 +202,9 @@ if ($pengajar_id) {
                 });
         });
     </script>
+    <footer>
+        <?php include 'includes/Footer.php'; ?>
+    </footer>
 </body>
 
 </html>

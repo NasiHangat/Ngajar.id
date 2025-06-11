@@ -160,6 +160,9 @@ if ($id_pengguna) {
                 </div>
             </section>
         </main>
+        <footer>
+            <?php include 'includes/Footer.php'; ?>
+        </footer>
 </body>
 
 </html>

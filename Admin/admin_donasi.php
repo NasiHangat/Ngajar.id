@@ -92,6 +92,9 @@ $result_riwayat = $conn->query($sql_riwayat);
             </table>
         </div>
     </div>
+    <footer>
+        <?php include 'includes/Footer.php'; ?>
+    </footer>
 </body>
 
 </html>

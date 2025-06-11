@@ -207,7 +207,10 @@
             closeModalFunc();
         });
     </script>
-    </script>
+
+    <footer>
+        <?php include 'includes/Footer.php'; ?>
+    </footer>
 </body>
 
 </html>
