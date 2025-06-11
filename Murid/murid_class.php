@@ -105,7 +105,7 @@ if ($id_pengguna) {
                                 <p class="font-roboto-slab font-bold text-cyan-950 text-[10px] mt-1">Presentasi - 23 Juni 2025</p>
                             </div>
                         </div>
-                        <button class="w-4 bg-white flex flex-col items-center py-2 space-y-1.5 rounded-r-lg">
+                        <button location="murid_isikelas.php" class="w-4 bg-white flex flex-col items-center py-2 space-y-1.5 rounded-r-lg">
                             <div class="w-1.5 h-1.5 bg-cyan-950 rounded-full"></div>
                             <div class="w-1.5 h-1.5 bg-cyan-950 rounded-full"></div>
                             <div class="w-1.5 h-1.5 bg-cyan-950 rounded-full"></div>
