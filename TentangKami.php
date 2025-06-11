@@ -27,7 +27,7 @@
   </header>
 
   <section class="max-w-6xl mx-auto px-4 py-12 text-center">
-    <h2 class="text-2xl md:text-3xl font-bold text-teal-600 mb-10">Tentang Ngajar.Id</h2>
+    <h2 class="text-3xl font-bold text-teal-600 mb-10">Tentang Ngajar.Id</h2>
     <p class="max-w-4xl mx-auto text-sm md:text-base text-gray-700">
       Ngajar.id adalah platform edukasi berbasis relawan yang menghubungkan pelajar dengan pengajar sukarelawan secara gratis.
       Relawan bisa berbagi ilmu lewat course, modul, dan kelas online, demi akses pendidikan yang setara dan inklusif.
@@ -39,21 +39,21 @@
   </section>
 
   <section class="max-w-6xl mx-auto px-4 py-12 text-center">
-    <h3 class="text-xl md:text-2xl font-bold text-teal-600 mb-4">Visi Kami</h3>
+    <h3 class="text-3xl font-bold text-teal-600 mb-4">Visi Kami</h3>
     <p class="max-w-4xl mx-auto text-gray-700">
       Mewujudkan akses pendidikan yang inklusif, berkualitas, dan dapat dijangkau oleh semua pelajar Indonesia melalui kolaborasi relawan dan teknologi.
     </p>
   </section>
 
   <section class="max-w-6xl mx-auto px-4 py-12 text-center">
-    <h3 class="text-xl md:text-2xl font-bold text-teal-600 mb-4">Misi Kami</h3>
+    <h3 class="text-3xl font-bold text-teal-600 mb-4">Misi Kami</h3>
     <p class="max-w-4xl mx-auto text-gray-700 mb-auto">
       Menghubungkan pelajar dengan relawan pengajar, menyediakan materi belajar gratis dan premium, serta mendorong donasi transparan untuk mendukung pendidikan yang merata.
     </p>
   </section>
 
   <div class="max-w-6xl mx-auto px-4 py-12">
-    <h2 class="text-3xl font-bold text-center mb-10">Meet the Team</h2>
+    <h2 class="text-teal-600 text-3xl font-bold text-center mb-10">Meet the Team</h2>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
       <div class="text-center">

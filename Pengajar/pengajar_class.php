@@ -99,12 +99,18 @@ if ($pengajar_id) {
                                         <p>Modul: -</p>
                                     </div>
                                     <div class="flex items-center gap-3 mt-4">
-                                        <button id="editKelasBtn" <?= $item['kelas_id'] ?>" class="bg-teal-500 text-white px-3 py-1.5 rounded-md text-xs font-bold flex items-center gap-2 hover:bg-teal-600 transition-colors">
+                                        <button class="editKelasBtn bg-teal-500 text-white px-3 py-1.5 rounded-md text-xs font-bold flex items-center gap-2 hover:bg-teal-600 transition-colors"
+                                                data-id="<?= $item['kelas_id'] ?>"
+                                                data-judul="<?= htmlspecialchars($item['judul']) ?>"
+                                                data-deskripsi="<?= htmlspecialchars($item['deskripsi']) ?>">
                                             <i class="fas fa-pencil-alt"></i><span>Edit Kelas</span>
                                         </button>
-                                        <button href="hapus_kelas.php?id=<?= $item['kelas_id'] ?>" onclick="return confirm('Yakin ingin menghapus kelas ini?')" class="bg-red-500 text-white px-3 py-1.5 rounded-md text-xs font-bold flex items-center gap-2 hover:bg-red-600 transition-colors">
+
+                                        <button onclick="hapusKelas(<?= $item['kelas_id'] ?>)"
+                                                class="bg-red-500 text-white px-3 py-1.5 rounded-md text-xs font-bold flex items-center gap-2 hover:bg-red-600 transition-colors">
                                             <i class="fas fa-trash-alt"></i><span>Delete Kelas</span>
                                         </button>
+
                                     </div>
                                 </div>
                             </div>
@@ -221,7 +227,6 @@ if ($pengajar_id) {
         });
 
         // --- Modal Logic for Edit Kelas ---
-        const editKelasBtn = document.getElementById('editKelasBtn'); // Assuming you have a button with this ID to open the "edit" modal
         const modalEdit = document.getElementById('modalEditKelas');
         const closeModalEditBtn = document.getElementById('closeModalEdit');
         const batalBtnEdit = document.getElementById('batalBtnEdit');
@@ -240,9 +245,6 @@ if ($pengajar_id) {
             formEdit.reset();
         }
 
-        if (editKelasBtn) { 
-            editKelasBtn.addEventListener('click', openModalEdit);
-        }
         closeModalEditBtn.addEventListener('click', closeModalEditFunc);
         batalBtnEdit.addEventListener('click', closeModalEditFunc);
 
@@ -257,38 +259,40 @@ if ($pengajar_id) {
                 closeModalEditFunc();
             }
         });
+    </script>
+    <script>
+    document.querySelectorAll('.editKelasBtn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = btn.dataset.id;
+            const judul = btn.dataset.judul;
+            const deskripsi = btn.dataset.deskripsi;
 
-        formEdit.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const namaKelas = document.getElementById('namaKelasEdit').value;
-            const deskripsiKelas = document.getElementById('deskripsiKelasEdit').value;
+            document.getElementById('namaKelasEdit').value = judul;
+            document.getElementById('deskripsiKelasEdit').value = deskripsi;
+            formEdit.dataset.id = id;
 
-            // Kirim data ke PHP untuk update
-            fetch('../proses_edit_kelas.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: new URLSearchParams({
-                    namaKelas: namaKelas,
-                    deskripsiKelas: deskripsiKelas
-                })
-            })
-            .then(response => response.json())
+            openModalEdit();
+        });
+    });
+
+    formEdit.addEventListener('submit', (e) => {
+
+    });
+</script>
+<script>
+    function hapusKelas(kelasId) {
+        if (!confirm('Yakin ingin menghapus kelas ini?')) return;
+
+        fetch(`../hapus_kelas.php?id=${kelasId}`, { method: 'GET' })
+            .then(res => res.json())
             .then(data => {
                 alert(data.message);
-                if (data.status === 'success') {
-                    closeModalEditFunc();
-                    // Optional: reload halaman agar perubahan muncul
-                    location.reload();
-                }
+                if (data.status === 'success') location.reload();
             })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Terjadi kesalahan saat mengedit!');
-            });
-        });
-    </script>
+            .catch(() => alert('Terjadi kesalahan saat menghapus!'));
+    }
+</script>
+
     <footer>
         <?php include '../Includes/Footer.php'; ?>
     </footer>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 11 Jun 2025 pada 11.04
+-- Waktu pembuatan: 11 Jun 2025 pada 15.01
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -32,9 +32,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `get_pengajar_statistik` (IN `pengaj
     WHERE pengajar_id = pengajarId;
 
     
-    SELECT COUNT(*) AS total_modul
-    FROM modul
-    WHERE dibuat_oleh = pengajarId;
+    SELECT COUNT(*) AS total_materi
+    FROM materi m
+    JOIN kelas k ON m.kelas_id = k.kelas_id
+    WHERE k.pengajar_id = pengajarId;
 
     
     SELECT COUNT(DISTINCT kp.siswa_id) AS total_siswa
@@ -58,6 +59,14 @@ CREATE TABLE `donasi` (
   `tanggal` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data untuk tabel `donasi`
+--
+
+INSERT INTO `donasi` (`donasi_id`, `nama`, `jumlah`, `tanggal`) VALUES
+(1, 'b', 1000000, '2025-06-11 11:45:11'),
+(2, 'Ihsan Ganteng', 10000000, '2025-06-11 11:53:04');
+
 -- --------------------------------------------------------
 
 --
@@ -79,7 +88,6 @@ CREATE TABLE `kelas` (
 
 INSERT INTO `kelas` (`kelas_id`, `pengajar_id`, `judul`, `deskripsi`, `status`, `created_at`) VALUES
 (1, 20, 'Anjay', 'a', 'aktif', '2025-06-11 08:36:53'),
-(2, 20, 'memek', 'ewean enak', 'aktif', '2025-06-11 08:44:47'),
 (3, 20, 'syahdan', 'nabila', 'aktif', '2025-06-11 08:45:27');
 
 -- --------------------------------------------------------
@@ -123,6 +131,15 @@ CREATE TABLE `materi` (
   `file_url` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `materi`
+--
+
+INSERT INTO `materi` (`materi_id`, `kelas_id`, `judul`, `tipe`, `file_url`, `created_at`) VALUES
+(1, 1, 'cihuy', 'soal', 'https://drive.google.com/file/d/1S7h2FPhcJ_U612atYy0RziEE9b7QsG9d/view?usp=sharing', '2025-06-11 11:25:20'),
+(2, 1, 'tes', 'soal', '../uploads/materi/1749641334_Firefly 20250522003112.png', '2025-06-11 11:28:54'),
+(3, 1, 'tes', 'soal', '../uploads/materi/1749641431_Firefly 20250522003112.png', '2025-06-11 11:30:31');
 
 -- --------------------------------------------------------
 
@@ -203,7 +220,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `role`, `status`, `created_at`) VALUES
 (19, 'A', 'D@gmail.com', '$2y$10$5VffwNGmfK.BoouYo9.fRO9bHdTO5yVQVFPh8TfycncQuODsOknSq', 'murid', 'aktif', '2025-06-04 16:22:19'),
-(20, 'asd', 'a@gmail.com', '$2y$10$JM5wbLRDkaxwFlxIkPIyaO7g36UbyieO5CVXjQwDTg48xKD7CUhm6', 'pengajar', 'aktif', '2025-06-11 07:30:53');
+(20, 'asd', 'a@gmail.com', '$2y$10$JM5wbLRDkaxwFlxIkPIyaO7g36UbyieO5CVXjQwDTg48xKD7CUhm6', 'pengajar', 'aktif', '2025-06-11 07:30:53'),
+(21, 'Azis', 'mamanganteng@gmail.com', '$2y$10$lLjwFbwBVqCxB1hObBrvzuVbyfyHfZPvECUQrAT9ygpe9zMaygXNa', 'admin', 'aktif', '2025-06-11 09:57:45');
 
 --
 -- Indexes for dumped tables
@@ -288,7 +306,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `donasi`
 --
 ALTER TABLE `donasi`
-  MODIFY `donasi_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `donasi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `kelas`
@@ -312,7 +330,7 @@ ALTER TABLE `komentar`
 -- AUTO_INCREMENT untuk tabel `materi`
 --
 ALTER TABLE `materi`
-  MODIFY `materi_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `materi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `modul`
@@ -336,7 +354,7 @@ ALTER TABLE `topup`
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
