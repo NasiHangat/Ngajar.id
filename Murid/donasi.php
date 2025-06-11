@@ -37,7 +37,7 @@
                 </div>
             </div>
         </header>
-        <?php include "sidebar.php" ?>;
+        <?php include "../Includes/sidebar.php" ?>
         <div class="max-w-6xl mx-auto p-6">
             <!-- Total Donasi -->
             <div class="bg-teal-600 text-white text-center py-10 rounded-lg mb-8">
