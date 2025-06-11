@@ -1,3 +1,24 @@
+<?php include '../Includes/session_check.php'; ?>
+<?php include '../Includes/DBkoneksi.php'; ?>
+<?php
+if ($_SESSION['role'] !== 'murid') {
+    header("Location: unauthorized.php");
+    exit;
+}
+
+$id_pengguna = $_SESSION['user_id'] ?? null;
+$namaPengguna = "";
+
+if ($id_pengguna) {
+    $stmt = $conn->prepare("SELECT name FROM users WHERE user_id = ?");
+    $stmt->bind_param("i", $id_pengguna);
+    $stmt->execute();
+    $stmt->bind_result($namaPengguna);
+    $stmt->fetch();
+    $stmt->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>

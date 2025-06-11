@@ -1,3 +1,24 @@
+<?php include '../Includes/session_check.php'; ?>
+<?php include '../Includes/DBkoneksi.php'; ?>
+<?php
+if ($_SESSION['role'] !== 'murid') {
+    header("Location: unauthorized.php");
+    exit;
+}
+
+$id_pengguna = $_SESSION['user_id'] ?? null;
+$namaPengguna = "";
+
+if ($id_pengguna) {
+    $stmt = $conn->prepare("SELECT name FROM users WHERE user_id = ?");
+    $stmt->bind_param("i", $id_pengguna);
+    $stmt->execute();
+    $stmt->bind_result($namaPengguna);
+    $stmt->fetch();
+    $stmt->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -37,7 +58,7 @@
                     <i class="fa-regular fa-user text-teal-500 text-3xl"></i>
                 </div>
                 <div class="text-white">
-                    <h2 class="font-bold text-base sm:text-lg leading-tight ">Danul</h2>
+                    <h2 class="font-bold text-base sm:text-lg leading-tight "><?php echo $namaPengguna; ?></h2>
                     <p class="text-white-200 opacity-70 text-xs sm:text-sm leading-tight">Pelajar</p>
                     <!-- Token dan tombol tambah diletakkan di bawah -->
                     <div class="mt-2 flex items-center space-x-2">
