@@ -203,7 +203,7 @@ if ($pengajar_id) {
         });
     </script>
     <footer>
-        <?php include 'includes/Footer.php'; ?>
+        <?php include '../Includes/Footer.php'; ?>
     </footer>
 </body>
 

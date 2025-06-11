@@ -36,7 +36,7 @@ $result_riwayat = $conn->query($sql_riwayat);
                     <button id="hamburgerButton" class="text-teal-500 focus:outline-none mt-1">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
-                    <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Dashboard</h1>
+                    <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Donasi</h1>
                 </div>
                 <div class="flex items-center space-x-2 sm:space-x-4">
                     <div class="relative">
@@ -93,7 +93,7 @@ $result_riwayat = $conn->query($sql_riwayat);
         </div>
     </div>
     <footer>
-        <?php include 'includes/Footer.php'; ?>
+        <?php include '../includes/Footer.php'; ?>
     </footer>
 </body>
 

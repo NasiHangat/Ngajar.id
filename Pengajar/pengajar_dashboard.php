@@ -164,7 +164,7 @@ $stmt->close();
     </div>
 
     <footer>
-        <?php include 'includes/Footer.php'; ?>
+        <?php include '../Includes/Footer.php'; ?>
     </footer>
 </body>
 

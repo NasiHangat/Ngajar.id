@@ -9,17 +9,16 @@ $menus = [
         ['label' => 'Dashboard', 'icon' => 'fa-home', 'url' => '../pengajar/pengajar_dashboard.php'],
         ['label' => 'Kelas Saya', 'icon' => 'fa-book-open', 'url' => '../pengajar/pengajar_class.php'],
         ['label' => 'Modul', 'icon' => 'fa-book', 'url' => '../pengajar/pengajar_modul.php'],
-        ['label' => 'Donasi', 'icon' => 'fa-donate', 'url' => '../form_donasi.php'],
+        ['label' => 'Donasi', 'icon' => 'fa-donate', 'url' => 'form_donasi.php'],
     ],
     'murid' => [
         ['label' => 'Dashboard', 'icon' => 'fa-home', 'url' => '../murid/murid_dashboard.php'],
         ['label' => 'Kelas Saya', 'icon' => 'fa-book-open', 'url' => '../murid/murid_class.php'],
         ['label' => 'Modul', 'icon' => 'fa-book', 'url' => '../murid/murid_modul.php'],
-        ['label' => 'Donasi', 'icon' => 'fa-donate', 'url' => '../form_donasi.php'],
+        ['label' => 'Donasi', 'icon' => 'fa-donate', 'url' => 'form_donasi.php'],
     ],
     'admin' => [
-        ['label' => 'Dashboard', 'icon' => 'fa-home', 'url' => '../admin/dashboard.php'],
-        ['label' => 'Kelola Pengguna', 'icon' => 'fa-users-cog', 'url' => '../admin/kelola_pengguna.php'],
+        ['label' => 'Dashboard', 'icon' => 'fa-home', 'url' => '../admin/admin_dashboard.php'],
         ['label' => 'Kelas', 'icon' => 'fa-chalkboard-teacher', 'url' => '../admin/kelas.php'],
         ['label' => 'Donasi', 'icon' => 'fa-donate', 'url' => '../admin/admin_donasi.php'],
     ]
