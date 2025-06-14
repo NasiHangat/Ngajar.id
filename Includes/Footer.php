@@ -35,7 +35,7 @@
         <h4 class="text-base font-semibold mb-3">Peta Situs</h4>
         <ul class="space-y-2 text-sm">
           <li><a href="index.php" class="hover:underline">Beranda</a></li>
-          <li><a href="#" class="hover:underline">Donasi</a></li>
+          <li><a href="donasi.php" class="hover:underline">Donasi</a></li>
           <li><a href="TentangKami.php" class="hover:underline">Tentang Kami</a></li>
         </ul>
       </div>
@@ -55,7 +55,8 @@
           <li><a href="#" class="hover:underline">FAQ</a></li>
           <li><a href="#" class="hover:underline">Kontak</a></li>
           <li><a href="#" class="hover:underline">Kebijakan Privacy</a></li>
-          <li><a href="#" class="hover:underline">Tentang Kami</a></li>
+          <li><a href="TentangKami.php" class="hover:underline">Tentang Kami</a></li>
+
         </ul>
       </div>
 

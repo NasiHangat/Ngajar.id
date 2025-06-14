@@ -93,9 +93,7 @@ for ($i = 1; $i <= 12; $i++) {
                     <button class="text-teal-500 hover:text-teal-600 p-2 rounded-full transition-colors">
                         <i class="fas fa-bell text-xl"></i>
                     </button>
-                    <button class="text-teal-500 hover:text-teal-600 p-2 rounded-full transition-colors">
-                        <i class="fas fa-user-circle text-xl"></i>
-                    </button>
+                    <?php include "../includes/Profile.php"; ?>
                 </div>
             </div>
         </header>
