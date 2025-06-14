@@ -123,7 +123,7 @@ while ($row = $result->fetch_assoc()) {
                         <div class="flex flex-wrap items-center gap-4">
                             <button class="bg-teal-500 text-white px-4 py-2 rounded-lg font-bold flex items-center gap-2 hover:bg-teal-600 transition-colors text-sm">
                                 <i class="fas fa-sort"></i>
-                                <span>Urutkan</span>
+                                <span id="urutkanBtn">Urutkan</span>
                             </button>
                         </div>
                     </div>
@@ -192,6 +192,25 @@ while ($row = $result->fetch_assoc()) {
     </div>
 
     <script>
+    document.getElementById('urutkanBtn').addEventListener('click', () => {
+      const list = document.getElementById('namaList');
+      // Ambil semua item list dan bikin array dari mereka
+      const itemsArray = Array.from(list.querySelectorAll('li'));
+
+      // Urutkan array berdasarkan teks isi elemen, case insensitive
+      itemsArray.sort((a, b) => {
+        return a.textContent.toLowerCase().localeCompare(b.textContent.toLowerCase());
+      });
+
+      // Hapus semua item list lama
+      while (list.firstChild) {
+        list.removeChild(list.firstChild);
+      }
+
+      // Masukkan kembali item yang sudah diurutkan ke dalam list
+      itemsArray.forEach(item => list.appendChild(item));
+    });
+
         // --- Modal Logic ---
         const tambahMateriBtn = document.getElementById('tambahMateriBtn');
         const modal = document.getElementById('modalTambahMateri');
