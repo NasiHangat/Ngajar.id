@@ -7,7 +7,16 @@ $pengajar_id = $_SESSION['user_id'] ?? null;
 $kelas = [];
 
 if ($pengajar_id) {
-    $stmt = $conn->prepare("SELECT kelas_id, judul, deskripsi FROM kelas WHERE pengajar_id = ?");
+    $stmt = $conn->prepare("
+        SELECT 
+            k.kelas_id,
+            k.judul,
+            k.deskripsi,
+            (SELECT COUNT(*) FROM kelas_peserta kp WHERE kp.kelas_id = k.kelas_id) AS jumlah_siswa,
+            (SELECT COUNT(*) FROM materi m WHERE m.kelas_id = k.kelas_id) AS jumlah_materi
+        FROM kelas k
+        WHERE k.pengajar_id = ?
+    ");
     $stmt->bind_param("i", $pengajar_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -16,6 +25,7 @@ if ($pengajar_id) {
     }
     $stmt->close();
 }
+
 ?>
 
 
@@ -86,13 +96,14 @@ if ($pengajar_id) {
                     <?php if (!empty($kelas)): ?>
                         <?php foreach ($kelas as $item): ?>
                             <div class="bg-white rounded-xl shadow-md p-6 flex flex-col sm:flex-row items-center gap-6 border-l-8 border-teal-500">
-                                <img class="w-28 h-28 rounded-md object-cover flex-shrink-0" src="https://hololive.hololivepro.com/wp-content/uploads/2020/06/Nakiri-Ayame_pr-img_06.png" alt="<?= htmlspecialchars($item['judul']) ?>" />
+                                <img class="w-28 h-28 rounded-md object-cover flex-shrink-0" src="https://hololive.hololivepro.com/wp-content/uploads/2024/03/melting.png" alt="<?= htmlspecialchars($item['judul']) ?>" />
                                 <div class="flex-grow w-full">
                                     <h3 class="text-2xl font-bold mb-2 text-teal-600"><?= htmlspecialchars($item['judul']) ?></h3>
                                     <div class="space-y-1 text-base font-bold text-gray-600">
-                                        <p>Jumlah siswa: -</p>
-                                        <p>Modul: -</p>
+                                        <p>Jumlah siswa: <?= $item['jumlah_siswa'] ?></p>
+                                        <p>Modul: <?= $item['jumlah_materi'] ?></p>
                                     </div>
+
                                     <div class="flex items-center gap-3 mt-4">
                                         <button class="editKelasBtn bg-teal-500 text-white px-3 py-1.5 rounded-md text-xs font-bold flex items-center gap-2 hover:bg-teal-600 transition-colors"
                                                 data-id="<?= $item['kelas_id'] ?>"
