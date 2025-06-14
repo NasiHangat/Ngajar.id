@@ -30,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['name']    = $user['name'];
             $_SESSION['role']    = $user['role'];
+            $_SESSION['email'] = $user['email'];
 
             // Redirect sesuai role
             switch ($user['role']) {

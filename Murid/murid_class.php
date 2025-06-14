@@ -90,12 +90,9 @@ $conn->close();
                     </div>
                     <div class="flex items-center space-x-2 sm:space-x-4">
                         <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-bell text-xl"></i></button>
+                        <?php include "../includes/Profile.php"; ?>
                     </div>
-                </div>
-                <div class="flex items-center space-x-2 sm:space-x-4">
-                    <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-bell text-xl"></i></button>
-                    <?php include "../includes/Profile.php"; ?>
-                </div>
+                </div>               
             </div>
         </header>
         <?php include "../Includes/sidebar.php" ?>
