@@ -66,7 +66,7 @@ while ($row = $result->fetch_assoc()) {
                 </div>
             </div>
         </header>
-        <?php include "Includes/sidebar.php" ?>;
+        <?php include "../Includes/sidebar.php" ?>;
         <div class="max-w-6xl mx-auto p-6">
             <?php if (isset($_GET['success'])): ?>
                 <div class="bg-green-100 text-green-700 px-4 py-2 rounded mb-4 border border-green-200">
