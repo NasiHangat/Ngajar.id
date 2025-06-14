@@ -95,7 +95,6 @@ if ($pengajar_id) {
                                     <h3 class="text-2xl font-bold mb-2 text-teal-600"><?= htmlspecialchars($item['judul']) ?></h3>
                                     <div class="space-y-1 text-base font-bold text-gray-600">
                                         <p>Jumlah siswa: -</p>
-                                        <p>Jam Mengajar: -</p>
                                         <p>Modul: -</p>
                                     </div>
                                     <div class="flex items-center gap-3 mt-4">
