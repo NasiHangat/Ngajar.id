@@ -79,7 +79,7 @@ while ($row = $result->fetch_assoc()) {
         <!-- Total Donasi -->
         <div class="bg-teal-600 text-white text-center py-10 rounded-lg mb-8">
             <h2 class="text-xl font-bold uppercase mb-2">Total Donasi</h2>
-            <p class="text-4xl md:text-5xl font-bold">Rp <?php echo number_format($total_donasi, 0, ',', '.'); ?>,00</p>
+            <p class="text-4xl md:text-5xl font-bold">Rp <?php echo number_format($total_donasi, 0, ',', '.'); ?></p>
         </div>
         <!-- Konten Dua Kolom: Riwayat & Form -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">

@@ -58,7 +58,7 @@ $result_riwayat = $conn->query($sql_riwayat);
         <!-- Total Donasi -->
         <div class="bg-teal-600 text-white text-center py-10 rounded-lg mb-8">
             <h2 class="text-5xl font-bold uppercase mb-2">Total Donasi</h2>
-            <p class="text-5xl md:text-7xl font-bold">Rp <?php echo number_format($total_donasi, 0, ',', '.'); ?>,00</p>
+            <p class="text-5xl md:text-7xl font-bold">Rp <?php echo number_format($total_donasi, 0, ',', '.'); ?></p>
         </div>
 
         <!-- Riwayat Donasi -->
