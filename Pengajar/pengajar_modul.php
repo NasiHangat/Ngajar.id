@@ -179,7 +179,8 @@ while ($row = $result->fetch_assoc()) {
                             <label for="tipeModul" class="block text-sm font-medium text-teal-500 mb-2">Tipe Modul</label>
                             <select name="tipe" id="tipeModul" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500">
                                 <option>Soal</option>
-                                <option>PPT</option>
+                                <option>PDF</option>
+                                <option>Video Materi</option>
                             </select>
                         </div>
                     </div>
