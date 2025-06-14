@@ -99,11 +99,13 @@ if ($id_pengguna) {
                         <div class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
                             <div class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl"></div>
                             <div class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl"></div>
-                            <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
+                             <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
+                                <a href = "murid_isimodul.php">
                                 <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl" src="https://placehold.co/160x90" alt="Math">
                                 <h3 class="text-emerald-500 text-lg font-bold mt-4 text-left">Aljabar Linear</h3>
                                 <p class="text-emerald-500 text-sm font-light mt-2 text-left">Deskripsi Singkat</p>
                                 <p class="text-emerald-500 py-5 text-sm font-light mt-2 text-right">8 Soal</p>
+                            </a>                        
                             </div>
                         </div>
                         <div class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">

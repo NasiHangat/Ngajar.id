@@ -82,27 +82,29 @@ if ($id_pengguna) {
             </div>
         </div>
 
-        <div class="max-w-4xl mx-auto bg-white border-2 border-teal-700 shadow-lg rounded-xl p-8">
-            <h1 class="text-2xl md:text-3xl font-bold text-teal-800 mb-4">Aljabar Linear</h1>
-
-            <p class="text-gray-700 text-base md:text-lg leading-relaxed mb-6">
-                Cabang dari matematika yang mempelajari sistem persamaan linear dan objek-objek matematika yang dapat direpresentasikan dalam bentuk vektor dan matriks. Aljabar linear digunakan secara luas dalam berbagai bidang seperti fisika, teknik, ilmu komputer, ekonomi, dan statistik.
-            </p>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <a href="modul/tes.pdf" target="_blank"
-                    class="bg-white border-2 border-gray-300 hover:border-teal-500 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-sm transition">
-                    Buka PDF
-                </a>
-                <button class="bg-white border-2 border-gray-300 hover:border-teal-500 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-sm transition">Matriks</button>
-                <button class="bg-white border-2 border-gray-300 hover:border-teal-500 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-sm transition">Sistem Persamaan Linear</button>
-                <button class="bg-white border-2 border-gray-300 hover:border-teal-500 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-sm transition">Transformasi Linear</button>
-                <button class="bg-white border-2 border-gray-300 hover:border-teal-500 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-sm transition">Vektor</button>
-                <button class="bg-white border-2 border-gray-300 hover:border-teal-500 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-sm transition">Matriks</button>
-                <button class="bg-white border-2 border-gray-300 hover:border-teal-500 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-sm transition">Sistem Persamaan Linear</button>
-                <button class="bg-white border-2 border-gray-300 hover:border-teal-500 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-sm transition">Transformasi Linear</button>
+        <main class="flex-grow">
+            <div class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
+                <div class="bg-teal-500 text-white p-6 rounded-t-lg shadow-md">
+                    <h1 class="text-2xl md:text-3xl font-medium">PERTEMUAN 1</h1>
+                    <p class="text-normal text-white mt-1">WAKTU AKSES: 07-02-2025 16:20</p>
+                </div>
+                <div class="bg-white rounded-b-lg shadow-md">
+                    <div class="p-6 sm:p-8">
+                        <h2 class="text-2xl font-normal text-black">Materi</h2>
+                        <div class="mt-4 border-t pt-4">
+                            <h3 class="text-xl font-normal text-black">Kontrak Kuliah</h3>
+                            <p class="mt-2 font-light ext-gray-800">Penjelasan mengenai kontrak kuliah, silabus, dan sistem penilaian untuk mata kuliah ini.</p>
+                            <div class="mt-4">
+                                <a href="#" class="inline-block bg-teal-500 text-white font-medium py-2 px-5 rounded-lg hover:bg-teal-600 transition-colors shadow">
+                                    Download File Materi
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </main>
+
         <footer>
             <?php include '../includes/Footer.php'; ?>
         </footer>
