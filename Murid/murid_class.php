@@ -100,6 +100,40 @@ $conn->close();
         </div>
 
         <main class="max-w-6xl mx-auto px-4 sm:px-6 py-6">
+            <section class="mb-8">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-xl font-bold text-teal-500 py-2">Kelas Yang Diikuti</h3>
+                    </div>
+                    <?php if (count($kelas_diikuti) > 0): ?>
+                        <?php foreach ($kelas_diikuti as $kelas): ?>
+                            <div class="w-full max-w-[361px] h-[207px] shadow-lg rounded-lg flex">
+                                <div class="w-3 bg-cyan-950 rounded-l-lg"></div>
+                                <div class="flex-grow">
+                                    <div class="bg-teal-600 h-[90px] rounded-tr-lg p-4 flex justify-between items-start">
+                                        <div>
+                                            <h3 class="font-roboto-slab font-bold text-white text-[12.3px] w-48">
+                                                <?= htmlspecialchars($kelas['judul']) ?>
+                                            </h3>
+                                            <p class="font-roboto-slab text-white text-[10px] mt-8">
+                                                <?= htmlspecialchars($kelas['nama_pengajar']) ?>
+                                            </p>
+                                        </div>
+                                        <div class="w-14 h-14 bg-white rounded-full flex justify-center items-center shrink-0">
+                                            <img class="w-6 h-8" src="img/vector-10.svg" alt="Web Programming Icon" />
+                                        </div>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-b-lg">
+                                        <p class="font-roboto-slab font-bold text-cyan-950 text-[10px]">
+                                            <?= htmlspecialchars($kelas['deskripsi']) ?>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class="text-sm text-gray-500">Belum mengikuti kelas apapun.</p>
+                    <?php endif; ?>
+                </section>
     <section class="mb-8">
         <div class="flex items-center justify-between mb-3">
             <h3 class="text-xl font-bold text-teal-500 py-2">Kelas</h3>
@@ -141,42 +175,6 @@ $conn->close();
     </section>
 </main>
 
-<main class="max-w-6xl mx-auto px-4 sm:px-6 py-6">
-                <section class="mb-8">
-                    <div class="flex items-center justify-between mb-3">
-                        <h3 class="text-xl font-bold text-teal-500 py-2">Kelas Yang Diikuti</h3>
-                    </div>
-                    <?php if (count($kelas_diikuti) > 0): ?>
-                        <?php foreach ($kelas_diikuti as $kelas): ?>
-                            <div class="w-full max-w-[361px] h-[207px] shadow-lg rounded-lg flex">
-                                <div class="w-3 bg-cyan-950 rounded-l-lg"></div>
-                                <div class="flex-grow">
-                                    <div class="bg-teal-600 h-[90px] rounded-tr-lg p-4 flex justify-between items-start">
-                                        <div>
-                                            <h3 class="font-roboto-slab font-bold text-white text-[12.3px] w-48">
-                                                <?= htmlspecialchars($kelas['judul']) ?>
-                                            </h3>
-                                            <p class="font-roboto-slab text-white text-[10px] mt-8">
-                                                <?= htmlspecialchars($kelas['nama_pengajar']) ?>
-                                            </p>
-                                        </div>
-                                        <div class="w-14 h-14 bg-white rounded-full flex justify-center items-center shrink-0">
-                                            <img class="w-6 h-8" src="img/vector-10.svg" alt="Web Programming Icon" />
-                                        </div>
-                                    </div>
-                                    <div class="bg-white p-4 rounded-b-lg">
-                                        <p class="font-roboto-slab font-bold text-cyan-950 text-[10px]">
-                                            <?= htmlspecialchars($kelas['deskripsi']) ?>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <p class="text-sm text-gray-500">Belum mengikuti kelas apapun.</p>
-                    <?php endif; ?>
-                </section>
-            </main>
 
         <footer>
             <?php include '../Includes/Footer.php'; ?>
