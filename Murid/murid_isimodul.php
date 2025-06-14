@@ -103,7 +103,8 @@ if ($id_pengguna) {
                 <button class="bg-white border-2 border-gray-300 hover:border-teal-500 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-sm transition">Transformasi Linear</button>
             </div>
         </div>
-
+        <footer>
+            <?php include '../includes/Footer.php'; ?>
+        </footer>
 </body>
-
 </html>
