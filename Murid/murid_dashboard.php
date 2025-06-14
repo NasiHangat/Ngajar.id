@@ -1,6 +1,6 @@
 <?php include '../Includes/session_check.php'; ?>
 <?php include '../Includes/DBkoneksi.php'; ?>
-<script?php
+<?php
 if ($_SESSION['role'] !== 'murid') {
     header("Location: unauthorized.php");
     exit;
