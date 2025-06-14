@@ -104,9 +104,8 @@ if ($id_pengguna) {
         <main class="flex-grow">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div class="bg-teal-500 text-white p-6 sm:p-8 rounded-xl shadow-lg mb-10 flex items-center space-x-6">
-                    <div>
-                        <img src="https://via.placeholder.com/56" alt="Foto Profil Danul"
-                            class="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-white object-cover">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white flex items-center justify-center">
+                        <i class="fa-regular fa-user text-teal-500 text-3xl"></i>
                     </div>
                     <div>
                         <h2 class="text-2xl sm:text-3xl font-semibold mb-1">Terimakasih, <?php echo $namaPengguna; ?></h2>
@@ -138,30 +137,6 @@ if ($id_pengguna) {
                     </div>
                 </div>
 
-                <!-- Content Grid -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <!-- Kegiatan Terbaru -->
-                    <div class="lg:col-span-2 bg-white p-6 sm:p-7 rounded-xl shadow-md">
-                        <h3 class="text-xl font-semibold text-teal-500 mb-6">Kegiatan Terbaru</h3>
-                        <div class="space-y-5">
-                            <div class="flex items-start space-x-4">
-                                <p class="text-sm text-gray-500 whitespace-nowrap pt-1 w-20">23 Maret</p>
-                                <p class="text-base text-gray-700">Mengunggah Modul "<span class="font-medium text-teal-500">Belajar Crypto</span>"</p>
-                            </div>
-                            <div class="border-t border-gray-100"></div>
-                            <div class="flex items-start space-x-4">
-                                <p class="text-sm text-gray-500 whitespace-nowrap pt-1 w-20">22 Maret</p>
-                                <p class="text-base text-gray-700">Membuat kelas baru "<span class="font-medium text-teal-500">Matematika Dasar</span>"</p>
-                            </div>
-                            <div class="border-t border-gray-100"></div>
-                            <div class="flex items-start space-x-4">
-                                <p class="text-sm text-gray-500 whitespace-nowrap pt-1 w-20">21 Maret</p>
-                                <p class="text-base text-gray-700">Menyelesaikan modul "<span class="font-medium text-teal-500">Aljabar Linear</span>"</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Kelas Yang Dibina -->
                     <div class="bg-white p-6 sm:p-7 rounded-xl shadow-md">
                         <h3 class="text-xl font-semibold text-teal-500 mb-6">Kelas Yang Dibina</h3>
                         <div class="space-y-4">

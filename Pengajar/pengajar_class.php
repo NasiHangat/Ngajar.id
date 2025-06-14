@@ -73,10 +73,6 @@ if ($pengajar_id) {
                             <h2 class="text-2xl font-bold text-teal-500">Kelas Yang Dibina</h2>
                         </div>
                         <div class="flex flex-wrap items-center gap-4">
-                            <button class="border-2 border-teal-500 text-teal-600 px-4 py-2 rounded-lg font-bold flex items-center gap-2 hover:bg-teal-50 transition-colors text-sm">
-                                <span>Kelas Saya</span>
-                                <i class="fas fa-chevron-down ml-1"></i>
-                            </button>
                             <button class="bg-teal-500 text-white px-4 py-2 rounded-lg font-bold flex items-center gap-2 hover:bg-teal-600 transition-colors text-sm">
                                 <i class="fas fa-sort"></i>
                                 <span>Urutkan</span>
@@ -90,7 +86,7 @@ if ($pengajar_id) {
                     <?php if (!empty($kelas)): ?>
                         <?php foreach ($kelas as $item): ?>
                             <div class="bg-white rounded-xl shadow-md p-6 flex flex-col sm:flex-row items-center gap-6 border-l-8 border-teal-500">
-                                <img class="w-28 h-28 rounded-md object-cover flex-shrink-0" src="https://placehold.co/109x109/EEEEEE/333333?text=Kelas" alt="<?= htmlspecialchars($item['judul']) ?>" />
+                                <img class="w-28 h-28 rounded-md object-cover flex-shrink-0" src="https://hololive.hololivepro.com/wp-content/uploads/2020/06/Nakiri-Ayame_pr-img_06.png" alt="<?= htmlspecialchars($item['judul']) ?>" />
                                 <div class="flex-grow w-full">
                                     <h3 class="text-2xl font-bold mb-2 text-teal-600"><?= htmlspecialchars($item['judul']) ?></h3>
                                     <div class="space-y-1 text-base font-bold text-gray-600">
