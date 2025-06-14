@@ -125,7 +125,7 @@ if ($id_pengguna) {
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <section>
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-xl font-bold text-teal-500">Modul Premium</h3>
+                        <h3 class="text-xl font-bold text-teal-500">Modul Ngajar.Id</h3>
                         </div>
                     <div class="relative">
                         <div class="absolute top-2 right-2 w-full h-full bg-[#003F4A] rounded-lg z-0"></div>
