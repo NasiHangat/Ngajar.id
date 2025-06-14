@@ -121,10 +121,6 @@ while ($row = $result->fetch_assoc()) {
                             <h2 class="text-2xl font-bold text-teal-500">Materi Pembelajaran</h2>
                         </div>
                         <div class="flex flex-wrap items-center gap-4">
-                            <button class="border-2 border-teal-500 text-teal-600 px-4 py-2 rounded-lg font-bold flex items-center gap-2 hover:bg-teal-50 transition-colors text-sm">
-                                <span>Materi Saya</span>
-                                <i class="fas fa-chevron-down ml-1"></i>
-                            </button>
                             <button class="bg-teal-500 text-white px-4 py-2 rounded-lg font-bold flex items-center gap-2 hover:bg-teal-600 transition-colors text-sm">
                                 <i class="fas fa-sort"></i>
                                 <span>Urutkan</span>
@@ -136,8 +132,8 @@ while ($row = $result->fetch_assoc()) {
                 <!-- Grid Kartu Kelas -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <?php foreach ($materi_list as $m): ?>
-                    <div class="bg-teal-500 rounded-xl shadow-md p-6 flex flex-col sm:flex-row items-center gap-6">
-                        <i class="fas fa-book text-3xl opacity-80"></i>
+                    <div class="bg-teal-500 rounded-xl shadow-md p-5 flex flex-col sm:flex-row items-center gap-6">
+                        <i class="fas fa-book text-8xl opacity-100"></i>
                         <div class="flex-grow w-full">
                             <h3 class="text-2xl font-bold mb-2 text-white"><?= htmlspecialchars($m['judul']) ?></h3>
                             <div class="space-y-1 text-base font-light text-gray-100">
