@@ -124,6 +124,37 @@ $conn->close();
         <main class="max-w-6xl mx-auto px-4 sm:px-6 py-6">
             <section class="mb-8">
                 <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-xl font-bold text-teal-500 py-2">Kelas</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-14 gap-y-12">
+                    <?php if (!empty($kelas)): ?>
+                        <?php foreach ($kelas as $item): ?>
+                            <div class="w-full max-w-[361px] h-[207px] shadow-lg rounded-lg flex">
+                                <div class="w-3 bg-cyan-950 rounded-l-lg"></div>
+                                <div class="flex-grow">
+                                    <div class="bg-teal-600 h-[90px] rounded-tr-lg p-4 flex justify-between items-start">
+                                        <div>
+                                            <h3 class="font-roboto-slab font-bold text-white text-[12.3px] w-48">
+                                                <?= htmlspecialchars($item['judul']) ?>
+                                            </h3>
+                                            <p class="font-roboto-slab text-white text-[10px] mt-8">
+                                                <?= htmlspecialchars($item['relawan']) ?>
+                                            </p>
+                                        </div>
+                                        <div class="w-14 h-14 bg-white rounded-full flex justify-center items-center shrink-0">
+                                            <img class="w-6 h-8" src="<?= $item['icon'] ?? 'img/vector-default.svg' ?>" alt="Icon Kelas" />
+                                        </div>   
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class="text-gray-500">Belum ada kelas yang tersedia untuk diikuti.</p>
+                    <?php endif; ?>
+                </div>
+            </section>
+            <section class="mb-8">
+                <div class="flex items-center justify-between mb-3">
                     <h3 class="text-xl font-bold text-teal-500 py-2">Kelas Yang Diikuti</h3>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-14 gap-y-12">
@@ -159,37 +190,6 @@ $conn->close();
                 </div>
             </section>
 
-            <section class="mb-8">
-                <div class="flex items-center justify-between mb-3">
-                    <h3 class="text-xl font-bold text-teal-500 py-2">Kelas</h3>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-14 gap-y-12">
-                    <?php if (!empty($kelas)): ?>
-                        <?php foreach ($kelas as $item): ?>
-                            <div class="w-full max-w-[361px] h-[207px] shadow-lg rounded-lg flex">
-                                <div class="w-3 bg-cyan-950 rounded-l-lg"></div>
-                                <div class="flex-grow">
-                                    <div class="bg-teal-600 h-[90px] rounded-tr-lg p-4 flex justify-between items-start">
-                                        <div>
-                                            <h3 class="font-roboto-slab font-bold text-white text-[12.3px] w-48">
-                                                <?= htmlspecialchars($item['judul']) ?>
-                                            </h3>
-                                            <p class="font-roboto-slab text-white text-[10px] mt-8">
-                                                <?= htmlspecialchars($item['relawan']) ?>
-                                            </p>
-                                        </div>
-                                        <div class="w-14 h-14 bg-white rounded-full flex justify-center items-center shrink-0">
-                                            <img class="w-6 h-8" src="<?= $item['icon'] ?? 'img/vector-default.svg' ?>" alt="Icon Kelas" />
-                                        </div>   
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <p class="text-gray-500">Belum ada kelas yang tersedia untuk diikuti.</p>
-                    <?php endif; ?>
-                </div>
-            </section>
         </main>
 
         <footer>
