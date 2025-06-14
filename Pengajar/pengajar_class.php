@@ -276,7 +276,29 @@ if ($pengajar_id) {
     });
 
     formEdit.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const namaKelas = document.getElementById('namaKelasEdit').value;
+        const deskripsiKelas = document.getElementById('deskripsiKelasEdit').value;
+        const kelasId = formEdit.dataset.id;
 
+        fetch('../proses_edit_kelas.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: new URLSearchParams({
+                id: kelasId,
+                namaKelas: namaKelas,
+                deskripsiKelas: deskripsiKelas
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            alert(data.message);
+            if (data.status === 'success') {
+                closeModalEditFunc();
+                location.reload();
+            }
+        })
+        .catch(() => alert('Terjadi kesalahan saat mengedit!'));
     });
 </script>
 <script>
