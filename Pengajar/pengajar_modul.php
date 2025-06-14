@@ -45,9 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['judul'], $_POST['kela
         $stmt->execute();
         $stmt->close();
 
-        $pesan = "Modul berhasil ditambahkan!";
+        $pesan = "Materi berhasil ditambahkan!";
     } else {
-        echo "<script>alert('Upload file gagal. Modul tidak disimpan.');</script>";
+        echo "<script>alert('Upload file gagal. Materi tidak disimpan.');</script>";
     }
 }
 
@@ -72,7 +72,7 @@ while ($row = $result->fetch_assoc()) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="../img/Logo.png">
-    <title>Modul Relawan - Ngajar.ID</title>
+    <title>Materi Relawan - Ngajar.ID</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -97,7 +97,7 @@ while ($row = $result->fetch_assoc()) {
                     <button id="hamburgerButton" class="text-teal-500 focus:outline-none mt-1">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
-                    <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Modul</h1>
+                    <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Materi</h1>
                 </div>
                 <div class="flex items-center space-x-2 sm:space-x-4">
                     <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-bell text-xl"></i></button>
@@ -110,19 +110,19 @@ while ($row = $result->fetch_assoc()) {
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <!-- Tombol Tambah Kelas -->
                 <div class="mb-6">
-                    <button id="tambahModulBtn" class="bg-teal-500 text-white px-4 py-2 rounded-lg font-bold flex items-center gap-2 hover:bg-teal-600 transition-colors shadow-md">
+                    <button id="tambahMateriBtn" class="bg-teal-500 text-white px-4 py-2 rounded-lg font-bold flex items-center gap-2 hover:bg-teal-600 transition-colors shadow-md">
                         <i class="fas fa-plus"></i>
-                        <span>Tambah Modul</span>
+                        <span>Tambah Materi</span>
                     </button>
                 </div>
                 <div class="bg-white rounded-lg shadow-lg  p-4 mb-8">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                         <div>
-                            <h2 class="text-2xl font-bold text-teal-500">Modul Pembelajaran</h2>
+                            <h2 class="text-2xl font-bold text-teal-500">Materi Pembelajaran</h2>
                         </div>
                         <div class="flex flex-wrap items-center gap-4">
                             <button class="border-2 border-teal-500 text-teal-600 px-4 py-2 rounded-lg font-bold flex items-center gap-2 hover:bg-teal-50 transition-colors text-sm">
-                                <span>Modul Saya</span>
+                                <span>Materi Saya</span>
                                 <i class="fas fa-chevron-down ml-1"></i>
                             </button>
                             <button class="bg-teal-500 text-white px-4 py-2 rounded-lg font-bold flex items-center gap-2 hover:bg-teal-600 transition-colors text-sm">
@@ -156,15 +156,15 @@ while ($row = $result->fetch_assoc()) {
             </div>
         </main>
     </div>
-    <div id="modalTambahModul" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div id="modalTambahMateri" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg transform transition-all">
             <div class="bg-teal-500 text-white px-6 py-4 rounded-t-xl flex items-center justify-between">
-                <h3 class="text-xl font-bold">Tambah Modul Baru</h3>
+                <h3 class="text-xl font-bold">Tambah Materi Baru</h3>
                 <button id="closeModal" class="text-white hover:text-gray-200 text-2xl"><i class="fas fa-times"></i></button>
             </div>
             <div class="p-6">
-                <form id="formTambahModul" class="space-y-4" method="POST" enctype="multipart/form-data">
-                    <div><label for="namaModul" class="block text-sm font-medium text-teal-500 mb-2">Nama Modul</label><input name="judul" type="text" id="namaModul" placeholder="Contoh: Pengenalan Vektor" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500" required></div>
+                <form id="formTambahMateri" class="space-y-4" method="POST" enctype="multipart/form-data">
+                    <div><label for="namaMateri" class="block text-sm font-medium text-teal-500 mb-2">Nama Materi</label><input name="judul" type="text" id="namaMateri" placeholder="Contoh: Pengenalan Vektor" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500" required></div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
@@ -176,20 +176,20 @@ while ($row = $result->fetch_assoc()) {
                             </select>
                         </div>
                         <div>
-                            <label for="tipeModul" class="block text-sm font-medium text-teal-500 mb-2">Tipe Modul</label>
-                            <select name="tipe" id="tipeModul" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500">
+                            <label for="tipeMateri" class="block text-sm font-medium text-teal-500 mb-2">Tipe Materi</label>
+                            <select name="tipe" id="tipeMateri" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500">
                                 <option>Soal</option>
                                 <option>PDF</option>
                                 <option>Video Materi</option>
                             </select>
                         </div>
                     </div>
-                    <div><label for="deskripsiModul" class="block text-sm font-medium text-teal-500 mb-2">Deskripsi</label><textarea name="deskripsi" id="deskripsiModul" placeholder="Jelaskan isi singkat dari modul ini" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"></textarea></div>
+                    <div><label for="deskripsiMateri" class="block text-sm font-medium text-teal-500 mb-2">Deskripsi</label><textarea name="deskripsi" id="deskripsiMateri" placeholder="Jelaskan isi singkat dari Materi ini" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"></textarea></div>
                     <div>
-                        <label for="fileModul" class="block text-sm font-medium text-teal-500 mb-2">Upload File</label>
-                        <input name="file" type="file"type="file" id="fileModul" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100" />
+                        <label for="fileMateri" class="block text-sm font-medium text-teal-500 mb-2">Upload File</label>
+                        <input name="file" type="file"type="file" id="fileMateri" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100" />
                     </div>
-                    <div class="flex gap-3 pt-4"><button type="button" id="batalBtn" class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors font-medium">Batal</button><button type="submit" class="flex-1 px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition-colors font-medium">Tambah Modul</button></div>
+                    <div class="flex gap-3 pt-4"><button type="button" id="batalBtn" class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors font-medium">Batal</button><button type="submit" class="flex-1 px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition-colors font-medium">Tambah Materi</button></div>
                 </form>
             </div>
         </div>
@@ -197,11 +197,11 @@ while ($row = $result->fetch_assoc()) {
 
     <script>
         // --- Modal Logic ---
-        const tambahModulBtn = document.getElementById('tambahModulBtn');
-        const modal = document.getElementById('modalTambahModul');
+        const tambahMateriBtn = document.getElementById('tambahMateriBtn');
+        const modal = document.getElementById('modalTambahMateri');
         const closeModalBtn = document.getElementById('closeModal');
         const batalBtn = document.getElementById('batalBtn');
-        const form = document.getElementById('formTambahModul');
+        const form = document.getElementById('formTambahMateri');
 
         function openModal() {
             modal.classList.remove('hidden');
@@ -216,7 +216,7 @@ while ($row = $result->fetch_assoc()) {
             form.reset();
         }
 
-        tambahModulBtn.addEventListener('click', openModal);
+        tambahMateriBtn.addEventListener('click', openModal);
         closeModalBtn.addEventListener('click', closeModalFunc);
         batalBtn.addEventListener('click', closeModalFunc);
 

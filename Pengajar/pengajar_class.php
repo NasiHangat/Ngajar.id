@@ -96,6 +96,7 @@ if ($pengajar_id) {
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <?php if (!empty($kelas)): ?>
                         <?php foreach ($kelas as $item): ?>
+                            <a href="detail_kelas.php?id=<?= $item['kelas_id'] ?>" class="block hover:shadow-lg transition-shadow">
                             <div class="bg-white rounded-xl shadow-md p-6 flex flex-col sm:flex-row items-center gap-6 border-l-8 border-teal-500">
                                 <img class="w-28 h-28 rounded-md object-cover flex-shrink-0" src="https://hololive.hololivepro.com/wp-content/uploads/2024/03/melting.png" alt="<?= htmlspecialchars($item['judul']) ?>" />
                                 <div class="flex-grow w-full">
@@ -121,6 +122,7 @@ if ($pengajar_id) {
                                     </div>
                                 </div>
                             </div>
+                            </a>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <p class="text-gray-500 text-center col-span-full">Belum ada kelas yang dibuat.</p>

@@ -143,6 +143,7 @@ if ($id_pengguna) {
                         <div class="space-y-4">
                             <?php if (count($kelasList) > 0): ?>
                                 <?php foreach ($kelasList as $kelas): ?>
+                                    <a href="detail_kelas.php?id=<?= $kelas['kelas_id'] ?>" class="block hover:shadow-lg transition-shadow">
                                     <div class="border border-gray-200 rounded-lg p-4 flex items-center space-x-4 hover:shadow-sm hover:border-teal-500 transition-all">
                                         <div class="p-3 bg-teal-100 rounded-lg flex-shrink-0"><i class="fas fa-chalkboard-teacher text-2xl text-teal-600"></i></div>
                                         <div>
@@ -150,6 +151,7 @@ if ($id_pengguna) {
                                             <p class="text-sm text-gray-500"><?php echo $kelas['total_siswa']; ?> siswa aktif</p>
                                         </div>
                                     </div>
+                                    </a>
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <p class="text-gray-500">Belum ada kelas yang dibina.</p>
