@@ -30,8 +30,8 @@ $rolePengguna = ucfirst($_SESSION['role'] ?? 'guest'); // Menjadi "Admin", "Peng
       class="absolute right-0 mt-2 w-72 bg-white text-black shadow-lg rounded-lg p-4 z-50">
       <div class="flex flex-col items-center text-center space-y-1">
         <div class="text-teal-600 font-bold text-lg"><?php echo htmlspecialchars($namaPengguna); ?></div>
-        <div class="text-sm text-gray-500"><?php echo htmlspecialchars($emailPengguna); ?></div>
         <div class="text-xs px-3 py-0.5 bg-teal-100 text-teal-700 rounded-full mt-1 uppercase tracking-wide"><?php echo htmlspecialchars($rolePengguna); ?></div>
+        <div class="text-sm text-gray-500"><?php echo htmlspecialchars($emailPengguna); ?></div>
       </div>
     </div>
   </div>

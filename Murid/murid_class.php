@@ -31,19 +31,6 @@ $result = $stmt->get_result();
 while ($row = $result->fetch_assoc()) {
     $kelas_diikuti[] = $row;
 }
-try {
-    $stmt = $pdo->prepare("SELECT jumlah FROM token WHERE user_id = :user_id");
-    $stmt->execute(['user_id' => $user_id]);
-    $token = $stmt->fetchColumn();
-
-    if ($token === false) {
-        $token = 0; // Jika tidak ada data token, set 0
-    }
-} catch (PDOException $e) {
-    // Tangani error koneksi atau query
-    $token = 0;
-    error_log("Database error: " . $e->getMessage());
-}
 
 $query = "SELECT k.kelas_id, k.judul, u.name AS relawan 
 FROM kelas k 
@@ -87,23 +74,6 @@ while ($row = $result->fetch_assoc()) {
     </script>
 </head>
 
-<<<<<<< Updated upstream
-    <body class="bg-white-50 font-roboto">
-        <div class="flex flex-col min-h-screen">
-            <header class="bg-white shadow-sm sticky top-0 z-30">
-                <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
-                    <div class="flex items-center space-x-4">
-                        <button id="hamburgerButton" class="text-teal-500 focus:outline-none">
-                            <i class="fas fa-bars text-xl"></i>
-                        </button>
-                        <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Kelas</h1>
-                    </div>
-                    <div class="flex items-center space-x-2 sm:space-x-4">
-                        <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-bell text-xl"></i></button>
-                        <?php include "../includes/Profile.php"; ?>
-                    </div>
-                </div>               
-=======
 <body class="bg-white-50 font-roboto">
     <div class="flex flex-col min-h-screen">
         <header class="bg-white shadow-sm sticky top-0 z-30">
@@ -118,7 +88,7 @@ while ($row = $result->fetch_assoc()) {
                     <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-bell text-xl"></i></button>
                     <?php include "../includes/Profile.php" ?>
                 </div>
->>>>>>> Stashed changes
+
             </div>
         </header>
         <?php include "../Includes/sidebar.php" ?>
@@ -130,7 +100,7 @@ while ($row = $result->fetch_assoc()) {
                     </div>
                     <div class="text-white">
                         <h2 class="font-bold text-base sm:text-lg leading-tight "><?php echo $namaPengguna; ?></h2>
-                        <p class="text-white-200 opacity-70 text-xs sm:text-sm leading-tight">Pelajar</p>
+                        <div class="text-xs rounded-full mt-1 uppercase tracking-wide"><?php echo htmlspecialchars($rolePengguna); ?></div>
                         <div class="mt-2 flex items-center space-x-2">
                             <div class="bg-white text-teal-500 text-xs font-semibold px-2.5 py-1 rounded-lg flex items-center">
                                 <img src="../img/coin.png" class="mr-1.5 w-4" alt="coin icon" />
