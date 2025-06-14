@@ -17,6 +17,21 @@ if ($id_pengguna) {
     $stmt->fetch();
     $stmt->close();
 }
+
+// Ambil modul yang dibuat oleh admin
+$modul_admin = [];
+$stmt = $conn->prepare("
+    SELECT judul, deskripsi, tipe, token_harga 
+    FROM modul 
+    WHERE dibuat_oleh IN (SELECT user_id FROM users WHERE role = 'admin')
+");
+$stmt->execute();
+$result = $stmt->get_result();
+while ($row = $result->fetch_assoc()) {
+    $modul_admin[] = $row;
+}
+$stmt->close();
+
 ?>
 
 <!DOCTYPE html>
@@ -131,43 +146,27 @@ if ($id_pengguna) {
                         <div class="absolute top-2 right-2 w-full h-full bg-[#003F4A] rounded-lg z-0"></div>
                         <div class="relative w-full h-full bg-white border-4 border-[#003F4A] rounded-lg z-10 p-5 space-y-3">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                                <div class="flex items-start space-x-4">
-                                    <div class="bg-teal-500 text-white font-bold p-4 py-10 border-l-8 border-[#003F4A] rounded-lg shadow-md">UTBK</div>
-                                    <div>
-                                        <p class="text-teal-500 font-bold">Tes soal UTBK</p>
-                                        <div class="flex items-center text-sm tex mt-1">
-                                            <img src="../img/coin.png" class="mr-1.5 w-4"> 20
+                                <?php if (!empty($modul_admin)) : ?>
+                                    <?php foreach ($modul_admin as $modul): ?>
+                                        <div class="flex items-start space-x-4">
+                                            <div class="bg-teal-500 text-white font-bold p-4 py-10 border-l-8 border-[#003F4A] rounded-lg shadow-md">
+                                                <?= strtoupper(substr($modul['judul'], 0, 6)) ?>
+                                            </div>
+                                            <div>
+                                                <p class="text-teal-500 font-bold"><?= htmlspecialchars($modul['judul']) ?></p>
+                                                <div class="text-sm text-gray-600 mt-1"><?= htmlspecialchars($modul['deskripsi']) ?></div>
+                                                <div class="flex items-center text-sm mt-1">
+                                                    <img src="../img/coin.png" class="mr-1.5 w-4">
+                                                    <?= (int)$modul['token_harga'] ?> Token
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="flex items-start space-x-4">
-                                    <div class="bg-teal-500 text-white font-bold p-4 py-10 border-l-8 border-[#003F4A] rounded-lg shadow-md">CPNS</div>
-                                    <div>
-                                        <p class="text-teal-500 font-bold">Tes soal CPNS</p>
-                                        <div class="flex items-center text-sm mt-1">
-                                            <img src="../img/coin.png" class="mr-1.5 w-4"> 20
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex items-start space-x-4">
-                                    <div class="bg-teal-500 text-white font-bold p-3.5 py-10 border-l-8 border-[#003F4A] rounded-lg shadow-md">BUMN</div>
-                                    <div>
-                                        <p class="text-teal-500 font-bold">Tes soal BUMN</p>
-                                        <div class="flex items-center text-sm mt-1">
-                                            <img src="../img/coin.png" class="mr-1.5 w-4"> 20
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex items-start space-x-4">
-                                    <div class="bg-teal-500 text-white font-bold p-3 py-10 border-l-8 border-[#003F4A] rounded-lg shadow-md">AKPOL</div>
-                                    <div>
-                                        <p class="text-teal-500 font-bold">Tes soal AKPOL</p>
-                                        <div class="flex items-center text-sm mt-1">
-                                            <img src="../img/coin.png" class="mr-1.5 w-4"> 20
-                                        </div>
-                                    </div>
-                                </div>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <p class="text-sm text-gray-500 col-span-full">Belum ada modul yang tersedia.</p>
+                                <?php endif; ?>
                             </div>
+
                         </div>
                     </div>
                 </section>
