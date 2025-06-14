@@ -87,26 +87,12 @@ if ($id_pengguna) {
             <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <section class="mb-8">
                     <div class="flex items-center justify-between mb-3">
-                        <h1 class="text-xl font-bold text-teal-500 py-2">Materi</h1>
-                    </div>
-                    <div class="flex space-x-8 mb-5">
-                        <button class="bg-teal-500 text-white px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">Matematika</button>
-                        <button class="bg-white text-teal-500 px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">Fisika</button>
-                        <button class="bg-white text-teal-500 px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">Kimia</button>
-                        <button class="bg-white text-teal-500 px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">Biologi</button>
-                        <button class="bg-white text-teal-500 px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">B.indonesia</button>
-                        <button class="bg-white text-teal-500 px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">B.inggris</button>
-                        <button class="bg-white text-teal-500 px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">PPkn</button>
-                        <button class="bg-white text-teal-500 px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">Sejarah</button>
-                    </div>
-                </section>
-                <section class="mb-8">
-                    <div class="flex items-center justify-between mb-3">
                         <h1 class="text-xl font-bold text-teal-500 py-2">Modul Pembelajaran</h1>
                     </div>
                     <div class="flex space-x-8 mb-5">
                         <button class="bg-teal-500 text-white px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">Soal</button>
-                        <button class="bg-white text-teal-500 px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">PPT</button>
+                        <button class="bg-white text-teal-500 px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">PDF</button>
+                        <button class="bg-white text-teal-500 px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">Video</button>
                     </div>
                     <!-- Modul Pembelajaran Cards -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-14">
