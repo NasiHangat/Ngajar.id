@@ -49,7 +49,7 @@ if ($id_pengguna) {
             <header class="bg-white shadow-sm sticky top-0 z-30">
                 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
                     <div class="flex items-center space-x-4">
-                        <button id="hamburgerButton" class="text-teal-500 focus:outline-none mt-1">
+                        <button id="hamburgerButton" class="text-teal-500 focus:outline-none">
                             <i class="fas fa-bars text-xl"></i>
                         </button>
                         <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Modul</h1>

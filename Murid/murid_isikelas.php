@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modul - Ngajar.ID</title>
+    <title>Kelas - Ngajar.ID</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -26,10 +26,10 @@
         <header class="bg-white shadow-sm sticky top-0 z-30">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
                 <div class="flex items-center space-x-4">
-                    <button id="hamburgerButton" class="text-teal-500 focus:outline-none mt-1">
+                    <button id="hamburgerButton" class="text-teal-500 focus:outline-none">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
-                    <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Modul</h1>
+                    <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Kelas</h1>
                 </div>
                 <div class="flex items-center space-x-2 sm:space-x-4">
                     <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-bell text-xl"></i></button>
@@ -62,7 +62,7 @@
 
         <div class="bg-white py-6">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="bg-teal-600 text-white p-16 rounded-xl relative min-h-[220px]">
+                <div class="bg-teal-500 text-white p-16 rounded-xl relative min-h-[220px]">
                     <h1 class="text-3xl sm:text-4xl font-bold">perbaikan nilai bahasa indonesia</h1>
                     <p class="text-base sm:text-lg mt-2">Kelas XII MM TJA</p>
                     <div class="absolute top-6 right-6">
@@ -73,7 +73,7 @@
                 <div class="mt-6 space-y-4">
                     <div class="bg-white p-4 shadow rounded-lg flex items-start justify-between">
                         <div class="flex gap-4 hover:text-gray-700">
-                            <div class="bg-teal-500 text-white p-2 rounded-full">
+                            <div class="w-10 h-10 bg-teal-500 text-white p-2 rounded-full flex items-center justify-center">
                                 <i class="fas fa-clipboard text-lg"></i>
                             </div>
                             <div>
@@ -85,17 +85,14 @@
 
                     <div class="bg-white p-4 shadow rounded-lg flex items-start justify-between">
                         <div class="flex gap-4">
-                            <div class="bg-teal-500 text-white p-2 rounded-full">
+                            <div class="w-10 h-10 bg-teal-500 text-white p-2 rounded-full flex items-center justify-center">
                                 <i class="fas fa-clipboard text-lg"></i>
                             </div>
                             <div>
-                                <p><strong>Dian NFarida</strong> memposting tugas baru: <strong>semester2</strong></p>
+                                <p><strong>Dian NFarida</strong> memposting tugas baru: <strong>semester 2</strong></p>
                                 <p class="text-sm text-gray-500">13 Okt 2022</p>
                             </div>
                         </div>
-                        <button class="text-gray-500 hover:text-gray-700">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </button>
                     </div>
                 </div>
             </div>
