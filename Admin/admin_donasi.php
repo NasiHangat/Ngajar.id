@@ -24,6 +24,7 @@ $result_riwayat = $conn->query($sql_riwayat);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donasi</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="../img/Logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -39,14 +40,8 @@ $result_riwayat = $conn->query($sql_riwayat);
                     <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Donasi</h1>
                 </div>
                 <div class="flex items-center space-x-2 sm:space-x-4">
-                    <div class="relative">
-                        <input type="text" placeholder="Mau liat apa?" class="bg-white border border-gray-300 text-sm rounded-full py-2 px-4 pl-10 focus:outline-none focus:border-teal-600 w-32 sm:w-64 transition-all">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i class="fas fa-search text-teal-500 opacity-75"></i>
-                        </div>
-                    </div>
                     <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-bell text-xl"></i></button>
-                    <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-user-circle text-xl"></i></button>
+                    <?php include "../includes/Profile.php"; ?>
                 </div>
             </div>
         </header>

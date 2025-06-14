@@ -76,6 +76,7 @@ if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'admin') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manajemen Modul Admin - Ngajar.ID</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="../img/Logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -103,7 +104,7 @@ if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'admin') {
                 </div>
                 <div class="flex items-center space-x-2 sm:space-x-4">
                     <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-bell text-xl"></i></button>
-                    <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-user-circle text-xl"></i></button>
+                    <?php include "../includes/Profile.php"; ?>
                 </div>
             </div>
         </header>

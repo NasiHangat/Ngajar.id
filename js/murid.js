@@ -252,8 +252,8 @@ class MuridDashboard {
             modules.forEach(module => {
                 const moduleHTML = `
                     <a href="module_detail.php?id=${module.modul_id}" 
-                       class="flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-100 transition-colors module-item" 
-                       data-module-id="${module.modul_id}">
+                        class="flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-100 transition-colors module-item" 
+                        data-module-id="${module.modul_id}">
                         <div class="flex-shrink-0 w-12 h-16 rounded-lg bg-teal-500 text-white flex items-center justify-center border-l-4 border-[#003F4A]">
                             <i class="fa-solid fa-book text-2xl"></i>
                         </div>
@@ -428,8 +428,8 @@ class MuridDashboard {
         document.body.appendChild(modal);
     }
 
-    showTopupModal() {
-        const modal = this.createModal(
+    showTopuptoken() {
+        const token = this.createModal(
             'Top Up Token',
             `
                 <div class="space-y-4">
@@ -725,3 +725,4 @@ style.textContent = `
 `;
 
 document.head.appendChild(style);
+

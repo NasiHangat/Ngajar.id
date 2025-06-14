@@ -1,10 +1,27 @@
+<?php include '../includes/session_check.php'?>
+<?php include '../Includes/DBkoneksi.php';?>
+<?php
+
+$id_pengguna = $_SESSION['user_id'] ?? null;
+$namaPengguna = "";
+
+if ($id_pengguna) {
+    $stmt = $conn->prepare("SELECT name FROM users WHERE user_id = ?");
+    $stmt->bind_param("i", $id_pengguna);
+    $stmt->execute();
+    $stmt->bind_result($namaPengguna);
+    $stmt->fetch();
+    $stmt->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kelas - Ngajar.ID</title>
+    <link rel="icon" type="image/png" href="../img/Logo.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -34,8 +51,8 @@
                 <div class="flex items-center space-x-2 sm:space-x-4">
                     <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-bell text-xl"></i></button>
                     <?php include "../includes/Profile.php"; ?>
-                </div>
-            </div>
+                    </div>
+                    </div>
         </header>
         <?php include "../Includes/sidebar.php" ?>
         <div class="bg-teal-500 py-4">

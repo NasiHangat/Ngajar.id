@@ -6,6 +6,7 @@ password: 123 -->
 <html lang="id">
 <head>
   <title>Login</title>
+  <link rel="icon" type="image/png" href="../img/Logo.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
   <script>

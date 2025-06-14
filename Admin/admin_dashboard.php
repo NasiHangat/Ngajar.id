@@ -60,6 +60,7 @@ for ($i = 1; $i <= 12; $i++) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Ngajar.ID</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="icon" type="image/png" href="../img/Logo.png">
     <script src="../js/admin.js" defer></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">

@@ -44,6 +44,7 @@ while ($row = $result->fetch_assoc()) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donasi Pelajar- Ngajar.ID</title>
+    <link rel="icon" type="image/png" href="../img/Logo.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -60,7 +61,8 @@ while ($row = $result->fetch_assoc()) {
                 </div>
                 <div class="flex items-center space-x-2 sm:space-x-4">
                     <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-bell text-xl"></i></button>
-                    <?php include "../includes/Profile.php"; ?>
+                    <link rel="icon" type="image/png" href="../img/Logo.png">
+    <?php include "../includes/Profile.php"; ?>
                 </div>
             </div>
         </header>
