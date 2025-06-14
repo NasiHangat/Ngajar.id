@@ -242,8 +242,14 @@ if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'admin') {
         });
 
         form.addEventListener('submit', (e) => {
-
+            const token = document.getElementById('tokenModul').value;
+            if (token < 0) {
+                e.preventDefault();
+                alert('Harga token tidak boleh negatif.');
+                return false;
+            }
         });
+
     </script>
     <script>
     function hapusModul(modulId) {
