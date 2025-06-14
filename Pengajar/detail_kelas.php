@@ -1,5 +1,5 @@
 <?php include '../includes/session_check.php'; ?>
-<?php include '../Includes/DBkoneksi.php'; ?>
+<?php include '../includes/DBkoneksi.php'; ?>
 
 <?php
 $id_pengguna = $_SESSION['user_id'] ?? null;
@@ -84,7 +84,7 @@ $stmt->close();
         </div>
     </header>
 
-    <?php include "../Includes/sidebar.php" ?>
+    <?php include "../includes/sidebar.php" ?>
 
     <div class="bg-white py-6">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -96,7 +96,7 @@ $stmt->close();
             <div class="mt-6 space-y-4">
                 <?php if (!empty($materi)): ?>
                     <?php foreach ($materi as $m): ?>
-                    <a href="detail_materi.php?id=<?= $m['materi_id'] ?>" class="block hover:shadow-lg transition-shadow">
+                    <a href="detail_materi.php?id=<?= $m['materi_id'] ?>&kelas_id=<?= $kelas_id ?>" class="block hover:shadow-lg transition-shadow">
                     <div class="bg-white p-4 shadow rounded-lg flex items-start gap-4">
                         <div class="w-10 h-10 bg-teal-500 text-white p-2 rounded-full flex items-center justify-center">
                             <i class="fas fa-clipboard text-lg"></i>
@@ -105,9 +105,6 @@ $stmt->close();
                             <h3 class="text-lg font-semibold text-teal-600"><?= htmlspecialchars($m['judul']) ?></h3>
                             <p class="text-sm text-gray-700">Tipe: <?= htmlspecialchars($m['tipe']) ?></p>
                             <p class="text-sm text-gray-500 mb-2"><?= date('d M Y', strtotime($m['created_at'])) ?></p>
-                            <a href="<?= htmlspecialchars($m['file_url']) ?>" target="_blank" class="text-sm text-white bg-teal-500 px-4 py-1 rounded hover:bg-teal-600 inline-block">
-                                Lihat / Unduh
-                            </a>
                         </div>
                     </div>
                     </a>

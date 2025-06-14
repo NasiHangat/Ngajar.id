@@ -14,6 +14,7 @@ if (!$kelas_id) {
     echo "<p class='text-red-500 text-center font-bold mt-10'>Kelas tidak ditemukan.</p>";
     exit;
 }
+$materi_id = $_GET['id'] ?? null;
 
 // Validasi apakah kelas memang milik pengajar
 $judulKelas = "";
@@ -37,17 +38,23 @@ if ($id_pengguna) {
     $stmt->close();
 }
 
-$materiList = [];
-$stmt = $conn->prepare("SELECT judul, deskripsi, file_url, created_at FROM materi WHERE kelas_id = ?");
-$stmt->bind_param("i", $kelas_id);
+// Ambil data materi spesifik
+$judulMateri = '';
+$deskripsiMateri = '';
+$fileUrl = '';
+$createdAt = '';
+
+$stmt = $conn->prepare("SELECT judul, deskripsi, file_url, created_at FROM materi WHERE materi_id = ? AND kelas_id = ?");
+$stmt->bind_param("ii", $materi_id, $kelas_id);
 $stmt->execute();
-$result = $stmt->get_result();
+$stmt->bind_result($judulMateri, $deskripsiMateri, $fileUrl, $createdAt);
 
-while ($row = $result->fetch_assoc()) {
-    $materiList[] = $row;
+if (!$stmt->fetch()) {
+    echo "<p class='text-red-500 text-center font-bold mt-10'>Materi tidak ditemukan.</p>";
+    exit;
 }
-
 $stmt->close();
+
 
 ?>
 
@@ -119,30 +126,24 @@ $stmt->close();
             <div class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
                 <div class="bg-teal-500 text-white p-6 rounded-t-lg shadow-md">
                     <h1 class="text-2xl md:text-3xl font-medium"><?= htmlspecialchars($judulKelas) ?></h1>
-                    <p class="text-normal text-white mt-1">WAKTU AKSES: <?= date("d-m-Y H:i") ?></p>
+                    <p class="text-sm text-white-500">Diunggah pada: <?= date('d M Y H:i', strtotime($createdAt)) ?></p>
                 </div>
 
-                <?php if (count($materiList) > 0): ?>
-                    <?php foreach ($materiList as $m): ?>
-                        <div class="bg-white rounded-b-lg shadow-md mb-6">
-                            <div class="p-6 sm:p-8">
-                                <h2 class="text-2xl font-normal text-black"><?= htmlspecialchars($m['judul']) ?></h2>
-                                <p class="text-sm text-gray-500">Diunggah pada: <?= date('d M Y H:i', strtotime($m['created_at'])) ?></p>
-                                <p class="mt-2 font-light text-gray-800"><?= nl2br(htmlspecialchars($m['deskripsi'])) ?></p>
-                                <div class="mt-4">
-                                    <a href="<?= htmlspecialchars($m['file_url']) ?>" target="_blank" class="inline-block bg-teal-500 text-white font-medium py-2 px-5 rounded-lg hover:bg-teal-600 transition-colors shadow">
-                                        Download File Materi
-                                    </a>
-                                </div>
-                            </div>
+                <div class="bg-white rounded-b-lg shadow-md mb-6">
+                    <div class="p-6 sm:p-8">
+                        <h2 class="text-2xl font-normal text-black"><?= htmlspecialchars($judulMateri) ?></h2>
+                        <p class="mt-2 font-light text-gray-800"><?= nl2br(htmlspecialchars($deskripsiMateri)) ?></p>
+                        <div class="mt-4">
+                            <a href="<?= htmlspecialchars($fileUrl) ?>" target="_blank"
+                            class="inline-block bg-teal-500 text-white font-medium py-2 px-5 rounded-lg hover:bg-teal-600 transition-colors shadow">
+                                Lihat / Unduh File Materi
+                            </a>
                         </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p class="text-center text-gray-500">Belum ada materi yang tersedia.</p>
-                <?php endif; ?>
-
+                    </div>
+                </div>
             </div>
         </main>
+
 
         <footer>
             <?php include '../includes/Footer.php'; ?>

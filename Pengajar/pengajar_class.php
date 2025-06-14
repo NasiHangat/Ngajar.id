@@ -96,12 +96,13 @@ if ($pengajar_id) {
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <?php if (!empty($kelas)): ?>
                         <?php foreach ($kelas as $item): ?>
-                            <a href="detail_kelas.php?id=<?= $item['kelas_id'] ?>" class="block hover:shadow-lg transition-shadow">
                             <div class="bg-white rounded-xl shadow-md p-6 flex flex-col sm:flex-row items-center gap-6 border-l-8 border-teal-500">
-                                <img class="w-28 h-28 rounded-md object-cover flex-shrink-0" src="https://hololive.hololivepro.com/wp-content/uploads/2024/03/melting.png" alt="<?= htmlspecialchars($item['judul']) ?>" />
+                                <img class="w-28 h-28 ..." src="..." />
                                 <div class="flex-grow w-full">
-                                    <h3 class="text-2xl font-bold mb-2 text-teal-600"><?= htmlspecialchars($item['judul']) ?></h3>
-                                    <div class="space-y-1 text-base font-bold text-gray-600">
+                                    <a href="detail_kelas.php?id=<?= $item['kelas_id'] ?>" class="text-2xl font-bold text-teal-600 hover:underline block mb-2">
+                                        <?= htmlspecialchars($item['judul']) ?>
+                                    </a>
+                                    <div class="text-base font-bold text-gray-600 space-y-1">
                                         <p>Jumlah siswa: <?= $item['jumlah_siswa'] ?></p>
                                         <p>Modul: <?= $item['jumlah_materi'] ?></p>
                                     </div>
@@ -118,11 +119,10 @@ if ($pengajar_id) {
                                                 class="bg-red-500 text-white px-3 py-1.5 rounded-md text-xs font-bold flex items-center gap-2 hover:bg-red-600 transition-colors">
                                             <i class="fas fa-trash-alt"></i><span>Delete Kelas</span>
                                         </button>
-
                                     </div>
                                 </div>
                             </div>
-                            </a>
+
                         <?php endforeach; ?>
                     <?php else: ?>
                         <p class="text-gray-500 text-center col-span-full">Belum ada kelas yang dibuat.</p>
