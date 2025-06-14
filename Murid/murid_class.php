@@ -1,45 +1,16 @@
-<?php include '../Includes/DBkoneksi.php'; ?>
-
 <?php
+include '../Includes/DBkoneksi.php';
+
+// Pastikan session sudah dimulai dan $id_pengguna tersedia
 session_start();
-$host = 'localhost';
-$user = 'root';
-$pass = '';
-$db   = 'ngajar_id';
+$id_pengguna = $_SESSION['user_id'] ?? 0;
 
-$conn = new mysqli($host, $user, $pass, $db);
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
-}
-
-$id_pengguna = $_SESSION['user_id'] ?? null;
-
-$query = "
-    SELECT 
-        k.kelas_id AS id,
-        k.judul,
-        k.deskripsi,
-        u.name AS relawan
-    FROM kelas k
-    JOIN users u ON k.pengajar_id = u.user_id
-    WHERE k.kelas_id NOT IN (
-        SELECT kelas_id FROM kelas_peserta WHERE siswa_id = ?
-    )
-    AND k.status = 'aktif'
-";
-
-$namaPengguna = "";
-
-if ($id_pengguna) {
-    $stmt = $conn->prepare("SELECT name FROM users WHERE user_id = ?");
-    $stmt->bind_param("i", $id_pengguna);
-    $stmt->execute();
-    $stmt->bind_result($namaPengguna);
-    $stmt->fetch();
-    $stmt->close();
-}
-?>
-
+$query = "SELECT k.kelas_id, k.judul, u.name AS relawan 
+          FROM kelas k 
+          JOIN users u ON k.pengajar_id = u.user_id 
+          WHERE k.kelas_id NOT IN (
+              SELECT kelas_id FROM kelas_peserta WHERE user_id = ?
+          )";
 
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $id_pengguna);
@@ -50,8 +21,9 @@ $kelas = [];
 while ($row = $result->fetch_assoc()) {
     $kelas[] = $row;
 }
+$stmt->close();
 
-
+$namaPengguna = '';
 if ($id_pengguna) {
     $stmt = $conn->prepare("SELECT name FROM users WHERE user_id = ?");
     $stmt->bind_param("i", $id_pengguna);
@@ -61,7 +33,6 @@ if ($id_pengguna) {
     $stmt->close();
 }
 
-$stmt->close();
 $conn->close();
 ?>
 
@@ -150,15 +121,17 @@ $conn->close();
                                 </div>
                                 <div class="w-14 h-14 bg-white rounded-full flex justify-center items-center shrink-0">
                                     <img class="w-6 h-8" src="<?= $item['icon'] ?? 'img/vector-default.svg' ?>" alt="Icon Kelas" />
-                                </div>
+                                </div>   
                             </div>
                            
+                            
+
+
                         </div>
-                        <a href="murid_isikelas.php?id=<?= $item['id'] ?>" class="w-4 bg-white flex flex-col items-center py-2 space-y-1.5 rounded-r-lg hover:bg-gray-100">
-                            <div class="w-1.5 h-1.5 bg-cyan-950 rounded-full"></div>
-                            <div class="w-1.5 h-1.5 bg-cyan-950 rounded-full"></div>
-                            <div class="w-1.5 h-1.5 bg-cyan-950 rounded-full"></div>
-                        </a>
+
+                    
+                        
+
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
