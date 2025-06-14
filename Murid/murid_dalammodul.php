@@ -98,7 +98,9 @@ if ($id_pengguna) {
 
             </div>
         </div>
-
+        <footer>
+            <?php include '../includes/Footer.php'; ?>
+        </footer>
 </body>
 
 </html>

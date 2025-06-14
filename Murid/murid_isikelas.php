@@ -100,6 +100,9 @@
                 </div>
             </div>
         </div>
+        <footer>
+            <?php include '../includes/Footer.php'; ?>
+        </footer>
 </body>
 
 </html>
