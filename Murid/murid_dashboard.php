@@ -86,11 +86,6 @@ if ($id_pengguna) {
 
         <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <section class="mb-8">
-                <h3 class="text-2xl font-bold text-teal-500 py-2">Pembelajaran</h3>
-                <div class="flex space-x-3 my-4">
-                    <a href="murid_modul.php" class="bg-teal-500 text-white px-6 py-2 rounded-lg text-sm font-bold border-l-2 border-r-2 border-b-4 border-[var(--border-blue-dark)] shadow-md" style="--border-blue-dark: #003D4E;">Modul</a>
-                    <a href="murid_class.php" class="bg-white text-teal-500 px-7 py-2 rounded-lg text-sm font-bold border-l-2 border-r-2 border-b-4 border-[var(--border-blue-dark)] shadow-md" style="--border-blue-dark: #003D4E;">Kelas</a>
-                </div>
                 <div>
                     <div class="mb-3">
                         <h3 class="inline-flex items-center text-xl font-bold text-teal-500">
@@ -127,7 +122,7 @@ if ($id_pengguna) {
                 </div>
             </section>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <section>
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="text-xl font-bold text-teal-500">Modul Premium</h3>
@@ -173,57 +168,6 @@ if ($id_pengguna) {
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section>
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-xl font-bold text-teal-500">Terakhir Dipelajari</h3>
-                    </div>
-                    <div class="relative">
-                        <div class="absolute top-2 right-2 w-full h-full bg-[#003F4A] rounded-lg z-0"></div>
-                        <div class="relative w-full h-full bg-white border-4 border-[#003F4A] rounded-lg z-10 p-5 space-y-3">
-                            <a href="#" class="flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-100 transition-colors">
-                                <div class="flex-shrink-0 w-12 h-16 rounded-lg bg-teal-500 text-white flex items-center justify-center border-l-4 border-[#003F4A]">
-                                    <i class="fa-solid fa-calculator text-2xl"></i>
-                                </div>
-                                <div class="flex-grow">
-                                    <h5 class="text-m font-bold text-teal-500">Aljabar Linear</h5>
-                                    <p class="text-xs text-teal-500">Deskripsi Singkat</p>
-                                </div>
-                                <span class="text-xs font-bold text-teal-500">12 Soal</span>
-                            </a>
-                            <a href="#" class="flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-100 transition-colors">
-                                <div class="flex-shrink-0 w-12 h-16 rounded-lg bg-teal-500 text-white flex items-center justify-center border-l-4 border-[#003F4A]">
-                                    <i class="fa-solid fa-calculator text-2xl"></i>
-                                </div>
-                                <div class="flex-grow">
-                                    <h5 class="text-m font-bold text-teal-500">Aljabar Linear</h5>
-                                    <p class="text-xs text-teal-500">Deskripsi Singkat</p>
-                                </div>
-                                <span class="text-xs font-bold text-teal-500">12 Soal</span>
-                            </a>
-                            <a href="#" class="flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-100 transition-colors">
-                                <div class="flex-shrink-0 w-12 h-16 rounded-lg bg-teal-500 text-white flex items-center justify-center border-l-4 border-[#003F4A]">
-                                    <i class="fa-solid fa-calculator text-2xl"></i>
-                                </div>
-                                <div class="flex-grow">
-                                    <h5 class="text-m font-bold text-teal-500">Aljabar Linear</h5>
-                                    <p class="text-xs text-teal-500">Deskripsi Singkat</p>
-                                </div>
-                                <span class="text-xs font-bold text-teal-500">12 Soal</span>
-                            </a>
-                            <a href="#" class="flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-100 transition-colors">
-                                <div class="flex-shrink-0 w-12 h-16 rounded-lg bg-teal-500 text-white flex items-center justify-center border-l-4 border-[#003F4A]">
-                                    <i class="fa-solid fa-calculator text-2xl"></i>
-                                </div>
-                                <div class="flex-grow">
-                                    <h5 class="text-m font-bold text-teal-500">Aljabar Linear</h5>
-                                    <p class="text-xs text-teal-500">Deskripsi Singkat</p>
-                                </div>
-                                <span class="text-xs font-bold text-teal-500">12 Soal</span>
-                            </a>
                         </div>
                     </div>
                 </section>
