@@ -137,7 +137,7 @@ while ($row = $result->fetch_assoc()) {
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <?php foreach ($materi_list as $m): ?>
                     <div class="bg-teal-500 rounded-xl shadow-md p-6 flex flex-col sm:flex-row items-center gap-6">
-                        <img class="w-28 h-28 rounded-md object-cover flex-shrink-0" src="https://placehold.co/109x109/EEEEEE/333333?text=<?= strtoupper($m['tipe']) ?>" alt="<?= htmlspecialchars($m['judul']) ?>" />
+                        <i class="fas fa-book text-3xl opacity-80"></i>
                         <div class="flex-grow w-full">
                             <h3 class="text-2xl font-bold mb-2 text-white"><?= htmlspecialchars($m['judul']) ?></h3>
                             <div class="space-y-1 text-base font-light text-gray-100">
