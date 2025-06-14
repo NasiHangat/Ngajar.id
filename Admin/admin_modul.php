@@ -2,28 +2,67 @@
 session_start();
 include "../Includes/DBkoneksi.php";
 
-// Pastikan pengajar sudah login
-$pengajar_id = $_SESSION['user_id'] ?? null;
-$kelas = [];
+// Pastikan admin sudah login
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $judul = $_POST['judul'] ?? '';
+    $tipe = $_POST['tipe'] ?? '';
+    $deskripsi = $_POST['deskripsi'] ?? '';
+    $token_harga = intval($_POST['token_harga'] ?? 0);
+    $dibuat_oleh = $_SESSION['user_id'];
 
-if ($pengajar_id) {
+    // Penanganan upload file
+    $uploadDir = '../uploads/modul/';
+    if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
+
+    $file_url = '';
+    if (isset($_FILES['file']) && $_FILES['file']['error'] === 0) {
+        $ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+        $filename = time() . '_' . uniqid() . '.' . $ext;
+        $targetPath = $uploadDir . $filename;
+
+        if (move_uploaded_file($_FILES['file']['tmp_name'], $targetPath)) {
+            $file_url = $targetPath;
+        }
+    }
+
+    // Simpan ke database
+    $stmt = $conn->prepare("INSERT INTO modul (judul, deskripsi, file_url, tipe, token_harga, dibuat_oleh) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssii", $judul, $deskripsi, $file_url, $tipe, $token_harga, $dibuat_oleh);
+
+    if ($stmt->execute()) {
+        echo "<script>alert('Modul berhasil ditambahkan!'); window.location.href=window.location.href;</script>";
+    } else {
+        echo "<script>alert('Gagal menambahkan modul.');</script>";
+    }
+
+    $stmt->close();
+}
+// Ambil data modul yang sudah ada
+$modul = [];
+
+if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'admin') {
     $stmt = $conn->prepare("
         SELECT 
-            k.kelas_id,
-            k.judul,
-            k.deskripsi,
-            (SELECT COUNT(*) FROM kelas_peserta kp WHERE kp.kelas_id = k.kelas_id) AS jumlah_siswa,
-            (SELECT COUNT(*) FROM materi m WHERE m.kelas_id = k.kelas_id) AS jumlah_materi
-        FROM kelas k
-        WHERE k.pengajar_id = ?
+            m.modul_id,
+            m.judul,
+            m.deskripsi,
+            m.file_url,
+            m.tipe,
+            m.token_harga,
+            u.name AS nama_pengajar
+        FROM modul m
+        LEFT JOIN users u ON m.dibuat_oleh = u.user_id
+        ORDER BY m.created_at DESC
     ");
-    $stmt->bind_param("i", $pengajar_id);
     $stmt->execute();
     $result = $stmt->get_result();
     while ($row = $result->fetch_assoc()) {
-        $kelas[] = $row;
+        $modul[] = $row;
     }
     $stmt->close();
+} else {
+    echo "<p class='text-red-500 text-center font-bold mt-10'>Akses ditolak. Halaman hanya untuk admin.</p>";
+    exit;
 }
 
 ?>
@@ -35,7 +74,7 @@ if ($pengajar_id) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manajemen Kelas - Ngajar.ID</title>
+    <title>Manajemen Modul Admin - Ngajar.ID</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -91,34 +130,30 @@ if ($pengajar_id) {
                     </header>
                 </div>
 
-                <!-- Grid Kartu Kelas -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <?php if (!empty($kelas)): ?>
-                        <?php foreach ($kelas as $item): ?>
-                            <div class="bg-white rounded-xl shadow-md p-6 flex flex-col sm:flex-row items-center gap-6 border-l-8 border-teal-500">
-                                <img class="w-28 h-28 rounded-md object-cover flex-shrink-0" src="https://hololive.hololivepro.com/wp-content/uploads/2024/03/melting.png" alt="<?= htmlspecialchars($item['judul']) ?>" />
-                                <div class="flex-grow w-full">
-                                    <h3 class="text-2xl font-bold mb-2 text-teal-600"><?= htmlspecialchars($item['judul']) ?></h3>
-                                    <div class="space-y-1 text-base font-bold text-gray-600">
-                                        <p>Jumlah siswa: <?= $item['jumlah_siswa'] ?></p>
-                                        <p>Modul: <?= $item['jumlah_materi'] ?></p>
-                                    </div>
-
-                                    <div class="flex items-center gap-3 mt-4">
-                                        <button class="editKelasBtn bg-teal-500 text-white px-3 py-1.5 rounded-md text-xs font-bold flex items-center gap-2 hover:bg-teal-600 transition-colors"
-                                            data-id="<?= $item['kelas_id'] ?>"
-                                            data-judul="<?= htmlspecialchars($item['judul']) ?>"
-                                            data-deskripsi="<?= htmlspecialchars($item['deskripsi']) ?>">
-                                            <i class="fas fa-pencil-alt"></i><span>Edit Kelas</span>
-                                        </button>
-
-                                        <button onclick="hapusKelas(<?= $item['kelas_id'] ?>)"
-                                            class="bg-red-500 text-white px-3 py-1.5 rounded-md text-xs font-bold flex items-center gap-2 hover:bg-red-600 transition-colors">
-                                            <i class="fas fa-trash-alt"></i><span>Delete Kelas</span>
-                                        </button>
-
-                                    </div>
+                <!-- Grid Kartu Modul -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">                  
+                    <?php if (!empty($modul)): ?>
+                        <?php foreach ($modul as $item): ?>
+                            <div class="bg-white rounded-xl shadow-md p-6 flex flex-col gap-4 border-l-8 border-teal-500">
+                                <h3 class="text-xl font-bold text-teal-600"><?= htmlspecialchars($item['judul']) ?></h3>
+                                <p class="text-sm text-gray-600"><?= htmlspecialchars($item['deskripsi']) ?></p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm font-bold text-teal-500"><?= htmlspecialchars($item['tipe']) ?></span>
+                                    <?php if ($item['token_harga'] > 0): ?>
+                                        <div class="flex items-center gap-1 text-sm text-gray-700">
+                                            <img src="../img/coin.png" class="w-4 h-4" alt="Token"> <?= $item['token_harga'] ?>
+                                        </div>
+                                    <?php else: ?>
+                                        <span class="text-gray-400 text-sm">Gratis</span>
+                                    <?php endif; ?>
                                 </div>
+                                <a href="<?= $item['file_url'] ?>" target="_blank" class="text-teal-500 text-sm hover:underline">Lihat File</a>
+                                <p class="text-xs text-gray-400">Dibuat oleh: <?= htmlspecialchars($item['nama_pengajar']) ?></p>
+
+                                <!-- Tombol Hapus -->
+                                <button onclick="hapusModul(<?= $item['modul_id'] ?>)" class="mt-2 bg-red-500 text-white px-4 py-1.5 rounded-md text-sm font-bold hover:bg-red-600 transition-colors w-fit self-end">
+                                    <i class="fas fa-trash-alt mr-1"></i> Hapus
+                                </button>
                             </div>
                         <?php endforeach; ?>
                     <?php else: ?>
@@ -145,15 +180,14 @@ if ($pengajar_id) {
                             <select name="tipe" id="tipeModul" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500">
                                 <option>Soal</option>
                                 <option>PDF</option>
-                                <option>Video Materi</option>
+                                <option>Video</option>
                             </select>
                         </div>
                         <div>
-                            <label for="kelasInduk" class="block text-sm font-medium text-teal-500  mb-2">Harga Token</label>
+                            <label for="modul" class="block text-sm font-medium text-teal-500  mb-2">Harga Token</label>
                             <input
-                            type="text"
-                            id="tokenModul"
-                            placeholder="Masukkan token jika modul berbayar"
+                            name="token_harga" type="number" id="tokenModul"
+                            placeholder="Masukkan harga token untuk akses modul"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
                         >
                         </div>
@@ -161,7 +195,7 @@ if ($pengajar_id) {
                     <div><label for="deskripsiModul" class="block text-sm font-medium text-teal-500 mb-2">Deskripsi</label><textarea name="deskripsi" id="deskripsiModul" placeholder="Jelaskan isi singkat dari modul ini" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"></textarea></div>
                     <div>
                         <label for="fileModul" class="block text-sm font-medium text-teal-500 mb-2">Upload File</label>
-                        <input name="file" type="file"type="file" id="fileModul" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100" />
+                        <input name="file" type="file" id="fileModul" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100" />
                     </div>
                     <div class="flex gap-3 pt-4"><button type="button" id="batalBtn" class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors font-medium">Batal</button><button type="submit" class="flex-1 px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition-colors font-medium">Tambah Modul</button></div>
                 </form>
@@ -209,6 +243,23 @@ if ($pengajar_id) {
         form.addEventListener('submit', (e) => {
 
         });
+    </script>
+    <script>
+    function hapusModul(modulId) {
+        if (confirm("Yakin ingin menghapus modul ini?")) {
+            fetch(`hapus_modul.php?id=${modulId}`, {
+                method: 'GET'
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.message);
+                if (data.status === 'success') {
+                    location.reload();
+                }
+            })
+            .catch(() => alert('Terjadi kesalahan saat menghapus modul.'));
+        }
+    }
     </script>
 
     <footer>

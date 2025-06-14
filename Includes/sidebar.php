@@ -19,7 +19,7 @@ $menus = [
     ],
     'admin' => [
         ['label' => 'Dashboard', 'icon' => 'fa-home', 'url' => '../admin/admin_dashboard.php'],
-        ['label' => 'Modul', 'icon' => 'fa-chalkboard-teacher', 'url' => '../admin/admin_class.php'],
+        ['label' => 'Modul', 'icon' => 'fa-chalkboard-teacher', 'url' => '../admin/admin_modul.php'],
         ['label' => 'Donasi', 'icon' => 'fa-donate', 'url' => '../admin/admin_donasi.php'],
         
     ]
