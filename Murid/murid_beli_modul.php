@@ -1,52 +1,61 @@
 <?php
-include '../Includes/session_check.php';
-include '../Includes/DBkoneksi.php';
+session_start();
+include "../Includes/DBkoneksi.php";
 
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['user_id'], $_POST['modul_id'], $_POST['harga'])) {
+    $user_id  = (int) $_SESSION['user_id'];
+    $modul_id = (int) $_POST['modul_id'];
+    $harga    = (int) $_POST['harga'];
 
-$_SESSION['pesan'] = "Modul berhasil dibeli!";
-header("Location: murid_dashboard.php");
-exit;
+    // Cek apakah sudah dibeli
+    $stmt = $conn->prepare("SELECT COUNT(*) FROM token_log WHERE user_id = ? AND modul_id = ?");
+    $stmt->bind_param("ii", $user_id, $modul_id);
+    $stmt->execute();
+    $stmt->bind_result($sudah_dibeli);
+    $stmt->fetch();
+    $stmt->close();
 
+    if ($sudah_dibeli > 0) {
+        header("Location: murid_dashboard.php?status=already_purchased");
+        exit;
+    }
 
-if ($_SESSION['role'] !== 'murid') {
-    header("Location: unauthorized.php");
+    // Cek token cukup
+    $stmt = $conn->prepare("SELECT jumlah FROM token WHERE user_id = ?");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $stmt->bind_result($jumlah_token);
+    $stmt->fetch();
+    $stmt->close();
+
+    if ($jumlah_token < $harga) {
+        header("Location: murid_dashboard.php?status=not_enough_token");
+        exit;
+    }
+
+    // Proses transaksi
+    $conn->begin_transaction();
+
+    try {
+        // Kurangi token
+        $stmt = $conn->prepare("UPDATE token SET jumlah = jumlah - ? WHERE user_id = ?");
+        $stmt->bind_param("ii", $harga, $user_id);
+        $stmt->execute();
+
+        // Catat pembelian
+        $stmt = $conn->prepare("INSERT INTO token_log (user_id, modul_id, jumlah, tanggal) VALUES (?, ?, ?, NOW())");
+        $stmt->bind_param("iii", $user_id, $modul_id, $harga);
+        $stmt->execute();
+
+        $conn->commit();
+        header("Location: murid_dashboard.php?status=success");
+        exit;
+    } catch (Exception $e) {
+        $conn->rollback();
+        header("Location: murid_dashboard.php?status=failed");
+        exit;
+    }
+} else {
+    header("Location: murid_dashboard.php");
     exit;
 }
-
-$user_id = $_SESSION['user_id'] ?? null;
-$modul_id = $_POST['modul_id'] ?? null;
-$harga = $_POST['harga'] ?? 0;
-
-if (!$user_id || !$modul_id) {
-    die("Data tidak valid.");
-}
-
-// 1. Ambil token user
-$stmt = $conn->prepare("SELECT jumlah FROM token WHERE user_id = ?");
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$stmt->bind_result($token_saat_ini);
-$stmt->fetch();
-$stmt->close();
-
-if ($token_saat_ini < $harga) {
-    echo "<script>alert('Token tidak cukup. Silakan topup terlebih dahulu.'); window.location.href='murid_dashboard.php';</script>";
-    exit;
-}
-
-// 2. Kurangi token
-$stmt = $conn->prepare("UPDATE token SET jumlah = jumlah - ?, last_update = NOW() WHERE user_id = ?");
-$stmt->bind_param("ii", $harga, $user_id);
-$stmt->execute();
-$stmt->close();
-
-// 3. Catat ke log pembelian
-$stmt = $conn->prepare("INSERT INTO token_log (user_id, modul_id, jumlah, tanggal) VALUES (?, ?, ?, NOW())");
-$stmt->bind_param("iii", $user_id, $modul_id, $harga);
-$stmt->execute();
-$stmt->close();
-
-// 4. Redirect ke halaman isi modul
-header("Location: murid_isimodul.php?id=$modul_id");
-exit;
-?>

@@ -57,6 +57,27 @@ if ($id_pengguna) {
     $stmt->close();
 }
 
+
+// Ambil semua modul dari database
+$modulList = [];
+$stmt = $conn->prepare("SELECT * FROM modul");
+$stmt->execute();
+$result = $stmt->get_result();
+
+while ($row = $result->fetch_assoc()) {
+    // Cek apakah user sudah membeli modul ini
+    $cek = $conn->prepare("SELECT 1 FROM modul_user WHERE user_id = ? AND modul_id = ?");
+    $cek->bind_param("ii", $id_pengguna, $row['modul_id']);
+    $cek->execute();
+    $cek->store_result();
+
+    $row['sudah_dibeli'] = $cek->num_rows > 0;
+    $modulList[] = $row;
+
+    $cek->close();
+}
+$stmt->close();
+
 ?>
 
 <!DOCTYPE html>

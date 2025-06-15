@@ -8,9 +8,10 @@ if ($_SESSION['role'] !== 'murid') {
 
 $id_pengguna = $_SESSION['user_id'] ?? null;
 $namaPengguna = "";
-
-// Ambil nama dan token pengguna
+$rolePengguna = $_SESSION['role'] ?? '';
 $token = 0;
+
+// Ambil nama & token
 if ($id_pengguna) {
     $stmt = $conn->prepare("SELECT name FROM users WHERE user_id = ?");
     $stmt->bind_param("i", $id_pengguna);
@@ -24,6 +25,25 @@ if ($id_pengguna) {
     $stmt->execute();
     $stmt->bind_result($token);
     $stmt->fetch();
+    $stmt->close();
+}
+
+// Ambil materi dari kelas yang diikuti murid
+$materiList = [];
+if ($id_pengguna) {
+    $stmt = $conn->prepare("
+        SELECT m.materi_id, m.judul AS materi_judul, m.kelas_id, k.judul AS kelas_judul
+        FROM kelas_peserta kp
+        JOIN kelas k ON kp.kelas_id = k.kelas_id
+        JOIN materi m ON m.kelas_id = k.kelas_id
+        WHERE kp.siswa_id = ?
+    ");
+    $stmt->bind_param("i", $id_pengguna);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $materiList[] = $row;
+    }
     $stmt->close();
 }
 
@@ -41,15 +61,17 @@ while ($row = $result->fetch_assoc()) {
 }
 $stmt->close();
 
-// Ambil daftar modul
-$modulList = [];
-$stmt = $conn->prepare("SELECT modul_id, judul, deskripsi FROM modul");
+// Ambil modul yang sudah dibeli
+$modul_dibeli = [];
+$stmt = $conn->prepare("SELECT modul_id FROM token_log WHERE user_id = ?");
+$stmt->bind_param("i", $id_pengguna);
 $stmt->execute();
 $result = $stmt->get_result();
 while ($row = $result->fetch_assoc()) {
-    $modulList[] = $row;
+    $modul_dibeli[] = $row['modul_id'];
 }
 $stmt->close();
+<<<<<<< Updated upstream
 
 // Ambil materi dari kelas yang diikuti murid
 $materiList = [];
@@ -118,7 +140,10 @@ if ($id_pengguna) {
     $stmt->fetch();
     $stmt->close();
 }
+=======
+>>>>>>> Stashed changes
 ?>
+
 
 <!DOCTYPE html>
 <html lang="id">
@@ -237,22 +262,32 @@ if ($id_pengguna) {
                                             <?= strtoupper(substr($modul['judul'], 0, 6)) ?>
                                         </div>
                                         <div>
-                                            <a href="murid_isimodul.php?id=<?= $modul['modul_id'] ?>"
-                                                class="text-teal-500 font-bold hover:underline">
-                                                <?= htmlspecialchars($modul['judul']) ?>
-                                            </a>
+                                            <!-- Dalam daftar modul -->
+                                            <?php if (in_array($modul['modul_id'], $modul_dibeli)): ?>
+                                                <a href="../detail_materi.php?id=<?= $modul['modul_id'] ?>" class="text-teal-500 font-bold hover:underline">
+                                                    <?= htmlspecialchars($modul['judul']) ?>
+                                                </a>
+                                                <div class="text-sm text-green-600 mt-1 font-semibold">Sudah Dibeli</div>
+                                            <?php else: ?>
+                                                <p class="text-teal-500 font-bold">
+                                                    <?= htmlspecialchars($modul['judul']) ?>
+                                                </p>
+                                                <form action="murid_beli_modul.php" method="POST"
+                                                    onsubmit="return confirm('Yakin ingin membeli modul ini seharga <?= (int) $modul['token_harga'] ?> token?')">
+                                                    <input type="hidden" name="modul_id" value="<?= $modul['modul_id'] ?>">
+                                                    <input type="hidden" name="harga" value="<?= (int) $modul['token_harga'] ?>">
+                                                    <button type="submit"
+                                                            class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm hover:bg-yellow-200">
+                                                        <img src="../img/coin.png" class="w-3 h-3" alt="Token">
+                                                        Beli <?= (int) $modul['token_harga'] ?>
+                                                    </button>
+                                                </form>
+                                            <?php endif; ?>
+
+
                                             <div class="text-sm text-gray-600 mt-1"><?= htmlspecialchars($modul['deskripsi']) ?>
                                             </div>
-                                            <form action="murid_beli_modul.php" method="POST"
-                                                onsubmit="return confirm('Yakin ingin membeli modul ini seharga <?= (int) $modul['token_harga'] ?> token?')">
-                                                <input type="hidden" name="modul_id" value="<?= $modul['modul_id'] ?>">
-                                                <input type="hidden" name="harga" value="<?= (int) $modul['token_harga'] ?>">
-                                                <button type="submit"
-                                                    class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm hover:bg-yellow-200">
-                                                    <img src="../img/coin.png" class="w-3 h-3" alt="Token">
-                                                    Beli <?= (int) $modul['token_harga'] ?>
-                                                </button>
-                                            </form>
+
                                         </div>
                                     </div>
                                 <?php endforeach; ?>
