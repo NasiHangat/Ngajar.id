@@ -78,8 +78,6 @@ if ($id_pengguna) {
                         <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Modul</h1>
                     </div>
                     <div class="flex items-center space-x-2 sm:space-x-4">
-                        <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i
-                                class="fas fa-bell text-xl"></i></button>
                         <?php include "../includes/Profile.php"; ?>
                     </div>
                 </div>
@@ -110,12 +108,12 @@ if ($id_pengguna) {
                 </div>
             </div>
 
-            <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <main class="max-w-6xl mx-[250px] px-4 sm:px-6 lg:px-8 py-8">
                 <section class="mb-8">
-                    <div class="flex items-center justify-between mb-3">
-                        <h1 class="text-xl font-bold text-teal-500 py-2">Modul Pembelajaran</h1>
+                    <div class="flex items-start justify-between mb-3">
+                        <h1 class="text-start text-xl font-bold text-teal-500 py-2">Modul Pembelajaran</h1>
                     </div>
-                    <div class="flex space-x-8 mb-5">
+                    <div class="items-start flex space-x-8 mb-5">
                         <button id="btnSoal" data-target="soal" onclick="modul.toggleModul(this)"
                             class="toggle-modul bg-teal-500 text-white px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">Soal</button>
                         <button id="btnPDF" data-target="pdf" onclick="modul.toggleModul(this)"
@@ -124,93 +122,8 @@ if ($id_pengguna) {
                             class="toggle-modul bg-white text-teal-500 px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">Video</button>
                     </div>
                     <!-- Modul Pembelajaran Cards -->
-                    <div id="modul-soal" class="tab-modul">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-14">
-                            <div
-                                class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
-                                <div
-                                    class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl">
-                                </div>
-                                <div
-                                    class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl">
-                                </div>
-                                <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
-                                    <a href="murid_isimodul.php">
-                                        <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl"
-                                            src="https://placehold.co/160x90" alt="Math">
-                                        <h3 class="text-emerald-500 text-lg font-bold mt-4 text-left">Aljabar Linear
-                                        </h3>
-                                        <p class="text-emerald-500 text-sm font-light mt-2 text-left">Deskripsi Singkat
-                                        </p>
-                                        <p class="text-emerald-500 py-5 text-sm font-light mt-2 text-right">8 Soal</p>
-                                    </a>
-                                </div>
-                            </div>
-                            <div
-                                class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
-                                <div
-                                    class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl">
-                                </div>
-                                <div
-                                    class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl">
-                                </div>
-                                <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
-                                    <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl"
-                                        src="https://placehold.co/160x90" alt="Math">
-                                    <h3 class="text-emerald-500 text-lg font-bold mt-4 text-left">Aljabar Linear</h3>
-                                    <p class="text-emerald-500 text-sm font-light mt-2 text-left">Deskripsi Singkat</p>
-                                    <p class="text-emerald-500 py-5 text-sm font-light mt-2 text-right">8 Soal</p>
-                                </div>
-                            </div>
-                            <div
-                                class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
-                                <div
-                                    class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl">
-                                </div>
-                                <div
-                                    class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl">
-                                </div>
-                                <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
-                                    <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl"
-                                        src="https://placehold.co/160x90" alt="Math">
-                                    <h3 class="text-emerald-500 text-lg font-bold mt-4 text-left">Aljabar Linear</h3>
-                                    <p class="text-emerald-500 text-sm font-light mt-2 text-left">Deskripsi Singkat</p>
-                                    <p class="text-emerald-500 py-5 text-sm font-light mt-2 text-right">8 Soal</p>
-                                </div>
-                            </div>
-                            <div
-                                class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
-                                <div
-                                    class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl">
-                                </div>
-                                <div
-                                    class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl">
-                                </div>
-                                <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
-                                    <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl"
-                                        src="https://placehold.co/160x90" alt="Math">
-                                    <h3 class="text-emerald-500 text-lg font-bold mt-4 text-left">Aljabar Linear</h3>
-                                    <p class="text-emerald-500 text-sm font-light mt-2 text-left">Deskripsi Singkat</p>
-                                    <p class="text-emerald-500 py-5 text-sm font-light mt-2 text-right">8 Soal</p>
-                                </div>
-                            </div>
-                            <div
-                                class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
-                                <div
-                                    class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl">
-                                </div>
-                                <div
-                                    class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl">
-                                </div>
-                                <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
-                                    <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl"
-                                        src="https://placehold.co/160x90" alt="Math">
-                                    <h3 class="text-emerald-500 text-lg font-bold mt-4 text-left">Aljabar Linear</h3>
-                                    <p class="text-emerald-500 text-sm font-light mt-2 text-left">Deskripsi Singkat</p>
-                                    <p class="text-emerald-500 py-5 text-sm font-light mt-2 text-right">8 Soal</p>
-                                </div>
-                            </div>
-                        </div>
+                    <div id="modul-soal" class="tab-modul hidden">
+                        <p class="text-gray-500 ">Belum ada konten soal.</p>
                     </div>
 
                     <!-- PDF -->
