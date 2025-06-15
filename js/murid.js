@@ -708,27 +708,51 @@ class MuridModul {
     }
 
       togglePremium(button) {
-        const allButtons = document.querySelectorAll(".toggle-tab");
-        const allTabs = document.querySelectorAll(".tab-content");
+    const allButtons = document.querySelectorAll(".toggle-tab");
+    const allTabs = document.querySelectorAll(".sub-tab-group");
 
-        allButtons.forEach(btn => {
-            btn.classList.remove("bg-teal-500", "text-white");
-            btn.classList.add("bg-white", "text-teal-500");
-        });
+    allButtons.forEach(btn => {
+        btn.classList.remove("bg-teal-500", "text-white");
+        btn.classList.add("bg-white", "text-teal-500");
+    });
 
-        allTabs.forEach(tab => {
-            tab.classList.add("hidden");
-        });
+    allTabs.forEach(tab => {
+        tab.classList.add("hidden");
+    });
 
-        const target = button.getAttribute("data-target");
-        const activeTab = document.getElementById("tab-" + target);
-        if (activeTab) {
-            activeTab.classList.remove("hidden");
-        }
-
-        button.classList.remove("bg-white", "text-teal-500");
-        button.classList.add("bg-teal-500", "text-white");
+    const target = button.getAttribute("data-target");
+    const activeTab = document.getElementById(target); // <== harus cocok
+    if (activeTab) {
+        activeTab.classList.remove("hidden");
     }
+
+    button.classList.remove("bg-white", "text-teal-500");
+    button.classList.add("bg-teal-500", "text-white");
+}
+
+   toggleNgajar(button, group) {
+    const allButtons = document.querySelectorAll(`#${group} .toggle-ngajar`);
+    const allTabs = document.querySelectorAll(`#${group} .tab-ngajar`);
+
+    allButtons.forEach(btn => {
+        btn.classList.remove("bg-teal-500", "text-white");
+        btn.classList.add("bg-white", "text-teal-500");
+    });
+
+    allTabs.forEach(tab => {
+        tab.classList.add("hidden");
+    });
+
+    const target = button.getAttribute("data-target");
+    const activeTab = document.getElementById(`ngajar-${group}-${target}`);
+    if (activeTab) {
+        activeTab.classList.remove("hidden");
+    }
+
+    button.classList.remove("bg-white", "text-teal-500");
+    button.classList.add("bg-teal-500", "text-white");
+}
+
 
 
     
