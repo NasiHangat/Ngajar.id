@@ -225,6 +225,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['keluar'])) {
                     <?php endif; ?>
                 </div>
             </section>
+            
             <section class="mb-8">
                 <div class="flex items-center justify-between mb-3">
                     <h3 class="text-xl font-bold text-teal-500 py-2">Kelas Yang Diikuti</h3>

@@ -257,7 +257,7 @@ if ($id_pengguna) {
             <section class="mb-8">
                 <div>
                     <div class="mb-3">
-                        <h3 class="inline-flex items-center text-xl font-bold text-teal-500">
+                        <h3 class="inline-flex items-center text-3xl font-bold text-teal-500">
                             <span>Materi Pembelajaran<span>
                     </div>
                     <div class="border-l-4 border-r-4 border-b-4 border-[#003F4A] shadow-lg rounded-xl p-4 bg-white">
