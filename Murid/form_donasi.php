@@ -21,24 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nama'], $_POST['jumla
     }
 }
 
-
-if ($_SESSION['role'] !== 'murid') {
-    header("Location: unauthorized.php");
-    exit;
-}
-
-$id_pengguna = $_SESSION['user_id'] ?? null;
-$namaPengguna = "";
-
-if ($id_pengguna) {
-    $stmt = $conn->prepare("SELECT name FROM users WHERE user_id = ?");
-    $stmt->bind_param("i", $id_pengguna);
-    $stmt->execute();
-    $stmt->bind_result($namaPengguna);
-    $stmt->fetch();
-    $stmt->close();
-}
-
 // Ambil total donasi
 $total_donasi = 0;
 $result = $conn->query("SELECT SUM(jumlah) AS total FROM donasi");
@@ -64,7 +46,6 @@ while ($row = $result->fetch_assoc()) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donasi Pelajar- Ngajar.ID</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" type="image/png" href="../img/Logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -99,7 +80,7 @@ while ($row = $result->fetch_assoc()) {
             <!-- Total Donasi -->
             <div class="bg-teal-600 text-white text-center py-10 rounded-lg mb-8">
                 <h2 class="text-xl font-bold uppercase mb-2">Total Donasi</h2>
-                <p class="text-4xl md:text-5xl font-bold">Rp <?php echo number_format($total_donasi, 0, ',', '.'); ?>,00</p>
+                <p class="text-4xl md:text-5xl font-bold">Rp <?php echo number_format($total_donasi, 0, ',', '.'); ?></p>
             </div>
             <!-- Konten Dua Kolom: Riwayat & Form -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
