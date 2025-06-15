@@ -75,7 +75,7 @@ if ($id_pengguna) {
     <title>Dashboard - Ngajar.ID</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" type="image/png" href="../img/Logo.png">
-    <script src="../js/murid.js"></script>
+    <script src="../js/token.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -123,9 +123,10 @@ if ($id_pengguna) {
                                 <img src="../img/coin.png" class="w-3 h-3" alt="Token">
                                 <?php echo htmlspecialchars($token); ?>
                             </div>
-                            <button class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center">
+                            <button id="openPopup" class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center">
                                 <i class="fas fa-plus text-sm"></i>
                             </button>
+                            <?php include "../Includes/token.php"; ?>
                         </div>
                     </div>
                 </div>

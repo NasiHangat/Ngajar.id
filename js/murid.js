@@ -946,7 +946,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
             });
 
-            
+            // Click effect
+            button.addEventListener('click', function(e) {
+                // Animasi ripple effect
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple-effect');
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+                
+
+            });
         });
     }, 1000);
 
