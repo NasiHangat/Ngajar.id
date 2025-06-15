@@ -122,7 +122,9 @@ if (!empty($kelasIds)) {
                         </div>
                         <div class="text-white">
                             <h2 class="font-bold text-base sm:text-lg leading-tight "><?php echo $namaPengguna; ?></h2>
-                            <p class="text-white-200 opacity-70 text-xs sm:text-sm leading-tight">Pelajar</p>
+                            <div class="text-white-200 opacity-70 text-xs sm:text-sm leading-tight">
+                                <?php echo htmlspecialchars(ucfirst($rolePengguna)); ?>
+                            </div>
                             <!-- Token dan tombol tambah diletakkan di bawah -->
                             <div class="mt-2 flex items-center space-x-2">
                                 <div
@@ -162,37 +164,38 @@ if (!empty($kelasIds)) {
                                     ikuti.</p>
                             <?php else: ?>
                                 <?php foreach ($materiList['soal'] as $materi): ?>
-                                    <a href="../Pengajar/detail_materi.php?materi_id=<?= htmlspecialchars($materi['materi_id']) ?>&kelas_id=<?= htmlspecialchars($materi['kelas_id']) ?>" class="block hover:shadow-lg transition-shadow">                                      
-                                    <div
-                                        class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
-                                        <!-- Layer biru di kiri bawah -->
+                                    <a href="../Pengajar/detail_materi.php?materi_id=<?= htmlspecialchars($materi['materi_id']) ?>&kelas_id=<?= htmlspecialchars($materi['kelas_id']) ?>"
+                                        class="block hover:shadow-lg transition-shadow">
                                         <div
-                                            class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl">
+                                            class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
+                                            <!-- Layer biru di kiri bawah -->
+                                            <div
+                                                class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl">
+                                            </div>
+
+                                            <!-- Strip biru di bawah -->
+                                            <div
+                                                class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl">
+                                            </div>
+
+                                            <!-- Isi Card -->
+                                            <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
+                                                <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl"
+                                                    src="https://placehold.co/160x90"
+                                                    alt="<?= htmlspecialchars($materi['judul']) ?>">
+
+                                                <h2 class="text-emerald-500 text-lg font-bold mt-4 text-left">
+                                                    <?= htmlspecialchars($materi['judul']) ?>
+                                                </h2>
+
+                                                <p class="text-emerald-500 text-sm font-light mt-2 text-left">
+                                                    <?= htmlspecialchars($materi['nama_kelas']) ?>
+                                                </p>
+
+                                                <p class="text-emerald-500 py-5 text-sm font-light mt-2 text-right">
+                                                </p>
+                                            </div>
                                         </div>
-
-                                        <!-- Strip biru di bawah -->
-                                        <div
-                                            class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl">
-                                        </div>
-
-                                        <!-- Isi Card -->
-                                        <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
-                                            <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl"
-                                                src="https://placehold.co/160x90"
-                                                alt="<?= htmlspecialchars($materi['judul']) ?>">
-
-                                            <h2 class="text-emerald-500 text-lg font-bold mt-4 text-left">
-                                                <?= htmlspecialchars($materi['judul']) ?>
-                                            </h2>
-
-                                            <p class="text-emerald-500 text-sm font-light mt-2 text-left">
-                                                <?= htmlspecialchars($materi['nama_kelas']) ?>
-                                            </p>
-
-                                            <p class="text-emerald-500 py-5 text-sm font-light mt-2 text-right">
-                                            </p>
-                                        </div>
-                                    </div>
                                     </a>
                                 <?php endforeach; ?>
                             <?php endif; ?>
@@ -202,42 +205,43 @@ if (!empty($kelasIds)) {
                     <!-- PDF -->
                     <div id="modul-pdf" class="tab-modul hidden">
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                           <?php if (empty($materiList['pdf'])): ?>
+                            <?php if (empty($materiList['pdf'])): ?>
                                 <p class="text-center col-span-full text-gray-500">Belum ada PDF dari kelas yang Anda
                                     ikuti.</p>
                             <?php else: ?>
                                 <?php foreach ($materiList['pdf'] as $materi): ?>
-                                    <a href="../Pengajar/detail_materi.php?materi_id=<?= htmlspecialchars($materi['materi_id']) ?>&kelas_id=<?= htmlspecialchars($materi['kelas_id']) ?>" class="block hover:shadow-lg transition-shadow">                                    
+                                    <a href="../Pengajar/detail_materi.php?materi_id=<?= htmlspecialchars($materi['materi_id']) ?>&kelas_id=<?= htmlspecialchars($materi['kelas_id']) ?>"
+                                        class="block hover:shadow-lg transition-shadow">
                                         <div
-                                        class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
-                                        <!-- Layer biru di kiri bawah -->
-                                        <div
-                                            class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl">
+                                            class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
+                                            <!-- Layer biru di kiri bawah -->
+                                            <div
+                                                class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl">
+                                            </div>
+
+                                            <!-- Strip biru di bawah -->
+                                            <div
+                                                class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl">
+                                            </div>
+
+                                            <!-- Isi Card -->
+                                            <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
+                                                <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl"
+                                                    src="https://placehold.co/160x90"
+                                                    alt="<?= htmlspecialchars($materi['judul']) ?>">
+
+                                                <h2 class="text-emerald-500 text-lg font-bold mt-4 text-left">
+                                                    <?= htmlspecialchars($materi['judul']) ?>
+                                                </h2>
+
+                                                <p class="text-emerald-500 text-sm font-light mt-2 text-left">
+                                                    <?= htmlspecialchars($materi['nama_kelas']) ?>
+                                                </p>
+
+                                                <p class="text-emerald-500 py-5 text-sm font-light mt-2 text-right">
+                                                </p>
+                                            </div>
                                         </div>
-
-                                        <!-- Strip biru di bawah -->
-                                        <div
-                                            class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl">
-                                        </div>
-
-                                        <!-- Isi Card -->
-                                        <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
-                                            <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl"
-                                                src="https://placehold.co/160x90"
-                                                alt="<?= htmlspecialchars($materi['judul']) ?>">
-
-                                            <h2 class="text-emerald-500 text-lg font-bold mt-4 text-left">
-                                                <?= htmlspecialchars($materi['judul']) ?>
-                                            </h2>
-
-                                            <p class="text-emerald-500 text-sm font-light mt-2 text-left">
-                                                <?= htmlspecialchars($materi['nama_kelas']) ?>
-                                            </p>
-
-                                            <p class="text-emerald-500 py-5 text-sm font-light mt-2 text-right">
-                                            </p>
-                                        </div>
-                                    </div>
                                     </a>
                                 <?php endforeach; ?>
                             <?php endif; ?>
@@ -252,37 +256,38 @@ if (!empty($kelasIds)) {
                                     ikuti.</p>
                             <?php else: ?>
                                 <?php foreach ($materiList['video'] as $materi): ?>
-                                    <a href="../Pengajar/detail_materi.php?materi_id=<?= htmlspecialchars($materi['materi_id']) ?>&kelas_id=<?= htmlspecialchars($materi['kelas_id']) ?>" class="block hover:shadow-lg transition-shadow">                                    
+                                    <a href="../Pengajar/detail_materi.php?materi_id=<?= htmlspecialchars($materi['materi_id']) ?>&kelas_id=<?= htmlspecialchars($materi['kelas_id']) ?>"
+                                        class="block hover:shadow-lg transition-shadow">
                                         <div
-                                        class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
-                                        <!-- Layer biru di kiri bawah -->
-                                        <div
-                                            class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl">
+                                            class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
+                                            <!-- Layer biru di kiri bawah -->
+                                            <div
+                                                class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl">
+                                            </div>
+
+                                            <!-- Strip biru di bawah -->
+                                            <div
+                                                class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl">
+                                            </div>
+
+                                            <!-- Isi Card -->
+                                            <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
+                                                <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl"
+                                                    src="https://placehold.co/160x90"
+                                                    alt="<?= htmlspecialchars($materi['judul']) ?>">
+
+                                                <h2 class="text-emerald-500 text-lg font-bold mt-4 text-left">
+                                                    <?= htmlspecialchars($materi['judul']) ?>
+                                                </h2>
+
+                                                <p class="text-emerald-500 text-sm font-light mt-2 text-left">
+                                                    <?= htmlspecialchars($materi['nama_kelas']) ?>
+                                                </p>
+
+                                                <p class="text-emerald-500 py-5 text-sm font-light mt-2 text-right">
+                                                </p>
+                                            </div>
                                         </div>
-
-                                        <!-- Strip biru di bawah -->
-                                        <div
-                                            class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl">
-                                        </div>
-
-                                        <!-- Isi Card -->
-                                        <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
-                                            <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl"
-                                                src="https://placehold.co/160x90"
-                                                alt="<?= htmlspecialchars($materi['judul']) ?>">
-
-                                            <h2 class="text-emerald-500 text-lg font-bold mt-4 text-left">
-                                                <?= htmlspecialchars($materi['judul']) ?>
-                                            </h2>
-
-                                            <p class="text-emerald-500 text-sm font-light mt-2 text-left">
-                                                <?= htmlspecialchars($materi['nama_kelas']) ?>
-                                            </p>
-
-                                            <p class="text-emerald-500 py-5 text-sm font-light mt-2 text-right">
-                                            </p>
-                                        </div>
-                                    </div>
                                     </a>
                                 <?php endforeach; ?>
                             <?php endif; ?>
