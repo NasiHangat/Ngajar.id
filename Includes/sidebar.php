@@ -8,13 +8,13 @@ $menus = [
     'pengajar' => [
         ['label' => 'Dashboard', 'icon' => 'fa-home', 'url' => '../pengajar/pengajar_dashboard.php'],
         ['label' => 'Kelas Saya', 'icon' => 'fa-book-open', 'url' => '../pengajar/pengajar_class.php'],
-        ['label' => 'Modul', 'icon' => 'fa-book', 'url' => '../pengajar/pengajar_modul.php'],
+        ['label' => 'Materi', 'icon' => 'fa-book', 'url' => '../pengajar/pengajar_modul.php'],
         ['label' => 'Donasi', 'icon' => 'fa-donate', 'url' => 'form_donasi.php'],
     ],
     'murid' => [
         ['label' => 'Dashboard', 'icon' => 'fa-home', 'url' => '../murid/murid_dashboard.php'],
         ['label' => 'Kelas Saya', 'icon' => 'fa-book-open', 'url' => '../murid/murid_class.php'],
-        ['label' => 'Modul', 'icon' => 'fa-book', 'url' => '../murid/murid_modul.php'],
+        ['label' => 'Materi', 'icon' => 'fa-book', 'url' => '../murid/murid_modul.php'],
         ['label' => 'Donasi', 'icon' => 'fa-donate', 'url' => 'form_donasi.php'],
     ],
     'admin' => [

@@ -2,45 +2,37 @@
 include '../Includes/session_check.php';
 include '../Includes/DBkoneksi.php';
 
-// Sesuaikan nama parameter GET sesuai URL yang kamu kirim
-$materi_id = $_GET['materi_id'] ?? null;  // pastikan di URL kamu pakai materi_id
+// Ambil parameter dari URL
+$materi_id = $_GET['materi_id'] ?? null;
 $kelas_id = $_GET['kelas_id'] ?? null;
 $id_pengguna = $_SESSION['user_id'] ?? null;
 $role = $_SESSION['role'] ?? null;
 
-// Cek data lengkap
-if (!$kelas_id || !$materi_id || !$id_pengguna || !$role) {
+// Validasi awal
+if (!$materi_id || !$kelas_id || !$id_pengguna || !$role) {
     echo "<p class='text-red-500 text-center font-bold mt-10'>Data tidak lengkap.</p>";
     exit;
 }
 
 $aksesDiizinkan = false;
 
-// Jika pengajar: pastikan kelas ini miliknya
+// Validasi akses berdasarkan peran
 if ($role === 'pengajar') {
-    $stmt = $conn->prepare("SELECT kelas_id FROM kelas WHERE kelas_id = ? AND pengajar_id = ?");
+    $stmt = $conn->prepare("SELECT 1 FROM kelas WHERE kelas_id = ? AND pengajar_id = ?");
     $stmt->bind_param("ii", $kelas_id, $id_pengguna);
-    $stmt->execute();
-    $stmt->store_result();
-    if ($stmt->num_rows > 0) {
-        $aksesDiizinkan = true;
-    }
-    $stmt->close();
+} elseif ($role === 'murid') {
+    $stmt = $conn->prepare("SELECT 1 FROM kelas_peserta WHERE kelas_id = ? AND siswa_id = ?");
+    $stmt->bind_param("ii", $kelas_id, $id_pengguna);
+} else {
+    echo "<p class='text-red-500 text-center font-bold mt-10'>Peran tidak valid.</p>";
+    exit;
 }
 
-// Jika murid: pastikan dia mengikuti kelas ini
-if ($role === 'murid') {
-    $stmt = $conn->prepare("SELECT id FROM kelas_peserta WHERE kelas_id = ? AND siswa_id = ?");
-    $stmt->bind_param("ii", $kelas_id, $id_pengguna);
-    $stmt->execute();
-    $stmt->store_result();
-    if ($stmt->num_rows > 0) {
-        $aksesDiizinkan = true;
-    }
-    $stmt->close();
-}
+$stmt->execute();
+$stmt->store_result();
+$aksesDiizinkan = $stmt->num_rows > 0;
+$stmt->close();
 
-// Jika akses tidak diizinkan, hentikan dan tampilkan pesan
 if (!$aksesDiizinkan) {
     echo "<p class='text-red-500 text-center font-bold mt-10'>Anda tidak memiliki akses ke materi ini.</p>";
     exit;
@@ -70,11 +62,10 @@ $deskripsiMateri = '';
 $fileUrl = '';
 $createdAt = '';
 
-$stmt = $conn->prepare("SELECT judul, file_url, created_at FROM materi WHERE materi_id = ? AND kelas_id = ?");
+$stmt = $conn->prepare("SELECT judul, deskripsi, file_url, created_at FROM materi WHERE materi_id = ? AND kelas_id = ?");
 $stmt->bind_param("ii", $materi_id, $kelas_id);
 $stmt->execute();
-$stmt->bind_result($judulMateri, $fileUrl, $createdAt);
-
+$stmt->bind_result($judulMateri, $deskripsiMateri, $fileUrl, $createdAt);
 if (!$stmt->fetch()) {
     echo "<p class='text-red-500 text-center font-bold mt-10'>Materi tidak ditemukan.</p>";
     exit;

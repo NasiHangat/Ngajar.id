@@ -138,7 +138,7 @@ if ($id_pengguna) {
                 <div>
                     <div class="mb-3">
                         <h3 class="inline-flex items-center text-xl font-bold text-teal-500">
-                            <span>Modul Pembelajaran<span>
+                            <span>Materi Pembelajaran<span>
                     </div>
                     <div class="border-l-4 border-r-4 border-b-4 border-[#003F4A] shadow-lg rounded-xl p-4 bg-white">
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
