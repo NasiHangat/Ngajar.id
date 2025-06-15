@@ -130,6 +130,7 @@ if ($id_pengguna) {
                     <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Kelas</h1>
                 </div>
                 <div class="flex items-center space-x-2 sm:space-x-4">
+
                     <?php include "../includes/Profile.php" ?>
                 </div>
 
@@ -163,7 +164,7 @@ if ($id_pengguna) {
             </div>
         </div>
 
-        <main class="max-w-6xl mx-auto px-4 sm:px-6 py-6">
+        <main class="max-w-6xl mx-[250px] px-4 sm:px-6 py-6">
             <section class="mb-8">
                 <div class="flex items-center justify-between mb-3">
                     <h3 class="text-xl font-bold text-teal-500 py-2">Rekomendasi Kelas</h3>
