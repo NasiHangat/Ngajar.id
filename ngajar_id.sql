@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 14 Jun 2025 pada 15.27
+-- Waktu pembuatan: 15 Jun 2025 pada 13.28
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -59,6 +59,13 @@ CREATE TABLE `donasi` (
   `tanggal` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data untuk tabel `donasi`
+--
+
+INSERT INTO `donasi` (`donasi_id`, `nama`, `jumlah`, `tanggal`) VALUES
+(3, 'asd', 1000000, '2025-06-14 20:03:46');
+
 -- --------------------------------------------------------
 
 --
@@ -79,10 +86,10 @@ CREATE TABLE `kelas` (
 --
 
 INSERT INTO `kelas` (`kelas_id`, `pengajar_id`, `judul`, `deskripsi`, `status`, `created_at`) VALUES
-(1, 20, 'Anjay', 'a', 'aktif', '2025-06-11 08:36:53'),
-(3, 20, 'syahdan', 'nabila', 'aktif', '2025-06-11 08:45:27'),
 (5, 22, 'Pemrograman Web', 'PEMWEB 1', 'aktif', '2025-06-14 07:36:56'),
-(6, 22, 'Anjay', 'mabar', 'aktif', '2025-06-14 08:48:15');
+(6, 22, 'Anjay', 'mabar', 'aktif', '2025-06-14 08:48:15'),
+(7, 20, 'Pemrograman Web', 'AWWWW', 'aktif', '2025-06-14 18:34:23'),
+(8, 22, 'aaaa', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'aktif', '2025-06-15 08:19:52');
 
 -- --------------------------------------------------------
 
@@ -97,6 +104,16 @@ CREATE TABLE `kelas_peserta` (
   `tanggal_daftar` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data untuk tabel `kelas_peserta`
+--
+
+INSERT INTO `kelas_peserta` (`id`, `siswa_id`, `kelas_id`, `tanggal_daftar`) VALUES
+(1, 23, 5, NULL),
+(2, 23, 6, NULL),
+(3, 23, 7, '2025-06-15 12:10:32'),
+(4, 23, 8, '2025-06-15 15:20:03');
+
 -- --------------------------------------------------------
 
 --
@@ -109,8 +126,17 @@ CREATE TABLE `materi` (
   `judul` varchar(150) DEFAULT NULL,
   `tipe` enum('video','pdf','soal') DEFAULT NULL,
   `file_url` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `deskripsi` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `materi`
+--
+
+INSERT INTO `materi` (`materi_id`, `kelas_id`, `judul`, `tipe`, `file_url`, `created_at`, `deskripsi`) VALUES
+(10, 7, 'Tes Admin', '', '../uploads/materi/1749926083_1284821.jpg', '2025-06-14 18:34:43', NULL),
+(11, 5, 'Tes Admin', 'pdf', '../uploads/materi/1749964307_1284821.jpg', '2025-06-15 05:11:47', NULL);
 
 -- --------------------------------------------------------
 
@@ -128,6 +154,15 @@ CREATE TABLE `modul` (
   `dibuat_oleh` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `modul`
+--
+
+INSERT INTO `modul` (`modul_id`, `judul`, `deskripsi`, `file_url`, `tipe`, `token_harga`, `dibuat_oleh`, `created_at`) VALUES
+(7, 'cihuy', 'aaaaa', '../uploads/modul/1749922966_684db4960d061.jpg', '', 1000, 21, '2025-06-14 17:42:46'),
+(11, 'tess', 'aaaaa', '../uploads/modul/1749923051_684db4eb5cc85.docx', '', 2222, 21, '2025-06-14 17:44:11'),
+(13, 'aw', 'hiyaaaaaaaaaa', '', '', 10, 21, '2025-06-15 05:56:11');
 
 -- --------------------------------------------------------
 
@@ -168,6 +203,27 @@ CREATE TABLE `topup` (
   `harga` int(11) DEFAULT NULL,
   `tanggal` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Trigger `topup`
+--
+DELIMITER $$
+CREATE TRIGGER `update_token_after_topup` AFTER INSERT ON `topup` FOR EACH ROW BEGIN
+  
+  IF EXISTS (SELECT 1 FROM token WHERE user_id = NEW.user_id) THEN
+    
+    UPDATE token
+    SET jumlah = jumlah + NEW.jumlah_token,
+        last_update = NOW()
+    WHERE user_id = NEW.user_id;
+  ELSE
+    
+    INSERT INTO token (user_id, jumlah, last_update)
+    VALUES (NEW.user_id, NEW.jumlah_token, NOW());
+  END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -272,31 +328,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `donasi`
 --
 ALTER TABLE `donasi`
-  MODIFY `donasi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `donasi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `kelas`
 --
 ALTER TABLE `kelas`
-  MODIFY `kelas_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `kelas_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `kelas_peserta`
 --
 ALTER TABLE `kelas_peserta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `materi`
 --
 ALTER TABLE `materi`
-  MODIFY `materi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `materi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT untuk tabel `modul`
 --
 ALTER TABLE `modul`
-  MODIFY `modul_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `modul_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `token_log`
