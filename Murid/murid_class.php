@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['keluar'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Ngajar.ID</title>
+    <title>Kelas - Ngajar.ID</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" type="image/png" href="../img/Logo.png">
     <script src="../js/token.js"></script>
@@ -247,7 +247,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['keluar'])) {
                                         <form action="" method="POST" onClick="event.stopPropagation();">
                                             <input type="hidden" name="kelas_id" value="<?= $kelas['kelas_id'] ?>">
                                             <button type="submit" name="keluar"
-                                                class="text-sm bg-white text-teal-500 font-semibold px-4 py-1 rounded shadow">
+                                                class="text-sm bg-white hover:bg-gray-100 text-teal-500 font-semibold px-4 py-1 rounded shadow">
                                                 Keluar
                                             </button>
                                         </form>
