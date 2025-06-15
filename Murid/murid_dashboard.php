@@ -21,10 +21,11 @@ if ($id_pengguna) {
 // Ambil modul yang dibuat oleh admin
 $modul_admin = [];
 $stmt = $conn->prepare("
-    SELECT judul, deskripsi, tipe, token_harga 
+    SELECT modul_id, judul, deskripsi, tipe, token_harga 
     FROM modul 
     WHERE dibuat_oleh IN (SELECT user_id FROM users WHERE role = 'admin')
 ");
+
 $stmt->execute();
 $result = $stmt->get_result();
 while ($row = $result->fetch_assoc()) {
@@ -32,6 +33,18 @@ while ($row = $result->fetch_assoc()) {
 }
 $stmt->close();
 
+// Ambil daftar modul
+$modulList = [];
+$stmt = $conn->prepare("SELECT modul_id, judul, deskripsi FROM modul");
+$stmt->execute();
+$result = $stmt->get_result();
+while ($row = $result->fetch_assoc()) {
+    $modulList[] = $row;
+}
+$stmt->close();
+
+
+// Ambil token pengguna
 $token = 0;
 if ($id_pengguna) {
     // Ambil nama
@@ -174,7 +187,9 @@ if ($id_pengguna) {
                                                 <?= strtoupper(substr($modul['judul'], 0, 6)) ?>
                                             </div>
                                             <div>
-                                                <p class="text-teal-500 font-bold"><?= htmlspecialchars($modul['judul']) ?></p>
+                                                <a href="murid_isimodul.php?id=<?= $modul['modul_id'] ?>" class="text-teal-500 font-bold hover:underline">
+                                                    <?= htmlspecialchars($modul['judul']) ?>
+                                                </a>
                                                 <div class="text-sm text-gray-600 mt-1"><?= htmlspecialchars($modul['deskripsi']) ?></div>
                                                 <div class="flex items-center text-sm mt-1">
                                                     <img src="../img/coin.png" class="mr-1.5 w-4">
@@ -183,6 +198,7 @@ if ($id_pengguna) {
                                             </div>
                                         </div>
                                     <?php endforeach; ?>
+
                                 <?php else: ?>
                                     <p class="text-sm text-gray-500 col-span-full">Belum ada modul yang tersedia.</p>
                                 <?php endif; ?>
