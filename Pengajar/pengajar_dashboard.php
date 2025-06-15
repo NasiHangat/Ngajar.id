@@ -57,16 +57,6 @@ if ($id_pengguna) {
     $stmt->close();
 }
 
-
-// Ambil semua modul dari database
-$modulList = [];
-$stmt = $conn->prepare("SELECT * FROM modul");
-$stmt->execute();
-$result = $stmt->get_result();
-
-
-$stmt->close();
-
 ?>
 
 <!DOCTYPE html>

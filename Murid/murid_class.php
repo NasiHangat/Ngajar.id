@@ -2,8 +2,9 @@
 <?php include '../Includes/DBkoneksi.php'; ?>
 
 <?php
-$id_pengguna = $_SESSION['user_id'] ?? null;
+$rolePengguna = $_SESSION['role'] ?? 'murid'; // default jika kosong
 $namaPengguna = "";
+$id_pengguna = $_SESSION['user_id'] ?? null;
 
 if ($id_pengguna) {
     $stmt = $conn->prepare("SELECT name FROM users WHERE user_id = ?");
@@ -89,6 +90,20 @@ if ($id_pengguna) {
     $stmt->bind_result($token);
     $stmt->fetch();
     $stmt->close();
+}
+
+// Proses keluar dari kelas
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['keluar'])) {
+    $kelas_id_keluar = $_POST['kelas_id'] ?? null;
+    if ($kelas_id_keluar) {
+        $stmt = $conn->prepare("DELETE FROM kelas_peserta WHERE siswa_id = ? AND kelas_id = ?");
+        $stmt->bind_param("ii", $id_pengguna, $kelas_id_keluar);
+        $stmt->execute();
+        $stmt->close();
+
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit;
+    }
 }
 
 ?>
@@ -217,7 +232,7 @@ if ($id_pengguna) {
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-14 gap-y-12">
                     <?php if (count($kelas_diikuti) > 0): ?>
                         <?php foreach ($kelas_diikuti as $kelas): ?>
-                            <div class="cursor-pointer w-full max-w-[361px] h-[207px] shadow-lg rounded-lg flex transition-transform hover:scale-[1.02]">
+                            <a href="../pengajar/detail_kelas.php?id=<?= $kelas['kelas_id'] ?>" class="block max-w-[361px] h-[207px] shadow-lg rounded-lg flex transition-transform hover:scale-[1.02]">
                                 <div class="w-3 bg-cyan-950 rounded-l-lg"></div>
                                 <div class="flex-grow">
                                     <div class="bg-teal-600 h-[90px] rounded-tr-lg p-4 flex justify-between items-start">
@@ -229,12 +244,13 @@ if ($id_pengguna) {
                                                 <?= htmlspecialchars($kelas['nama_pengajar']) ?>
                                             </p>
                                         </div>
-                                        <input type="hidden" name="kelas_id" value="<?= $item['kelas_id'] ?>">
+                                        <form action="" method="POST" onClick="event.stopPropagation();">
+                                            <input type="hidden" name="kelas_id" value="<?= $kelas['kelas_id'] ?>">
                                             <button type="submit" name="keluar"
                                                 class="text-sm bg-white text-teal-500 font-semibold px-4 py-1 rounded shadow">
                                                 Keluar
                                             </button>
-                                        </input>
+                                        </form>
                                     </div>
                                     <div class="bg-white p-4 rounded-b-lg">
                                         <p class="font-roboto-slab font-bold text-cyan-950 text-[10px] line-clamp-3">
@@ -242,7 +258,7 @@ if ($id_pengguna) {
                                         </p>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <p class="text-sm text-gray-500">Belum mengikuti kelas apapun.</p>
