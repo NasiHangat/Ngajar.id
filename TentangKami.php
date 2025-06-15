@@ -52,6 +52,19 @@
       Menghubungkan pelajar dengan relawan pengajar, menyediakan materi belajar gratis dan premium, serta mendorong donasi transparan untuk mendukung pendidikan yang merata.
     </p>
   </section>
+    <section class="max-w-6xl mx-auto px-4 py-12 text-center">
+    <h3 class="text-3xl font-bold text-teal-600 mb-4">Peran Donasi di Ngajar.ID</h3>
+    <p class="max-w-4xl mx-auto text-gray-700 mb-4">
+      Donasi dari pengguna dan masyarakat umum memainkan peran penting dalam memastikan bahwa pendidikan dapat diakses secara merata oleh semua kalangan, termasuk pelajar dari daerah tertinggal dan keluarga kurang mampu.
+    </p>
+    <p class="max-w-4xl mx-auto text-gray-700 mb-4">
+      Setiap donasi yang diterima akan digunakan secara transparan untuk membiayai program-program seperti beasiswa, pengadaan materi ajar, kuota internet bagi siswa, serta pelatihan untuk relawan pengajar.
+    </p>
+    <p class="max-w-4xl mx-auto text-gray-700">
+      Kami berkomitmen untuk menjaga transparansi dan akuntabilitas dalam setiap rupiah yang Anda berikan. Dengan berdonasi, Anda turut berkontribusi membuka akses ilmu bagi ribuan anak bangsa.
+    </p>
+  </section>
+
 
   <div class="max-w-6xl mx-auto px-4 py-12">
     <h2 class="text-teal-600 text-3xl font-bold text-center mb-10">Meet the Team</h2>

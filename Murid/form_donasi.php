@@ -21,24 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nama'], $_POST['jumla
     }
 }
 
-
-if ($_SESSION['role'] !== 'murid') {
-    header("Location: unauthorized.php");
-    exit;
-}
-
-$id_pengguna = $_SESSION['user_id'] ?? null;
-$namaPengguna = "";
-
-if ($id_pengguna) {
-    $stmt = $conn->prepare("SELECT name FROM users WHERE user_id = ?");
-    $stmt->bind_param("i", $id_pengguna);
-    $stmt->execute();
-    $stmt->bind_result($namaPengguna);
-    $stmt->fetch();
-    $stmt->close();
-}
-
 // Ambil total donasi
 $total_donasi = 0;
 $result = $conn->query("SELECT SUM(jumlah) AS total FROM donasi");
@@ -64,7 +46,6 @@ while ($row = $result->fetch_assoc()) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donasi Pelajar- Ngajar.ID</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" type="image/png" href="../img/Logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -80,7 +61,6 @@ while ($row = $result->fetch_assoc()) {
                     <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Donasi</h1>
                 </div>
                 <div class="flex items-center space-x-2 sm:space-x-4">
-                    <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-bell text-xl"></i></button>
                     <?php include "../includes/Profile.php"; ?>
                 </div>
             </div>
@@ -97,9 +77,9 @@ while ($row = $result->fetch_assoc()) {
                 </div>
             <?php endif; ?>
             <!-- Total Donasi -->
-            <div class="bg-teal-600 text-white text-center py-10 rounded-lg mb-8">
+            <div class="bg-teal-500 text-white text-center py-12 rounded-lg mb-8">
                 <h2 class="text-xl font-bold uppercase mb-2">Total Donasi</h2>
-                <p class="text-4xl md:text-5xl font-bold">Rp <?php echo number_format($total_donasi, 0, ',', '.'); ?>,00</p>
+                <p class="text-4xl md:text-5xl font-bold">Rp <?php echo number_format($total_donasi, 0, ',', '.'); ?></p>
             </div>
             <!-- Konten Dua Kolom: Riwayat & Form -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -110,9 +90,9 @@ while ($row = $result->fetch_assoc()) {
                         <table class="w-full table-auto text-center text-sm">
                             <thead class="bg-white text-teal-600 font-bold">
                                 <tr>
-                                    <th class="border border-teal-500 px-4 py-2">Nama</th>
-                                    <th class="border border-teal-500 px-4 py-2">Jumlah</th>
-                                    <th class="border border-teal-500 px-4 py-2">Tanggal</th>
+                                    <th class="border border-teal-500 px-4 py-3">Nama</th>
+                                    <th class="border border-teal-500 px-4 py-3">Jumlah</th>
+                                    <th class="border border-teal-500 px-4 py-3">Tanggal</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -135,7 +115,7 @@ while ($row = $result->fetch_assoc()) {
                 </div>
                 <!-- Form Donasi -->
                 <div>
-                    <div class="bg-teal-500 rounded-lg p-6 shadow-md">
+                    <div class="bg-teal-500 rounded-lg p-8 shadow-md">
                         <h3 class="text-white text-xl font-bold mb-4">Donasi</h3>
                         <form action="" method="POST" class="space-y-4">
                             <input
@@ -161,7 +141,7 @@ while ($row = $result->fetch_assoc()) {
             </div>
         </div>
         <footer>
-            <?php include '../includes/Footer.php'; ?>
+            <?php include '../includes/Footer.php' ?>
         </footer>
 </body>
 

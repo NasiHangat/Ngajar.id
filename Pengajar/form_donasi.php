@@ -60,7 +60,6 @@ while ($row = $result->fetch_assoc()) {
                     <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Donasi</h1>
                 </div>
                 <div class="flex items-center space-x-2 sm:space-x-4">
-                    <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-bell text-xl"></i></button>
                     <link rel="icon" type="image/png" href="../img/Logo.png">
     <?php include "../includes/Profile.php"; ?>
                 </div>

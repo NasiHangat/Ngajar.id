@@ -102,7 +102,6 @@ if ($id_pengguna) {
                     <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Dashboard</h1>
                 </div>
                 <div class="flex items-center space-x-2 sm:space-x-4">
-                    <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-bell text-xl"></i></button>
                     <?php include "../includes/Profile.php" ?>
                 </div>
             </div>
@@ -133,7 +132,7 @@ if ($id_pengguna) {
             </div>
         </div>
 
-        <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <main class="mx-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <section class="mb-8">
                 <div>
                     <div class="mb-3">
@@ -170,45 +169,45 @@ if ($id_pengguna) {
                     </div>
                 </div>
             </section>
-
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <section>
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-xl font-bold text-teal-500">Modul Ngajar.Id</h3>
-                        </div>
-                    <div class="relative">
-                        <div class="absolute top-2 right-2 w-full h-full bg-[#003F4A] rounded-lg z-0"></div>
-                        <div class="relative w-full h-full bg-white border-4 border-[#003F4A] rounded-lg z-10 p-5 space-y-3">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                                <?php if (!empty($modul_admin)) : ?>
-                                    <?php foreach ($modul_admin as $modul): ?>
-                                        <div class="flex items-start space-x-4">
-                                            <div class="bg-teal-500 text-white font-bold p-4 py-10 border-l-8 border-[#003F4A] rounded-lg shadow-md">
-                                                <?= strtoupper(substr($modul['judul'], 0, 6)) ?>
-                                            </div>
-                                            <div>
-                                                <a href="murid_isimodul.php?id=<?= $modul['modul_id'] ?>" class="text-teal-500 font-bold hover:underline">
-                                                    <?= htmlspecialchars($modul['judul']) ?>
-                                                </a>
-                                                <div class="text-sm text-gray-600 mt-1"><?= htmlspecialchars($modul['deskripsi']) ?></div>
-                                                <div class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm">
-                                                    <img src="../img/coin.png" class="w-3 h-3" alt="Token">
-                                                    <?= (int)$modul['token_harga'] ?>
-                                                </div>
-                                            </div>
+            <section>
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-bold text-teal-500">Modul Ngajar.Id</h3>
+                    </div>
+                <div class="relative">
+                    <div class="absolute top-2 right-2 w-full h-full bg-[#003F4A] rounded-lg z-0"></div>
+                    <div class="relative w-full h-full bg-white border-4 border-[#003F4A] rounded-lg z-10 p-5 space-y-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <?php if (!empty($modul_admin)) : ?>
+                                <?php foreach ($modul_admin as $modul): ?>
+                                    <div class="flex items-start space-x-4">
+                                        <div class="bg-teal-500 text-white font-bold p-4 py-10 border-l-8 border-[#003F4A] rounded-lg shadow-md">
+                                            <?= strtoupper(substr($modul['judul'], 0, 6)) ?>
                                         </div>
-                                    <?php endforeach; ?>
-
-                                <?php else: ?>
-                                    <p class="text-sm text-gray-500 col-span-full">Belum ada modul yang tersedia.</p>
-                                <?php endif; ?>
-                            </div>
-
+                                        <div>
+                                            <a href="murid_isimodul.php?id=<?= $modul['modul_id'] ?>" class="text-teal-500 font-bold hover:underline">
+                                                <?= htmlspecialchars($modul['judul']) ?>
+                                            </a>
+                                            <div class="text-sm text-gray-600 mt-1"><?= htmlspecialchars($modul['deskripsi']) ?></div>
+                                            <form action="murid_beli_modul.php" method="POST" onsubmit="return confirm('Yakin ingin membeli modul ini seharga <?= (int)$modul['token_harga'] ?> token?')">
+                                                <input type="hidden" name="modul_id" value="<?= $modul['modul_id'] ?>">
+                                                <input type="hidden" name="harga" value="<?= (int)$modul['token_harga'] ?>">
+                                                <button type="submit" class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm hover:bg-yellow-200">
+                                                    <img src="../img/coin.png" class="w-3 h-3" alt="Token">
+                                                    Beli <?= (int)$modul['token_harga'] ?>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <p class="text-sm text-gray-500 col-span-full">Belum ada modul yang tersedia.</p>
+                            <?php endif; ?>
                         </div>
                     </div>
-                </section>
-            </div>
-        </main>
+                </div>
+            </section>
+        </div>
+    </main>
         <footer>
             <?php include '../includes/Footer.php'; ?>
         </footer>

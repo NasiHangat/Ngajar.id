@@ -55,8 +55,11 @@ if ($result = $conn->query($sql_murid)) {
       </h1>
       <p class="text-xl text-justify mb-6 pr-20">
         Bersama, kita bangun akses pendidikan yang setara
-        dan inklusif bagi seluruh pelajar Indonesia.
+        dan inklusif bagi seluruh pelajar Indonesia. <br><br>
+        Melalui fitur donasi di Ngajar.ID, Anda dapat berkontribusi langsung untuk membantu mereka yang mengalami kendala biaya pendidikan. 
+        Setiap donasi yang Anda berikan akan disalurkan kepada pelajar dari keluarga kurang mampu agar mereka tetap bisa melanjutkan belajar tanpa hambatan.
       </p>
+
       <a href="Register.php" class="px-6 py-2 bg-teal-500 text-white rounded hover:bg-teal-600 text-sm font-medium inline-block mt-6">
         Daftar Sekarang
       </a>

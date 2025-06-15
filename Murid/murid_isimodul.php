@@ -86,7 +86,6 @@ if ($modul_id) {
                 <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Modul</h1>
             </div>
             <div class="flex items-center space-x-2 sm:space-x-4">
-                <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-bell text-xl"></i></button>
                 <?php include "../includes/Profile.php"; ?>
             </div>
         </div>
@@ -128,7 +127,7 @@ if ($modul_id) {
                     <?php if (!empty($file_url)): ?>
                         <div class="mt-4">
                             <a href="<?= htmlspecialchars($file_url) ?>" target="_blank"
-                               class="inline-block bg-teal-500 text-white font-medium py-2 px-5 rounded-lg hover:bg-teal-600 transition-colors shadow">
+                                class="inline-block bg-teal-500 text-white font-medium py-2 px-5 rounded-lg hover:bg-teal-600 transition-colors shadow">
                                 Download File Materi
                             </a>
                         </div>

@@ -109,8 +109,6 @@ if (!empty($kelasIds)) {
                         <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Materi</h1>
                     </div>
                     <div class="flex items-center space-x-2 sm:space-x-4">
-                        <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i
-                                class="fas fa-bell text-xl"></i></button>
                         <?php include "../includes/Profile.php"; ?>
                     </div>
                 </div>
@@ -142,14 +140,12 @@ if (!empty($kelasIds)) {
                 </div>
             </div>
 
-            <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-
+            <main class="max-w-6xl mx-[250px] px-4 sm:px-6 lg:px-8 py-8">
                 <section class="mb-8">
-                    <div class="flex items-center justify-between mb-3">
-                        <h1 class="text-xl font-bold text-teal-500 py-2">Materi Dari Kelas Yang Anda Ikuti</h1>
+                    <div class="flex items-start justify-between mb-3">
+                        <h1 class="text-start text-xl font-bold text-teal-500 py-2">Modul Pembelajaran</h1>
                     </div>
-
-                    <div class="flex space-x-8 mb-5">
+                    <div class="items-start flex space-x-8 mb-5">
                         <button id="btnSoal" data-target="soal" onclick="modul.toggleModul(this)"
                             class="toggle-modul bg-teal-500 text-white px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">Soal</button>
                         <button id="btnPDF" data-target="pdf" onclick="modul.toggleModul(this)"

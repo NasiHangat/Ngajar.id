@@ -49,7 +49,6 @@ if ($id_pengguna) {
                     <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Kelas</h1>
                 </div>
                 <div class="flex items-center space-x-2 sm:space-x-4">
-                    <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-bell text-xl"></i></button>
                     <?php include "../includes/Profile.php"; ?>
                     </div>
                     </div>
@@ -86,7 +85,6 @@ if ($id_pengguna) {
                         <div class="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center text-white text-sm font-bold">i</div>
                     </div>
                 </div>
-
                 <div class="mt-6 space-y-4">
                     <div class="bg-white p-4 shadow rounded-lg flex items-start justify-between">
                         <div class="flex gap-4 hover:text-gray-700">
@@ -99,7 +97,6 @@ if ($id_pengguna) {
                             </div>
                         </div>
                     </div>
-
                     <div class="bg-white p-4 shadow rounded-lg flex items-start justify-between">
                         <div class="flex gap-4">
                             <div class="w-10 h-10 bg-teal-500 text-white p-2 rounded-full flex items-center justify-center">

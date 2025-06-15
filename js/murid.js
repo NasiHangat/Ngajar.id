@@ -29,11 +29,11 @@ class MuridDashboard {
             hamburgerBtn.addEventListener('click', this.toggleSidebar.bind(this));
         }
 
-    const topupBtn = document.getElementById('topupButton');
+        // Token top-up button
+        const topupBtn = document.querySelector('.bg-white.bg-opacity-20');
         if (topupBtn) {
-            topupBtn.addEventListener('click', this.showTopuptoken.bind(this));
+            topupBtn.addEventListener('click', this.showTopupModal.bind(this));
         }
-
 
         // Subject cards hover effects
         this.initSubjectCards();
@@ -405,7 +405,7 @@ class MuridDashboard {
     }
 
     showInsufficientTokensModal() {
-        const token = this.createModal(
+        const modal = this.createModal(
             'Token Tidak Cukup',
             'Anda tidak memiliki cukup token untuk membeli modul ini. Lakukan top up terlebih dahulu.',
             [
@@ -681,8 +681,6 @@ class MuridDashboard {
     }
 }
 
-
-
 class MuridModul {
      constructor() {
         this.activeTab = "soal"; // hanya satu tab global (soal, pdf, video)
@@ -782,8 +780,6 @@ document.addEventListener('DOMContentLoaded', function() {
     new MuridDashboard();
 });
 
-
-
 // Add CSS animations
 const style = document.createElement('style');
 style.textContent = `
@@ -824,3 +820,725 @@ style.textContent = `
 
 document.head.appendChild(style);
 
+// Animasi untuk Dashboard Kelas Ngajar.ID - VERSI PERBAIKAN
+console.log('JavaScript animasi dimuat!'); // Debug log
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM sudah siap, memulai animasi...'); // Debug log
+    
+    // Inject CSS animations first
+    injectAnimationStyles();
+    
+    // 1. ANIMASI HAMBURGER MENU
+    const hamburgerButton = document.getElementById('hamburgerButton');
+    if (hamburgerButton) {
+        console.log('Hamburger button ditemukan');
+        hamburgerButton.addEventListener('click', function() {
+            const icon = this.querySelector('i');
+            if (icon) {
+                icon.style.transform = icon.style.transform === 'rotate(90deg)' ? 'rotate(0deg)' : 'rotate(90deg)';
+                icon.style.transition = 'transform 0.3s ease';
+            }
+        });
+    }
+
+    // 2. ANIMASI FADE IN UNTUK HEADER
+    setTimeout(() => {
+        const header = document.querySelector('header');
+        if (header) {
+            console.log('Header ditemukan, menjalankan animasi');
+            header.style.opacity = '0';
+            header.style.transform = 'translateY(-20px)';
+            header.style.transition = 'all 0.8s ease';
+            
+            setTimeout(() => {
+                header.style.opacity = '1';
+                header.style.transform = 'translateY(0)';
+            }, 100);
+        }
+    }, 100);
+
+    // 3. ANIMASI PROFILE SECTION (background hijau)
+    setTimeout(() => {
+        const profileSection = document.querySelector('.bg-teal-500');
+        if (profileSection) {
+            console.log('Profile section ditemukan');
+            profileSection.style.opacity = '0';
+            profileSection.style.transform = 'translateY(30px)';
+            profileSection.style.transition = 'all 1s ease';
+            
+            setTimeout(() => {
+                profileSection.style.opacity = '1';
+                profileSection.style.transform = 'translateY(0)';
+            }, 200);
+        }
+    }, 300);
+
+    // 4. ANIMASI UNTUK CARD KELAS - MENGGUNAKAN SELECTOR YANG LEBIH SPESIFIK
+    setTimeout(() => {
+        // Cari semua div yang memiliki onclick dengan detail_kelas.php
+        const kelasCards = document.querySelectorAll('div[onclick*="detail_kelas.php"]');
+        console.log(`Ditemukan ${kelasCards.length} card kelas`);
+        
+        kelasCards.forEach((card, index) => {
+            // Set initial state
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(50px) scale(0.8)';
+            card.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+            
+            // Staggered animation dengan delay
+            setTimeout(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0) scale(1)';
+            }, index * 150);
+
+            // Hover effects
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.03)';
+                this.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.2)';
+                this.style.transition = 'all 0.3s ease';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+                this.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+            });
+        });
+    }, 500);
+
+    // 5. ANIMASI UNTUK COIN/TOKEN
+    setTimeout(() => {
+        const coinElements = document.querySelectorAll('img[src*="coin.png"]');
+        coinElements.forEach(coin => {
+            const coinContainer = coin.closest('.bg-white.text-teal-500');
+            if (coinContainer) {
+                console.log('Coin container ditemukan');
+                coinContainer.addEventListener('mouseenter', function() {
+                    coin.style.transform = 'rotate(360deg) scale(1.2)';
+                    coin.style.transition = 'transform 0.5s ease';
+                    this.style.transform = 'scale(1.05)';
+                    this.style.transition = 'transform 0.3s ease';
+                });
+                
+                coinContainer.addEventListener('mouseleave', function() {
+                    coin.style.transform = 'rotate(0deg) scale(1)';
+                    this.style.transform = 'scale(1)';
+                });
+            }
+        });
+    }, 800);
+
+    // 6. ANIMASI UNTUK TOMBOL IKUTI
+    setTimeout(() => {
+        const ikutiButtons = document.querySelectorAll('button[name="ikuti"]');
+        console.log(`Ditemukan ${ikutiButtons.length} tombol ikuti`);
+        
+        ikutiButtons.forEach(button => {
+            // Hover effect
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px) scale(1.05)';
+                this.style.boxShadow = '0 8px 15px rgba(0, 0, 0, 0.3)';
+                this.style.transition = 'all 0.2s ease';
+            });
+
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+                this.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
+            });
+
+            // Click effect
+            button.addEventListener('click', function(e) {
+                // Animasi ripple effect
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple-effect');
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+                
+                // Loading state
+                const originalText = this.textContent;
+                this.innerHTML = '<span class="loading-spinner"></span>Memproses...';
+                this.disabled = true;
+            });
+        });
+    }, 1000);
+
+    // 7. ANIMASI UNTUK SECTION TITLES
+    setTimeout(() => {
+        const sectionTitles = document.querySelectorAll('h3');
+        console.log(`Ditemukan ${sectionTitles.length} section titles`);
+        
+        sectionTitles.forEach((title, index) => {
+            if (title.textContent.includes('Rekomendasi') || title.textContent.includes('Diikuti')) {
+                title.style.opacity = '0';
+                title.style.transform = 'translateX(-50px)';
+                title.style.transition = 'all 0.8s ease';
+                
+                setTimeout(() => {
+                    title.style.opacity = '1';
+                    title.style.transform = 'translateX(0)';
+                }, index * 300);
+            }
+        });
+    }, 1200);
+
+    // 8. ANIMASI NOTIFICATION BELL
+    const bellButton = document.querySelector('.fa-bell');
+    if (bellButton) {
+        bellButton.parentElement.addEventListener('click', function() {
+            bellButton.classList.add('bell-ring');
+            setTimeout(() => {
+                bellButton.classList.remove('bell-ring');
+            }, 1000);
+        });
+    }
+
+    // 9. ANIMASI SAAT SCROLL
+    let isScrolling = false;
+    window.addEventListener('scroll', () => {
+        if (!isScrolling) {
+            window.requestAnimationFrame(() => {
+                const scrolled = window.pageYOffset;
+                const header = document.querySelector('header');
+                if (header && scrolled > 50) {
+                    header.style.backdropFilter = 'blur(10px)';
+                    header.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+                } else if (header) {
+                    header.style.backdropFilter = 'none';
+                    header.style.backgroundColor = 'white';
+                }
+                isScrolling = false;
+            });
+            isScrolling = true;
+        }
+    });
+
+    console.log('Semua animasi telah diinisialisasi!');
+});
+
+// Function untuk inject CSS styles
+function injectAnimationStyles() {
+    const style = document.createElement('style');
+    style.id = 'kelas-animations-styles';
+    style.textContent = `
+        /* Keyframe animations */
+        @keyframes bell-ring {
+            0%, 100% { transform: rotate(0deg); }
+            10%, 30%, 50%, 70%, 90% { transform: rotate(-10deg); }
+            20%, 40%, 60%, 80% { transform: rotate(10deg); }
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translate3d(0, 40px, 0);
+            }
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+        
+        @keyframes bounceIn {
+            0%, 20%, 40%, 60%, 80%, 100% {
+                transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+            }
+            0% {
+                opacity: 0;
+                transform: scale3d(.3, .3, .3);
+            }
+            20% {
+                transform: scale3d(1.1, 1.1, 1.1);
+            }
+            40% {
+                transform: scale3d(.9, .9, .9);
+            }
+            60% {
+                opacity: 1;
+                transform: scale3d(1.03, 1.03, 1.03);
+            }
+            80% {
+                transform: scale3d(.97, .97, .97);
+            }
+            100% {
+                opacity: 1;
+                transform: scale3d(1, 1, 1);
+            }
+        }
+        
+        /* Utility classes */
+        .bell-ring {
+            animation: bell-ring 1s ease-in-out;
+        }
+        
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin-left: -10px;
+            margin-top: -10px;
+        }
+        
+        .loading-spinner {
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            width: 12px;
+            height: 12px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        
+        /* Smooth transitions */
+        * {
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+        }
+        
+        /* Hover effects enhancement */
+        button:hover {
+            cursor: pointer;
+        }
+        
+        .cursor-pointer:hover {
+            cursor: pointer;
+        }
+        
+        /* Enhanced shadows */
+        .shadow-lg {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .shadow-lg:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+    `;
+    
+    // Remove existing styles if any
+    const existingStyle = document.getElementById('kelas-animations-styles');
+    if (existingStyle) {
+        existingStyle.remove();
+    }
+    
+    document.head.appendChild(style);
+    console.log('CSS animasi berhasil diinjeksi!');
+}
+
+// Enhanced Modul JavaScript with Smooth Animations
+const modul = {
+    // Initialize the module system
+    init() {
+        this.setupEventListeners();
+        this.initializeDefaultTabs();
+        this.addTransitionStyles();
+    },
+
+    // Add CSS transition styles dynamically
+    addTransitionStyles() {
+        const style = document.createElement('style');
+        style.textContent = `
+            .tab-modul, .tab-ngajar, .sub-tab-group {
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                transform-origin: top;
+            }
+            
+            .tab-modul.hidden, .tab-ngajar.hidden, .sub-tab-group.hidden {
+                opacity: 0;
+                transform: translateY(-10px) scale(0.98);
+                max-height: 0;
+                overflow: hidden;
+                padding: 0;
+                margin: 0;
+            }
+            
+            .tab-modul:not(.hidden), .tab-ngajar:not(.hidden), .sub-tab-group:not(.hidden) {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                max-height: 1000px;
+            }
+            
+            .toggle-modul, .toggle-tab, .toggle-ngajar {
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                transform: translateY(0);
+            }
+            
+            .toggle-modul:hover, .toggle-tab:hover, .toggle-ngajar:hover {
+                transform: translateY(-2px);
+                box-shadow: 0px 6px 8px rgba(0, 61, 78, 0.3);
+            }
+            
+            .toggle-modul:active, .toggle-tab:active, .toggle-ngajar:active {
+                transform: translateY(0);
+                transition: all 0.1s ease;
+            }
+            
+            .fade-in {
+                animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            }
+            
+            .fade-out {
+                animation: fadeOutDown 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            }
+            
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            @keyframes fadeOutDown {
+                from {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+            }
+            
+            .loading-shimmer {
+                background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+                background-size: 200% 100%;
+                animation: shimmer 1.5s infinite;
+            }
+            
+            @keyframes shimmer {
+                0% { background-position: -200% 0; }
+                100% { background-position: 200% 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    },
+
+    // Setup event listeners
+    setupEventListeners() {
+        // Smooth scroll for page navigation
+        document.addEventListener('DOMContentLoaded', () => {
+            this.addScrollToTopOnLoad();
+        });
+    },
+
+    // Initialize default tabs
+    initializeDefaultTabs() {
+        // Set default active states
+        setTimeout(() => {
+            const defaultModulButton = document.getElementById('btnSoal');
+            const defaultPremiumButton = document.getElementById('btnGratis');
+            
+            if (defaultModulButton) {
+                this.showModulContent('soal');
+            }
+            
+            if (defaultPremiumButton) {
+                this.showTabContent('Gratis');
+                this.showNgajarContent('soal', 'Gratis');
+            }
+        }, 100);
+    },
+
+    // Enhanced toggle function for modul pembelajaran
+    toggleModul(button) {
+        const target = button.getAttribute('data-target');
+        
+        // Add loading state
+        this.setLoadingState(button, true);
+        
+        setTimeout(() => {
+            // Update button states with animation
+            this.updateButtonStates('.toggle-modul', button);
+            
+            // Show content with animation
+            this.showModulContent(target);
+            
+            // Remove loading state
+            this.setLoadingState(button, false);
+        }, 200);
+    },
+
+    // Enhanced toggle function for premium/gratis
+    togglePremium(button) {
+        const target = button.getAttribute('data-target');
+        
+        // Add loading state
+        this.setLoadingState(button, true);
+        
+        setTimeout(() => {
+            // Update button states
+            this.updateButtonStates('.toggle-tab', button);
+            
+            // Show content with animation
+            this.showTabContent(target);
+            
+            // Reset ngajar buttons to first option
+            this.resetNgajarButtons(target);
+            this.showNgajarContent('soal', target);
+            
+            // Remove loading state
+            this.setLoadingState(button, false);
+        }, 200);
+    },
+
+    // Enhanced toggle function for ngajar content
+    toggleNgajar(button, parentTab) {
+        const target = button.getAttribute('data-target');
+        
+        // Add loading state
+        this.setLoadingState(button, true);
+        
+        setTimeout(() => {
+            // Update button states within the parent tab
+            const parentElement = document.getElementById(parentTab);
+            if (parentElement) {
+                const buttons = parentElement.querySelectorAll('.toggle-ngajar');
+                this.updateButtonStatesInParent(buttons, button);
+            }
+            
+            // Show content with animation
+            this.showNgajarContent(target, parentTab);
+            
+            // Remove loading state
+            this.setLoadingState(button, false);
+        }, 200);
+    },
+
+    // Set loading state for buttons
+    setLoadingState(button, isLoading) {
+        if (isLoading) {
+            button.classList.add('loading-shimmer');
+            button.style.pointerEvents = 'none';
+        } else {
+            button.classList.remove('loading-shimmer');
+            button.style.pointerEvents = 'auto';
+        }
+    },
+
+    // Update button states with smooth transitions
+    updateButtonStates(selector, activeButton) {
+        const buttons = document.querySelectorAll(selector);
+        buttons.forEach(btn => {
+            btn.classList.remove('bg-teal-500', 'text-white');
+            btn.classList.add('bg-white', 'text-teal-500');
+        });
+        
+        // Add active state to clicked button
+        activeButton.classList.remove('bg-white', 'text-teal-500');
+        activeButton.classList.add('bg-teal-500', 'text-white');
+    },
+
+    // Update button states within a parent element
+    updateButtonStatesInParent(buttons, activeButton) {
+        buttons.forEach(btn => {
+            btn.classList.remove('bg-teal-500', 'text-white');
+            btn.classList.add('bg-white', 'text-teal-500');
+        });
+        
+        activeButton.classList.remove('bg-white', 'text-teal-500');
+        activeButton.classList.add('bg-teal-500', 'text-white');
+    },
+
+    // Show modul content with smooth animation
+    showModulContent(target) {
+        const contents = document.querySelectorAll('.tab-modul');
+        const targetContent = document.getElementById(`modul-${target}`);
+        
+        // Hide all contents
+        contents.forEach(content => {
+            if (!content.classList.contains('hidden')) {
+                content.classList.add('fade-out');
+                setTimeout(() => {
+                    content.classList.add('hidden');
+                    content.classList.remove('fade-out');
+                }, 300);
+            }
+        });
+        
+        // Show target content
+        if (targetContent) {
+            setTimeout(() => {
+                targetContent.classList.remove('hidden');
+                targetContent.classList.add('fade-in');
+                setTimeout(() => {
+                    targetContent.classList.remove('fade-in');
+                }, 500);
+            }, 300);
+        }
+    },
+
+    // Show tab content with smooth animation
+    showTabContent(target) {
+        const contents = document.querySelectorAll('.sub-tab-group');
+        const targetContent = document.getElementById(target);
+        
+        // Hide all contents
+        contents.forEach(content => {
+            if (!content.classList.contains('hidden')) {
+                content.classList.add('fade-out');
+                setTimeout(() => {
+                    content.classList.add('hidden');
+                    content.classList.remove('fade-out');
+                }, 300);
+            }
+        });
+        
+        // Show target content
+        if (targetContent) {
+            setTimeout(() => {
+                targetContent.classList.remove('hidden');
+                targetContent.classList.add('fade-in');
+                setTimeout(() => {
+                    targetContent.classList.remove('fade-in');
+                }, 500);
+            }, 300);
+        }
+    },
+
+    // Show ngajar content with smooth animation
+    showNgajarContent(target, parentTab) {
+        const contents = document.querySelectorAll(`#${parentTab} .tab-ngajar`);
+        const targetContent = document.getElementById(`ngajar-${parentTab}-${target}`);
+        
+        // Hide all contents in this parent tab
+        contents.forEach(content => {
+            if (!content.classList.contains('hidden')) {
+                content.classList.add('fade-out');
+                setTimeout(() => {
+                    content.classList.add('hidden');
+                    content.classList.remove('fade-out');
+                }, 300);
+            }
+        });
+        
+        // Show target content
+        if (targetContent) {
+            setTimeout(() => {
+                targetContent.classList.remove('hidden');
+                targetContent.classList.add('fade-in');
+                setTimeout(() => {
+                    targetContent.classList.remove('fade-in');
+                }, 500);
+            }, 300);
+        }
+    },
+
+    // Reset ngajar buttons to default state
+    resetNgajarButtons(parentTab) {
+        const parentElement = document.getElementById(parentTab);
+        if (parentElement) {
+            const buttons = parentElement.querySelectorAll('.toggle-ngajar');
+            buttons.forEach((btn, index) => {
+                btn.classList.remove('bg-teal-500', 'text-white');
+                btn.classList.add('bg-white', 'text-teal-500');
+                
+                // Set first button as active
+                if (index === 0) {
+                    btn.classList.remove('bg-white', 'text-teal-500');
+                    btn.classList.add('bg-teal-500', 'text-white');
+                }
+            });
+        }
+    },
+
+    // Add smooth scroll to top on page load
+    addScrollToTopOnLoad() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    },
+
+    // Utility function for smooth scrolling to elements
+    scrollToElement(elementId) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    },
+
+    // Add pulse animation to buttons
+    addPulseAnimation(button) {
+        button.style.animation = 'pulse 0.6s cubic-bezier(0.4, 0, 0.6, 1)';
+        setTimeout(() => {
+            button.style.animation = '';
+        }, 600);
+    }
+};
+
+// Initialize the module system when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    modul.init();
+});
+
+// Add global styles for better UX
+const globalStyles = `
+    .pulse {
+        animation: pulse 0.6s cubic-bezier(0.4, 0, 0.6, 1);
+    }
+    
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.05);
+        }
+    }
+    
+    .smooth-transition {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .content-enter {
+        animation: contentEnter 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+    
+    @keyframes contentEnter {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+`;
+
+// Add global styles to document
+const styleSheet = document.createElement('style');
+styleSheet.textContent = globalStyles;
+document.head.appendChild(styleSheet);

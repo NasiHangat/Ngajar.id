@@ -51,6 +51,28 @@ for ($i = 1; $i <= 12; $i++) {
     $row = mysqli_fetch_assoc($result);
     $monthly_topup[] = $row['total'] ? (int)$row['total'] : 0;
 }
+
+// Query untuk Peringkat Teratas Topup Token
+$top_murid = [];
+$query_top_murid = "
+    SELECT ranked.name, ranked.total_token, ranked.rank FROM (
+        SELECT 
+            u.name, 
+            SUM(t.jumlah_token) AS total_token,
+            RANK() OVER (ORDER BY SUM(t.jumlah_token) DESC) AS rank
+        FROM topup t
+        JOIN users u ON u.user_id = t.user_id
+        WHERE u.role = 'murid'
+        GROUP BY t.user_id
+    ) AS ranked
+    WHERE ranked.rank <= 3
+    ORDER BY ranked.rank
+";
+
+$result_top_murid = mysqli_query($conn, $query_top_murid);
+while ($row = mysqli_fetch_assoc($result_top_murid)) {
+    $top_murid[] = $row;
+}
 ?>
 
 <!DOCTYPE html>
@@ -91,16 +113,13 @@ for ($i = 1; $i <= 12; $i++) {
                     <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Dashboard</h1>
                 </div>
                 <div class="flex items-center space-x-2 sm:space-x-4">
-                    <button class="text-teal-500 hover:text-teal-600 p-2 rounded-full transition-colors">
-                        <i class="fas fa-bell text-xl"></i>
-                    </button>
                     <?php include "../includes/Profile.php"; ?>
                 </div>
             </div>
         </header>
         <?php include "../Includes/sidebar.php"?>
         <div class="bg-dashboard-section">
-            <div class="max-w-6xl mx-auto px-4 py-6">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div class="bg-teal-500 text-white p-5 rounded-lg shadow-md stat-card">
                         <div class="flex items-center justify-between">
@@ -145,7 +164,7 @@ for ($i = 1; $i <= 12; $i++) {
             </div>
         </div>
         <div class="bg-white shadow-sm">
-            <div class="max-w-6xl mx-auto px-4 py-8">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-6">
                     <div class="flex flex-col items-start h-[400px]">
                         <h3 class="text-lg font-semibold text-teal-500 leading-tight mb-4">Statistik Update Token Bulanan</h3>
@@ -163,6 +182,47 @@ for ($i = 1; $i <= 12; $i++) {
         </div>
     </div>
     
+    <section class="py-8 px-4">
+                <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+                    <h2 class="text-2xl font-bold text-center text-teal-500 mb-8">Peringkat Teratas Pembelian Token</h2>
+                    <div class="flex justify-center items-end gap-4 md:gap-6">
+                        <!-- Peringkat 2 -->
+                        <div class="text-center w-1/3">
+                            <img src="https://placehold.co/80x80/c0c0c0/FFFFFF?text=2nd" alt="Peringkat 2" class="w-20 h-20 rounded-full mx-auto border-4 border-gray-300">
+                            <h4 class="font-bold mt-2 text-teal-500"><?php echo htmlspecialchars($top_murid[1]['name'] ?? 'N/A'); ?></h4>
+                            <div class="flex items-center justify-center text-yellow-500 font-bold"><i class="fas fa-star mr-1"></i><span><?php echo $top_murid[1]['total_token'] ?? 0; ?></span></div>
+                            <div class="bg-gray-200 rounded-t-lg p-6 mt-2 h-32 flex items-center justify-center">
+                                <i class="fas fa-trophy text-5xl text-gray-400"></i>
+                                <span class="text-6xl font-black text-gray-400">2</span>
+                            </div>
+                        </div>
+                        <!-- Peringkat 1 -->
+                        <div class="text-center w-1/3">
+                            <div class="relative inline-block">
+                                <img src="https://placehold.co/96x96/ffd700/FFFFFF?text=1st" alt="Peringkat 1" class="w-24 h-24 rounded-full mx-auto border-4 border-yellow-400">
+                                <i class="fas fa-crown text-3xl text-yellow-500 absolute -top-4 right-0 transform rotate-12"></i>
+                            </div>
+                            <h4 class="font-bold mt-2 text-teal-500"><?php echo htmlspecialchars($top_murid[0]['name'] ?? 'N/A'); ?></h4>
+                            <div class="flex items-center justify-center text-yellow-500 font-bold"><i class="fas fa-star mr-1"></i><span><?php echo $top_murid[0]['total_token'] ?? 0; ?></span></div>
+                            <div class="bg-yellow-300 rounded-t-lg p-6 mt-2 h-48 flex items-center justify-center">
+                                <i class="fas fa-trophy text-6xl text-yellow-500"></i>
+                                <span class="text-7xl font-black text-yellow-600">1</span>
+                            </div>
+                        </div>
+                        <!-- Peringkat 3 -->
+                        <div class="text-center w-1/3">
+                            <img src="https://placehold.co/80x80/cd7f32/FFFFFF?text=3rd" alt="Peringkat 3" class="w-20 h-20 rounded-full mx-auto border-4 border-orange-300">
+                            <h4 class="font-bold mt-2 text-teal-500"><?php echo htmlspecialchars($top_murid[2]['name'] ?? 'N/A'); ?></h4>
+                            <div class="flex items-center justify-center text-yellow-500 font-bold"><i class="fas fa-star mr-1"></i><span><?php echo $top_murid[2]['total_token'] ?? 0; ?></span></div>
+                            <div class="bg-orange-200 rounded-t-lg p-6 mt-2 h-24 flex items-center justify-center">
+                                <i class="fas fa-trophy text-4xl text-orange-400"></i>
+                                <span class="text-5xl font-black text-orange-500">3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
     <!-- Pass data ke JavaScript -->
     <script>
         // Data untuk charts

@@ -80,6 +80,27 @@ $result_riwayat = $conn->query($sql_riwayat);
                 </tbody>
 
             </table>
+            <!-- Penjelasan Donasi -->
+            <div class="mt-10 bg-gray-100 rounded-lg p-6 text-justify">
+                <h3 class="text-xl font-bold text-teal-700 mb-4">Tentang Donasi di Ngajar.ID</h3>
+                <p class="mb-4 text-gray-800">
+                    Donasi yang terkumpul di <strong>Ngajar.ID</strong> bertujuan untuk membantu pelajar dari keluarga kurang mampu agar tetap dapat mengakses pendidikan secara gratis dan layak. 
+                    Kami percaya bahwa setiap anak berhak mendapatkan kesempatan belajar tanpa terkendala biaya.
+                </p>
+                <p class="mb-4 text-gray-800">
+                    Dana yang Anda donasikan akan disalurkan dalam bentuk:
+                </p>
+                <ul class="list-disc ml-6 text-gray-800 mb-4">
+                    <li>Beasiswa pendidikan bagi siswa berprestasi namun terkendala biaya</li>
+                    <li>Paket belajar seperti modul, kuota internet, dan perangkat pendukung</li>
+                    <li>Pelatihan dan pendampingan belajar secara daring bersama relawan pengajar</li>
+                </ul>
+                <p class="text-gray-800">
+                    Transparansi adalah komitmen kami. Anda dapat melihat jumlah total donasi dan riwayat kontribusi pada halaman ini secara langsung dan real-time. 
+                    Setiap rupiah yang Anda berikan sangat berarti dalam membuka masa depan cerah bagi para pelajar di seluruh Indonesia.
+                </p>
+            </div>
+
         </div>
     </div>
 
