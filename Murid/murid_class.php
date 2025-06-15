@@ -231,7 +231,7 @@ if ($id_pengguna) {
                                         </div>
                                         <input type="hidden" name="kelas_id" value="<?= $item['kelas_id'] ?>">
                                             <button type="submit" name="keluar"
-                                                class="text-sm bg-white hover:bg-teal-600 text-teal-500 font-semibold px-4 py-1 rounded shadow">
+                                                class="text-sm bg-white text-teal-500 font-semibold px-4 py-1 rounded shadow">
                                                 Keluar
                                             </button>
                                         </input>
