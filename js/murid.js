@@ -690,13 +690,11 @@ style.textContent = `
 
 document.head.appendChild(style);
 
-// Animasi untuk Dashboard Kelas Ngajar.ID - VERSI PERBAIKAN
-console.log('JavaScript animasi dimuat!'); // Debug log
+console.log('JavaScript animasi dimuat!'); 
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM sudah siap, memulai animasi...'); // Debug log
+    console.log('DOM sudah siap, memulai animasi...');
     
-    // Inject CSS animations first
     injectAnimationStyles();
     
     // 1. ANIMASI HAMBURGER MENU

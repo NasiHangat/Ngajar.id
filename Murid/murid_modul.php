@@ -68,6 +68,25 @@ if (!empty($kelasIds)) {
     }
     $stmt->close();
 }
+
+$token = 0;
+if ($id_pengguna) {
+    // Ambil nama
+    $stmt = $conn->prepare("SELECT name FROM users WHERE user_id = ?");
+    $stmt->bind_param("i", $id_pengguna);
+    $stmt->execute();
+    $stmt->bind_result($namaPengguna);
+    $stmt->fetch();
+    $stmt->close();
+
+    // Ambil token
+    $stmt = $conn->prepare("SELECT jumlah FROM token WHERE user_id = ?");
+    $stmt->bind_param("i", $id_pengguna);
+    $stmt->execute();
+    $stmt->bind_result($token);
+    $stmt->fetch();
+    $stmt->close();
+}
 ?>
 
 <!DOCTYPE html>
@@ -79,7 +98,7 @@ if (!empty($kelasIds)) {
     <title>Modul - Ngajar.ID</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" type="image/png" href="../img/Logo.png">
-    <script src="../js/murid.js"></script>
+    <script src="../js/token.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;500;600;700;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -114,33 +133,33 @@ if (!empty($kelasIds)) {
                 </div>
             </header>
             <?php include "../Includes/sidebar.php" ?>
-            <div class="bg-teal-500 py-4">
-                <div class="max-w-6xl mx-auto px-4 sm:px-8 flex items-start justify-between">
-                    <div class="flex items-center space-x-4">
-                        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white flex items-center justify-center">
-                            <i class="fa-regular fa-user text-teal-500 text-3xl"></i>
+                    <div class="bg-teal-500 py-4">
+            <div class="max-w-6xl mx-auto px-4 sm:px-8 flex items-start justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white flex items-center justify-center">
+                        <i class="fa-regular fa-user text-teal-500 text-3xl"></i>
+                    </div>
+                    <div class="text-white">
+                        <h2 class="font-bold text-base sm:text-lg leading-tight"><?php echo $namaPengguna; ?></h2>
+                        <div class="text-white-200 opacity-70 text-xs sm:text-sm leading-tight">
+                            <?php echo htmlspecialchars(ucfirst($rolePengguna)); ?>
                         </div>
-                        <div class="text-white">
-                            <h2 class="font-bold text-base sm:text-lg leading-tight "><?php echo $namaPengguna; ?></h2>
-                            <div class="text-white-200 opacity-70 text-xs sm:text-sm leading-tight">
-                                <?php echo htmlspecialchars(ucfirst($rolePengguna)); ?>
+                        <div class="mt-2 flex items-center space-x-2">
+                            <div
+                                class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm">
+                                <img src="../img/coin.png" class="w-3 h-3" alt="Token">
+                                <?php echo htmlspecialchars($token); ?>
                             </div>
-                            <!-- Token dan tombol tambah diletakkan di bawah -->
-                            <div class="mt-2 flex items-center space-x-2">
-                                <div
-                                    class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm">
-                                    <img src="../img/coin.png" class="w-3 h-3" alt="Token">
-                                    <?php echo htmlspecialchars($token); ?>
-                                </div>
-                                <button
-                                    class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center">
-                                    <i class="fas fa-plus text-sm"></i>
-                                </button>
-                            </div>
+                            <button id="openPopup"
+                                class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center">
+                                <i class="fas fa-plus text-sm"></i>
+                            </button>
+                            <?php include "../Includes/token.php"; ?>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
             <main class="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
                 <section class="mb-8">

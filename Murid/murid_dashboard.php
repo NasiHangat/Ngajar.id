@@ -100,7 +100,24 @@ if (!empty($kelasIds)) {
     }
     $stmt->close();
 }
+$token = 0;
+if ($id_pengguna) {
+    // Ambil nama
+    $stmt = $conn->prepare("SELECT name FROM users WHERE user_id = ?");
+    $stmt->bind_param("i", $id_pengguna);
+    $stmt->execute();
+    $stmt->bind_result($namaPengguna);
+    $stmt->fetch();
+    $stmt->close();
 
+    // Ambil token
+    $stmt = $conn->prepare("SELECT jumlah FROM token WHERE user_id = ?");
+    $stmt->bind_param("i", $id_pengguna);
+    $stmt->execute();
+    $stmt->bind_result($token);
+    $stmt->fetch();
+    $stmt->close();
+}
 ?>
 
 <!DOCTYPE html>
