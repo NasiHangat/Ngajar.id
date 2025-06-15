@@ -122,7 +122,7 @@ while ($row = mysqli_fetch_assoc($result_top_murid)) {
         </header>
         <?php include "../Includes/sidebar.php"?>
         <div class="bg-dashboard-section">
-            <div class="max-w-6xl mx-auto px-4 py-6">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div class="bg-teal-500 text-white p-5 rounded-lg shadow-md stat-card">
                         <div class="flex items-center justify-between">
@@ -167,7 +167,7 @@ while ($row = mysqli_fetch_assoc($result_top_murid)) {
             </div>
         </div>
         <div class="bg-white shadow-sm">
-            <div class="max-w-6xl mx-auto px-4 py-8">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-6">
                     <div class="flex flex-col items-start h-[400px]">
                         <h3 class="text-lg font-semibold text-teal-500 leading-tight mb-4">Statistik Update Token Bulanan</h3>
@@ -185,8 +185,8 @@ while ($row = mysqli_fetch_assoc($result_top_murid)) {
         </div>
     </div>
     
-    <section class="py-10 px-4">
-                <div class="max-w-4xl mx-auto">
+    <section class="py-8 px-4">
+                <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
                     <h2 class="text-2xl font-bold text-center text-teal-500 mb-8">Peringkat Teratas Pembelian Token</h2>
                     <div class="flex justify-center items-end gap-4 md:gap-6">
                         <!-- Peringkat 2 -->
