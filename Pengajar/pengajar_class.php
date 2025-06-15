@@ -103,7 +103,7 @@ if ($pengajar_id) {
                                     </a>
                                     <div class="text-base font-bold text-gray-600 space-y-1">
                                         <p>Jumlah siswa: <?= $item['jumlah_siswa'] ?></p>
-                                        <p>Modul: <?= $item['jumlah_materi'] ?></p>
+                                        <p>Materi: <?= $item['jumlah_materi'] ?></p>
                                     </div>
 
                                     <div class="flex items-center gap-3 mt-4">

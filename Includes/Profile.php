@@ -22,7 +22,7 @@ if (isset($_SESSION['user_id']) && $conn) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="id" x-data="{ open: false }" xmlns="http://www.w3.org/1999/xhtml">
+<html lang>
 <?php
 $rolePengguna = $_SESSION['role'] ?? 'murid';
 $emailPengguna = "";
@@ -64,7 +64,7 @@ if (isset($_SESSION['user_id'])) {
             }
         });
     }
-});
+}); 
 </script>
 <body class="bg-gray-900 min-h-screen flex items-center justify-center">
 <div class="relative">
@@ -83,5 +83,51 @@ if (isset($_SESSION['user_id'])) {
             <p class="text-sm text-gray-700"><?php echo htmlspecialchars($emailPengguna); ?></p></div>
     </div>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('token-modal');
+    const bukaBtn = document.getElementById('buka-token');
+    const tutupBtn = document.getElementById('tutup-modal');
+    const tokenContent = document.getElementById('token-content');
+
+    bukaBtn.addEventListener('click', () => {
+        fetch('token.php')
+            .then(response => response.text())
+            .then(html => {
+                tokenContent.innerHTML = html;
+                modal.classList.remove('hidden');
+
+                const options = tokenContent.querySelectorAll('.topup-option');
+                const beliSection = tokenContent.querySelector('#beli-section');
+                let selectedToken = null;
+
+                options.forEach(option => {
+                    option.addEventListener('click', () => {
+                        options.forEach(o => o.classList.remove('border-4', 'border-green-500'));
+                        option.classList.add('border-4', 'border-green-500');
+                        selectedToken = {
+                            tokens: option.dataset.tokens,
+                            price: option.dataset.price
+                        };
+                        beliSection.classList.remove('hidden');
+                    });
+                });
+
+                const beliBtn = tokenContent.querySelector('#beli-button');
+                beliBtn.addEventListener('click', () => {
+                    if (selectedToken) {
+                        alert(`Lanjut ke proses pembayaran...\n${selectedToken.tokens} Token berhasil dibeli!`);
+                        modal.classList.add('hidden');
+                    }
+                });
+            });
+    });
+
+    tutupBtn.addEventListener('click', () => {
+        modal.classList.add('hidden');
+    });
+});
+</script>
+
 </body>
 </html>
