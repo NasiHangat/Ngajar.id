@@ -49,6 +49,29 @@ while ($row = $result->fetch_assoc()) {
     $kelas[] = $row;
 }
 $stmt->close();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ikuti'])) {
+    $kelas_id_ikut = $_POST['kelas_id'];
+
+    // Cegah duplikasi jika siswa sudah mengikuti kelas
+    $stmt = $conn->prepare("SELECT * FROM kelas_peserta WHERE siswa_id = ? AND kelas_id = ?");
+    $stmt->bind_param("ii", $id_pengguna, $kelas_id_ikut);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 0) {
+        // Jika belum, tambahkan
+        $stmt = $conn->prepare("INSERT INTO kelas_peserta (siswa_id, kelas_id, tanggal_daftar) VALUES (?, ?, NOW())");
+        $stmt->bind_param("ii", $id_pengguna, $kelas_id_ikut);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    // Refresh halaman agar data terbaru muncul
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -149,8 +172,8 @@ $stmt->close();
 
                                     <!-- Bagian Bawah: Tombol -->
                                     <div class="bg-white h-full p-4 rounded-br-lg flex items-end justify-end">
-                                        <form action="../pengajar/detail_kelas.php" method="POST"
-                                            onClick="event.stopPropagation();">
+                                        <form action="" method="POST" onClick="event.stopPropagation();">
+
                                             <input type="hidden" name="kelas_id" value="<?= $item['kelas_id'] ?>">
                                             <button type="submit" name="ikuti"
                                                 class="text-sm bg-teal-500 hover:bg-teal-600 text-white font-semibold px-4 py-1 rounded shadow">
