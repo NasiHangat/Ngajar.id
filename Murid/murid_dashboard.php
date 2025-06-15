@@ -95,7 +95,7 @@ if ($id_pengguna) {
         }
     }
     $stmt->close();
-    
+
 }
 
 if (!empty($kelasIds)) {
@@ -244,37 +244,50 @@ if ($id_pengguna) {
                 </div>
             </section>
             <section>
-                <div class="max-w-6xl mx-auto px-4 py-8">
-                    <h3 class="text-3xl font-bold text-teal-600 mb-6"> Modul Ngajar.ID</h3>
+                <div class="mb-3">
+                    <h3 class="text-3xl font-bold text-teal-500 mb-6 "> Modul Ngajar.ID</h3>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <?php if (!empty($modul_admin)): ?>
-                        <?php foreach ($modul_admin as $modul): ?>
-                        <div class="bg-white rounded-lg shadow-md p-5 hover:shadow-xl transition duration-300 relative group">
-                            <h2 class="text-lg font-bold text-teal-700 mb-1"><?= htmlspecialchars($modul['judul']) ?></h2>
-                            <p class="text-gray-600 text-sm mb-3 line-clamp-3"><?= htmlspecialchars($modul['deskripsi']) ?></p>
+                        <?php if (!empty($modul_admin)): ?>
+                            <?php foreach ($modul_admin as $modul): ?>
+                                <div
+                                    class="rounded-xl shadow-md border border-teal-500 hover:shadow-lg transition duration-300">
+                                    <div class="bg-white rounded-xl p-5 relative group">
+                                        <h2 class="text-lg font-bold text-teal-700 mb-1">
+                                            <?= htmlspecialchars($modul['judul']) ?>
+                                        </h2>
+                                        <p class="text-gray-600 text-sm mb-3 line-clamp-3">
+                                            <?= htmlspecialchars($modul['deskripsi']) ?>
+                                        </p>
 
-                            <?php if (in_array($modul['modul_id'], $modul_dibeli)): ?>
-                            <a href="../pengajar/detail_materi.php?modul_id=<?= $modul['modul_id'] ?>" class="inline-block bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full hover:bg-green-200">
-                                 Sudah Dibeli - Klik untuk Buka
-                            </a>
-                            <?php else: ?>
-                            <form action="murid_beli_modul.php" method="POST" onsubmit="return confirm('Yakin ingin membeli modul ini seharga <?= (int) $modul['token_harga'] ?> token?')">
-                                <input type="hidden" name="modul_id" value="<?= $modul['modul_id'] ?>">
-                                <input type="hidden" name="harga" value="<?= (int) $modul['token_harga'] ?>">
-                                <button type="submit"
-                                class="flex items-center gap-2 bg-yellow-100 text-yellow-800 text-xs font-semibold px-3 py-1 rounded-full hover:bg-yellow-200">
-                                <img src="../img/coin.png" alt="Token" class="w-4 h-4"> Beli <?= (int) $modul['token_harga'] ?> Token
-                                </button>
-                            </form>
-                            <?php endif; ?>
+                                        <?php if (in_array($modul['modul_id'], $modul_dibeli)): ?>
+                                            <a href="../pengajar/detail_materi.php?modul_id=<?= $modul['modul_id'] ?>"
+                                                class="inline-block bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full hover:bg-green-200">
+                                                Sudah Dibeli - Klik untuk Buka
+                                            </a>
+                                        <?php else: ?>
+                                            <form action="murid_beli_modul.php" method="POST"
+                                                onsubmit="return confirm('Yakin ingin membeli modul ini seharga <?= (int) $modul['token_harga'] ?> token?')">
+                                                <input type="hidden" name="modul_id" value="<?= $modul['modul_id'] ?>">
+                                                <input type="hidden" name="harga" value="<?= (int) $modul['token_harga'] ?>">
+                                                <button type="submit"
+                                                    class="flex items-center gap-2 bg-yellow-100 text-yellow-800 text-xs font-semibold px-3 py-1 rounded-full hover:bg-yellow-200">
+                                                    <img src="../img/coin.png" alt="Token" class="w-4 h-4"> Beli
+                                                    <?= (int) $modul['token_harga'] ?> Token
+                                                </button>
+                                            </form>
+                                        <?php endif; ?>
 
-                            <div class="absolute top-2 right-2 bg-teal-500 text-white text-xs font-bold px-2 py-1 rounded-lg opacity-90 group-hover:opacity-100 transition">MODUL</div>
-                        </div>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <p class="text-gray-500">Belum ada modul yang tersedia.</p>
-                    <?php endif; ?>
+                                        <div
+                                            class="absolute top-2 right-2 bg-teal-500 text-white text-xs font-bold px-2 py-1 rounded-lg opacity-90 group-hover:opacity-100 transition">
+                                            MODUL
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p class="text-gray-500">Belum ada modul yang tersedia.</p>
+                        <?php endif; ?>
                     </div>
                 </div>
             </section>

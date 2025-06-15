@@ -188,7 +188,7 @@ if ($id_pengguna) {
             </div>
 
             <main class="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
-                
+
                 <section class="mb-8">
                     <div class="flex items-start justify-between mb-3">
                         <h1 class="text-start text-xl font-bold text-teal-500 py-2">Modul Pembelajaran</h1>
@@ -216,12 +216,12 @@ if ($id_pengguna) {
                                             class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
                                             <!-- Layer biru di kiri bawah -->
                                             <div
-                                                class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl">
+                                                class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-[#003F4A] rounded-tl-2xl rounded-bl-2xl">
                                             </div>
 
                                             <!-- Strip biru di bawah -->
                                             <div
-                                                class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl">
+                                                class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-[#003F4A] rounded-tr-2xl">
                                             </div>
 
                                             <!-- Isi Card -->
@@ -261,12 +261,12 @@ if ($id_pengguna) {
                                             class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
                                             <!-- Layer biru di kiri bawah -->
                                             <div
-                                                class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl">
+                                                class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-[#003F4A] rounded-tl-2xl rounded-bl-2xl">
                                             </div>
 
                                             <!-- Strip biru di bawah -->
                                             <div
-                                                class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl">
+                                                class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-[#003F4A] rounded-tr-2xl">
                                             </div>
 
                                             <!-- Isi Card -->
@@ -306,18 +306,18 @@ if ($id_pengguna) {
                                             class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
                                             <!-- Layer biru di kiri bawah -->
                                             <div
-                                                class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl">
+                                                class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-[#003F4A]  rounded-tl-2xl rounded-bl-2xl">
                                             </div>
 
                                             <!-- Strip biru di bawah -->
                                             <div
-                                                class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl">
+                                                class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-[#003F4A]  rounded-tr-2xl">
                                             </div>
 
                                             <!-- Isi Card -->
                                             <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
                                                 <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl"
-                                                    src="../img/Logo.png"
+                                                    src="https://placehold.co/160x90"
                                                     alt="<?= htmlspecialchars($materi['judul']) ?>">
 
                                                 <h2 class="text-emerald-500 text-lg font-bold mt-4 text-left">
@@ -359,96 +359,88 @@ if ($id_pengguna) {
                     <div id="tabContent">
                         <!-- Belum Dibeli -->
                         <div id="BelumDibeli" class="sub-tab-group block">
-                            <div class="relative mb-6">
-                                <div class="absolute top-2 right-2 w-full h-full bg-[#003F4A] rounded-lg z-0"></div>
-                                <div
-                                    class="relative w-full h-full bg-white border-4 border-[#003F4A] rounded-lg z-10 p-5 space-y-3">
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                                        <?php
-                                        $adaBelumDibeli = false;
-                                        if (!empty($modul_admin)):
-                                            foreach ($modul_admin as $modul):
-                                                if (!in_array($modul['modul_id'], $modul_dibeli)):
-                                                    $adaBelumDibeli = true;
-                                                    ?>
-                                                    <div class="flex items-start space-x-4">
-                                                        <div
-                                                            class="bg-teal-500 text-white font-bold p-4 py-10 border-l-8 border-[#003F4A] rounded-lg shadow-md">
-                                                            <?= strtoupper(substr($modul['judul'], 0, 6)) ?>
-                                                        </div>
-                                                        <div>
-                                                            <p class="text-teal-500 font-bold">
-                                                                <?= htmlspecialchars($modul['judul']) ?></p>
-                                                            <form action="murid_beli_modul.php" method="POST"
-                                                                onsubmit="return confirm('Yakin ingin membeli modul ini seharga <?= (int) $modul['token_harga'] ?> token?')">
-                                                                <input type="hidden" name="modul_id"
-                                                                    value="<?= $modul['modul_id'] ?>">
-                                                                <input type="hidden" name="harga"
-                                                                    value="<?= (int) $modul['token_harga'] ?>">
-                                                                <button type="submit"
-                                                                    class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm hover:bg-yellow-200">
-                                                                    <img src="../img/coin.png" class="w-3 h-3" alt="Token">
-                                                                    Beli <?= (int) $modul['token_harga'] ?>
-                                                                </button>
-                                                            </form>
-                                                            <div class="text-sm text-gray-600 mt-1">
-                                                                <?= htmlspecialchars($modul['deskripsi']) ?></div>
-                                                        </div>
-                                                    </div>
-                                                    <?php
-                                                endif;
-                                            endforeach;
-                                        endif;
-                                        if (!$adaBelumDibeli):
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <?php
+                                $adaBelumDibeli = false;
+                                if (!empty($modul_admin)):
+                                    foreach ($modul_admin as $modul):
+                                        if (!in_array($modul['modul_id'], $modul_dibeli)):
+                                            $adaBelumDibeli = true;
                                             ?>
-                                            <p class="text-sm text-gray-500 col-span-full">Tidak ada modul yang belum
-                                                dibeli.</p>
-                                        <?php endif; ?>
-                                    </div>
-                                </div>
+                                            <div
+                                                class="rounded-xl shadow-md border border-teal-500 hover:shadow-lg transition duration-300">
+                                                <div class="bg-white rounded-xl p-5 relative group">
+                                                    <h2 class="text-lg font-bold text-teal-700 mb-1">
+                                                        <?= htmlspecialchars($modul['judul']) ?>
+                                                    </h2>
+                                                    <p class="text-gray-600 text-sm mb-3 line-clamp-3">
+                                                        <?= htmlspecialchars($modul['deskripsi']) ?>
+                                                    </p>
+                                                    <form action="murid_beli_modul.php" method="POST"
+                                                        onsubmit="return confirm('Yakin ingin membeli modul ini seharga <?= (int) $modul['token_harga'] ?> token?')">
+                                                        <input type="hidden" name="modul_id" value="<?= $modul['modul_id'] ?>">
+                                                        <input type="hidden" name="harga"
+                                                            value="<?= (int) $modul['token_harga'] ?>">
+                                                        <button type="submit"
+                                                            class="flex items-center gap-2 bg-yellow-100 text-yellow-800 text-xs font-semibold px-3 py-1 rounded-full hover:bg-yellow-200">
+                                                            <img src="../img/coin.png" alt="Token" class="w-4 h-4">
+                                                            Beli <?= (int) $modul['token_harga'] ?> Token
+                                                        </button>
+                                                    </form>
+                                                    <div
+                                                        class="absolute top-2 right-2 bg-teal-500 text-white text-xs font-bold px-2 py-1 rounded-lg opacity-90 group-hover:opacity-100 transition">
+                                                        MODUL
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <?php
+                                        endif;
+                                    endforeach;
+                                endif;
+                                if (!$adaBelumDibeli):
+                                    ?>
+                                    <p class="text-gray-500 col-span-full">Semua modul telah dibeli.</p>
+                                <?php endif; ?>
                             </div>
                         </div>
 
                         <!-- Sudah Dibeli -->
                         <div id="SudahDibeli" class="sub-tab-group hidden">
-                            <div class="relative">
-                                <div class="absolute top-2 right-2 w-full h-full bg-[#003F4A] rounded-lg z-0"></div>
-                                <div
-                                    class="relative w-full h-full bg-white border-4 border-[#003F4A] rounded-lg z-10 p-5 space-y-3">
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                                        <?php
-                                        $adaSudahDibeli = false;
-                                        if (!empty($modul_admin)):
-                                            foreach ($modul_admin as $modul):
-                                                if (in_array($modul['modul_id'], $modul_dibeli)):
-                                                    $adaSudahDibeli = true;
-                                                    ?>
-                                                    <div class="flex items-start space-x-4">
-                                                        <div
-                                                            class="bg-teal-500 text-white font-bold p-4 py-10 border-l-8 border-[#003F4A] rounded-lg shadow-md">
-                                                            <?= strtoupper(substr($modul['judul'], 0, 6)) ?>
-                                                        </div>
-                                                        <div>
-                                                            <a href="../pengajar/detail_materi.php?modul_id=<?= $modul['modul_id'] ?>"
-                                                                class="text-teal-500 font-bold hover:underline">
-                                                                <?= htmlspecialchars($modul['judul']) ?>
-                                                            </a>
-                                                            <div class="text-sm text-green-600 mt-1 font-semibold">Sudah Dibeli
-                                                            </div>
-                                                            <div class="text-sm text-gray-600 mt-1">
-                                                                <?= htmlspecialchars($modul['deskripsi']) ?></div>
-                                                        </div>
-                                                    </div>
-                                                    <?php
-                                                endif;
-                                            endforeach;
-                                        endif;
-                                        if (!$adaSudahDibeli):
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <?php
+                                $adaSudahDibeli = false;
+                                if (!empty($modul_admin)):
+                                    foreach ($modul_admin as $modul):
+                                        if (in_array($modul['modul_id'], $modul_dibeli)):
+                                            $adaSudahDibeli = true;
                                             ?>
-                                            <p class="text-sm text-gray-500 col-span-full">Belum ada modul yang dibeli.</p>
-                                        <?php endif; ?>
-                                    </div>
-                                </div>
+                                            <div
+                                                class="rounded-xl shadow-md border border-teal-500 hover:shadow-lg transition duration-300">
+                                                <div class="bg-white rounded-xl p-5 relative group">
+                                                    <h2 class="text-lg font-bold text-teal-700 mb-1">
+                                                        <?= htmlspecialchars($modul['judul']) ?>
+                                                    </h2>
+                                                    <p class="text-gray-600 text-sm mb-3 line-clamp-3">
+                                                        <?= htmlspecialchars($modul['deskripsi']) ?>
+                                                    </p>
+                                                    <a href="../pengajar/detail_materi.php?modul_id=<?= $modul['modul_id'] ?>"
+                                                        class="inline-block bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full hover:bg-green-200">
+                                                        Sudah Dibeli - Klik untuk Buka
+                                                    </a>
+                                                    <div
+                                                        class="absolute top-2 right-2 bg-teal-500 text-white text-xs font-bold px-2 py-1 rounded-lg opacity-90 group-hover:opacity-100 transition">
+                                                        MODUL
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <?php
+                                        endif;
+                                    endforeach;
+                                endif;
+                                if (!$adaSudahDibeli):
+                                    ?>
+                                    <p class="text-sm text-gray-500 col-span-full">Belum ada modul yang dibeli.</p>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
