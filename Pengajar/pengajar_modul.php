@@ -4,65 +4,75 @@ include '../Includes/DBkoneksi.php';
 
 $pengajar_id = $_SESSION['user_id'] ?? null;
 $pesan = null;
-
-// Ambil kelas yang dimiliki oleh pengajar
 $kelas_options = [];
+
 if ($pengajar_id) {
-    $result = $conn->query("SELECT kelas_id, judul FROM kelas WHERE pengajar_id = $pengajar_id");
+    $stmt = $conn->prepare("SELECT kelas_id, judul FROM kelas WHERE pengajar_id = ?");
+    $stmt->bind_param("i", $pengajar_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
     while ($row = $result->fetch_assoc()) {
         $kelas_options[] = $row;
     }
+    $stmt->close();
 }
 
-// Proses kirim form
+// Proses tambah materi
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['judul'], $_POST['kelas_id'], $_POST['tipe'])) {
     $judul     = $_POST['judul'];
     $kelas_id  = $_POST['kelas_id'];
     $tipe      = $_POST['tipe'];
     $file_url  = '';
+    $deskripsi = $_POST['deskripsi'] ?? '';
 
-    // Upload file
     if (!empty($_FILES['file']['name'])) {
         $nama_file = time() . '_' . basename($_FILES['file']['name']);
         $tujuan = '../uploads/materi/' . $nama_file;
 
-        // Tambahkan baris ini untuk memeriksa error upload
-        if ($_FILES['file']['error'] !== UPLOAD_ERR_OK) {
-            echo "<script>alert('Error saat upload file: " . $_FILES['file']['error'] . "');</script>";
-        }
-
-        if (move_uploaded_file($_FILES['file']['tmp_name'], $tujuan)) {
-            $file_url = $tujuan;
+        if ($_FILES['file']['error'] === UPLOAD_ERR_OK) {
+            if (move_uploaded_file($_FILES['file']['tmp_name'], $tujuan)) {
+                $file_url = $tujuan;
+            } else {
+                echo "<script>alert('Gagal memindahkan file ke tujuan.');</script>";
+            }
         } else {
-            echo "<script>alert('move_uploaded_file gagal ke: $tujuan');</script>";
+            echo "<script>alert('Error saat upload file: " . $_FILES['file']['error'] . "');</script>";
         }
     }
 
     if ($file_url !== '') {
-        // Simpan ke database
-        $stmt = $conn->prepare("INSERT INTO materi (kelas_id, judul, tipe, file_url) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("isss", $kelas_id, $judul, $tipe, $file_url);
-        $stmt->execute();
+        $stmt = $conn->prepare("INSERT INTO materi (kelas_id, judul, tipe, deskripsi, file_url) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("issss", $kelas_id, $judul, $tipe, $deskripsi, $file_url);
+        if ($stmt->execute()) {
+            $pesan = "Materi berhasil ditambahkan!";
+        } else {
+            echo "<script>alert('Gagal menyimpan materi: " . $stmt->error . "');</script>";
+        }
         $stmt->close();
-
-        $pesan = "Materi berhasil ditambahkan!";
     } else {
         echo "<script>alert('Upload file gagal. Materi tidak disimpan.');</script>";
     }
 }
 
-// Ambil semua materi
+// Ambil semua materi dari pengajar
 $materi_list = [];
-$result = $conn->query("
-    SELECT m.*, k.judul AS nama_kelas 
-    FROM materi m 
-    JOIN kelas k ON m.kelas_id = k.kelas_id 
-    WHERE k.pengajar_id = $pengajar_id 
-    ORDER BY m.created_at DESC
-");
-while ($row = $result->fetch_assoc()) {
-    $materi_list[] = $row;
+if ($pengajar_id) {
+    $stmt = $conn->prepare("
+        SELECT m.*, k.judul AS nama_kelas 
+        FROM materi m 
+        JOIN kelas k ON m.kelas_id = k.kelas_id 
+        WHERE k.pengajar_id = ? 
+        ORDER BY m.created_at DESC
+    ");
+    $stmt->bind_param("i", $pengajar_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $materi_list[] = $row;
+    }
+    $stmt->close();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -134,7 +144,12 @@ while ($row = $result->fetch_assoc()) {
                     <div class="bg-teal-500 rounded-xl shadow-md p-5 flex flex-col sm:flex-row items-center gap-6">
                         <i class="fas fa-book text-white text-8xl opacity-100"></i>
                         <div class="flex-grow w-full">
-                            <h3 id="namaList" class="text-2xl font-bold mb-2 text-white"><?= htmlspecialchars($m['judul']) ?></h3>
+                            <h3 class="text-2xl font-bold mb-2">
+                                <a href="detail_materi.php?materi_id=<?= $m['materi_id'] ?>&kelas_id=<?= $m['kelas_id'] ?>" class="text-white hover:underline">
+                                    <?= htmlspecialchars($m['judul']) ?>
+                                </a>
+                            </h3>
+
                             <div class="space-y-1 text-base font-light text-gray-100">
                                 <p>Kelas: <?= htmlspecialchars($m['nama_kelas']) ?></p>
                                 <p>Tipe: <?= $m['tipe'] ?></p>
@@ -182,7 +197,7 @@ while ($row = $result->fetch_assoc()) {
                     <div><label for="deskripsiMateri" class="block text-sm font-medium text-teal-500 mb-2">Deskripsi</label><textarea name="deskripsi" id="deskripsiMateri" placeholder="Jelaskan isi singkat dari Materi ini" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"></textarea></div>
                     <div>
                         <label for="fileMateri" class="block text-sm font-medium text-teal-500 mb-2">Upload File</label>
-                        <input name="file" type="file"type="file" id="fileMateri" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100" />
+                        <input name="file" type="file" id="fileMateri" required class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100" />
                     </div>
                     <div class="flex gap-3 pt-4"><button type="button" id="batalBtn" class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors font-medium">Batal</button><button type="submit" class="flex-1 px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition-colors font-medium">Tambah Materi</button></div>
                 </form>

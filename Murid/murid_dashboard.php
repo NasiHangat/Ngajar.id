@@ -9,11 +9,20 @@ if ($_SESSION['role'] !== 'murid') {
 $id_pengguna = $_SESSION['user_id'] ?? null;
 $namaPengguna = "";
 
+// Ambil nama dan token pengguna
+$token = 0;
 if ($id_pengguna) {
     $stmt = $conn->prepare("SELECT name FROM users WHERE user_id = ?");
     $stmt->bind_param("i", $id_pengguna);
     $stmt->execute();
     $stmt->bind_result($namaPengguna);
+    $stmt->fetch();
+    $stmt->close();
+
+    $stmt = $conn->prepare("SELECT jumlah FROM token WHERE user_id = ?");
+    $stmt->bind_param("i", $id_pengguna);
+    $stmt->execute();
+    $stmt->bind_result($token);
     $stmt->fetch();
     $stmt->close();
 }
@@ -25,7 +34,6 @@ $stmt = $conn->prepare("
     FROM modul 
     WHERE dibuat_oleh IN (SELECT user_id FROM users WHERE role = 'admin')
 ");
-
 $stmt->execute();
 $result = $stmt->get_result();
 while ($row = $result->fetch_assoc()) {
@@ -43,61 +51,18 @@ while ($row = $result->fetch_assoc()) {
 }
 $stmt->close();
 
-
-// Ambil token pengguna
-$token = 0;
-if ($id_pengguna) {
-    // Ambil nama
-    $stmt = $conn->prepare("SELECT name FROM users WHERE user_id = ?");
-    $stmt->bind_param("i", $id_pengguna);
-    $stmt->execute();
-    $stmt->bind_result($namaPengguna);
-    $stmt->fetch();
-    $stmt->close();
-
-    // Ambil token
-    $stmt = $conn->prepare("SELECT jumlah FROM token WHERE user_id = ?");
-    $stmt->bind_param("i", $id_pengguna);
-    $stmt->execute();
-    $stmt->bind_result($token);
-    $stmt->fetch();
-    $stmt->close();
-}
-
-// Ambil materi kelas yang diikuti oleh pengguna
-$materi_kelas = [];
-
-if ($id_pengguna) {
-    $stmt = $conn->prepare("
-        SELECT k.kelas_id, k.judul, k.deskripsi 
-        FROM kelas_peserta kp
-        JOIN kelas k ON kp.kelas_id = k.kelas_id
-        WHERE kp.siswa_id = ?
-    ");
-
-    $stmt->bind_param("i", $id_pengguna);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    while ($row = $result->fetch_assoc()) {
-        $materi_kelas[] = $row['judul'];
-    }
-    $stmt->close();
-}
-
-
 // Ambil materi dari kelas yang diikuti murid
 $materiList = [];
 $seen = [];
 
 if ($id_pengguna) {
     $stmt = $conn->prepare("
-        SELECT m.materi_id, m.judul AS materi_judul, m.deskripsi AS materi_deskripsi, k.judul AS kelas_judul
+        SELECT m.materi_id, m.judul AS materi_judul, m.deskripsi AS materi_deskripsi, m.kelas_id, k.judul AS kelas_judul
         FROM kelas_peserta kp
         JOIN kelas k ON kp.kelas_id = k.kelas_id
         JOIN materi m ON k.kelas_id = m.kelas_id
         WHERE kp.siswa_id = ?
     ");
-
     $stmt->bind_param("i", $id_pengguna);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -108,10 +73,33 @@ if ($id_pengguna) {
             $seen[] = $row['materi_id'];
         }
     }
-
     $stmt->close();
+    
 }
 
+if (!empty($kelasIds)) {
+    $placeholders = implode(',', array_fill(0, count($kelasIds), '?'));
+    $types = str_repeat('i', count($kelasIds));
+
+    $sql = "
+        SELECT m.materi_id, m.judul, m.tipe, m.file_url, m.kelas_id, k.judul AS nama_kelas
+        FROM materi m
+        JOIN kelas k ON m.kelas_id = k.kelas_id
+        WHERE m.kelas_id IN ($placeholders)
+    ";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param($types, ...$kelasIds);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $tipe = strtolower($row['tipe']);
+        if (isset($materiList[$tipe])) {
+            $materiList[$tipe][] = $row;
+        }
+    }
+    $stmt->close();
+}
 
 ?>
 
@@ -125,7 +113,8 @@ if ($id_pengguna) {
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" type="image/png" href="../img/Logo.png">
     <script src="../js/token.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;500;600;700;900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
@@ -166,13 +155,17 @@ if ($id_pengguna) {
                     </div>
                     <div class="text-white">
                         <h2 class="font-bold text-base sm:text-lg leading-tight"><?php echo $namaPengguna; ?></h2>
-                        <p class="text-white-200 opacity-70 text-xs sm:text-sm leading-tight">Pelajar</p>
+                        <div class="text-white-200 opacity-70 text-xs sm:text-sm leading-tight">
+                            <?php echo htmlspecialchars(ucfirst($rolePengguna)); ?>
+                        </div>
                         <div class="mt-2 flex items-center space-x-2">
-                            <div class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm">
+                            <div
+                                class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm">
                                 <img src="../img/coin.png" class="w-3 h-3" alt="Token">
                                 <?php echo htmlspecialchars($token); ?>
                             </div>
-                            <button id="openPopup" class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center">
+                            <button id="openPopup"
+                                class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center">
                                 <i class="fas fa-plus text-sm"></i>
                             </button>
                             <?php include "../Includes/token.php"; ?>
@@ -191,12 +184,16 @@ if ($id_pengguna) {
                     </div>
                     <div class="border-l-4 border-r-4 border-b-4 border-[#003F4A] shadow-lg rounded-xl p-4 bg-white">
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                            <?php if (!empty($materiList)) : ?>
+                            <?php if (!empty($materiList)): ?>
                                 <?php foreach ($materiList as $materi): ?>
-                                    <a href="murid_isimateri.php?id=<?= $materi['materi_id'] ?>" class="block bg-white p-3 rounded-lg border-l-4 border-b-2 border-t-2 border-[#003F4A] shadow-sm hover:shadow-md transition-shadow text-left">
-                                        <p class="text-sm font-bold text-teal-500"><?= htmlspecialchars($materi['materi_judul']) ?></p>
-                                        <p class="text-xs text-gray-500">Kelas: <?= htmlspecialchars($materi['kelas_judul']) ?></p>
-                                        
+                                    <a href="../Pengajar/detail_materi.php?materi_id=<?= htmlspecialchars($materi['materi_id']) ?>&kelas_id=<?= htmlspecialchars($materi['kelas_id']) ?>"
+                                        class="block hover:shadow-lg transition-shadow mb-4 p-4 border border-gray-200 rounded-lg">
+                                        <p class="text-sm font-bold text-teal-500">
+                                            <?= htmlspecialchars($materi['materi_judul']) ?>
+                                        </p>
+                                        <p class="text-xs text-gray-500">
+                                            Kelas: <?= htmlspecialchars($materi['kelas_judul']) ?>
+                                        </p>
                                     </a>
                                 <?php endforeach; ?>
                             <?php else: ?>
@@ -209,28 +206,34 @@ if ($id_pengguna) {
             <section>
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-xl font-bold text-teal-500">Modul Ngajar.Id</h3>
-                    </div>
+                </div>
                 <div class="relative">
                     <div class="absolute top-2 right-2 w-full h-full bg-[#003F4A] rounded-lg z-0"></div>
-                    <div class="relative w-full h-full bg-white border-4 border-[#003F4A] rounded-lg z-10 p-5 space-y-3">
+                    <div
+                        class="relative w-full h-full bg-white border-4 border-[#003F4A] rounded-lg z-10 p-5 space-y-3">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                            <?php if (!empty($modul_admin)) : ?>
+                            <?php if (!empty($modul_admin)): ?>
                                 <?php foreach ($modul_admin as $modul): ?>
                                     <div class="flex items-start space-x-4">
-                                        <div class="bg-teal-500 text-white font-bold p-4 py-10 border-l-8 border-[#003F4A] rounded-lg shadow-md">
+                                        <div
+                                            class="bg-teal-500 text-white font-bold p-4 py-10 border-l-8 border-[#003F4A] rounded-lg shadow-md">
                                             <?= strtoupper(substr($modul['judul'], 0, 6)) ?>
                                         </div>
                                         <div>
-                                            <a href="murid_isimodul.php?id=<?= $modul['modul_id'] ?>" class="text-teal-500 font-bold hover:underline">
+                                            <a href="murid_isimodul.php?id=<?= $modul['modul_id'] ?>"
+                                                class="text-teal-500 font-bold hover:underline">
                                                 <?= htmlspecialchars($modul['judul']) ?>
                                             </a>
-                                            <div class="text-sm text-gray-600 mt-1"><?= htmlspecialchars($modul['deskripsi']) ?></div>
-                                            <form action="murid_beli_modul.php" method="POST" onsubmit="return confirm('Yakin ingin membeli modul ini seharga <?= (int)$modul['token_harga'] ?> token?')">
+                                            <div class="text-sm text-gray-600 mt-1"><?= htmlspecialchars($modul['deskripsi']) ?>
+                                            </div>
+                                            <form action="murid_beli_modul.php" method="POST"
+                                                onsubmit="return confirm('Yakin ingin membeli modul ini seharga <?= (int) $modul['token_harga'] ?> token?')">
                                                 <input type="hidden" name="modul_id" value="<?= $modul['modul_id'] ?>">
-                                                <input type="hidden" name="harga" value="<?= (int)$modul['token_harga'] ?>">
-                                                <button type="submit" class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm hover:bg-yellow-200">
+                                                <input type="hidden" name="harga" value="<?= (int) $modul['token_harga'] ?>">
+                                                <button type="submit"
+                                                    class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm hover:bg-yellow-200">
                                                     <img src="../img/coin.png" class="w-3 h-3" alt="Token">
-                                                    Beli <?= (int)$modul['token_harga'] ?>
+                                                    Beli <?= (int) $modul['token_harga'] ?>
                                                 </button>
                                             </form>
                                         </div>
@@ -243,11 +246,11 @@ if ($id_pengguna) {
                     </div>
                 </div>
             </section>
-        </div>
+    </div>
     </main>
-        <footer>
-            <?php include '../includes/Footer.php'; ?>
-        </footer>
+    <footer>
+        <?php include '../includes/Footer.php'; ?>
+    </footer>
 </body>
 
 </html>
