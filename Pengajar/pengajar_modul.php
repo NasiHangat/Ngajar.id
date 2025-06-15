@@ -140,27 +140,27 @@ if ($pengajar_id) {
 
                 <!-- Grid Kartu Kelas -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <?php foreach ($materi_list as $m): ?>
-                    <div class="bg-teal-500 rounded-xl shadow-md p-5 flex flex-col sm:flex-row items-center gap-6">
-                        <i class="fas fa-book text-white text-8xl opacity-100"></i>
-                        <div class="flex-grow w-full">
-                            <h3 class="text-2xl font-bold mb-2">
-                                <a href="detail_materi.php?materi_id=<?= $m['materi_id'] ?>&kelas_id=<?= $m['kelas_id'] ?>" class="text-white hover:underline">
-                                    <?= htmlspecialchars($m['judul']) ?>
-                                </a>
-                            </h3>
+                    <?php foreach ($materi_list as $m): ?>
+                        <div class="bg-teal-500 rounded-xl shadow-md p-5 flex flex-col sm:flex-row items-center gap-6">
+                            <i class="fas fa-book text-white text-8xl opacity-100"></i>
+                            <div class="flex-grow w-full">
+                                <h3 class="text-2xl font-bold mb-2">
+                                    <a href="detail_materi.php?materi_id=<?= $m['materi_id'] ?>&kelas_id=<?= $m['kelas_id'] ?>" class="text-white hover:underline">
+                                        <?= htmlspecialchars($m['judul']) ?>
+                                    </a>
+                                </h3>
 
-                            <div class="space-y-1 text-base font-light text-gray-100">
-                                <p>Kelas: <?= htmlspecialchars($m['nama_kelas']) ?></p>
-                                <p>Tipe: <?= $m['tipe'] ?></p>
-                                <p>Tanggal: <?= date('d M Y', strtotime($m['created_at'])) ?></p>
-                            </div>
-                            <div class="flex items-center gap-3 mt-4">
-                                <a href="<?= $m['file_url'] ?>" target="_blank" class="bg-white text-teal-500 px-3 py-1.5 rounded-md text-xs font-bold hover:bg-teal-100 transition">Lihat File</a>
+                                <div class="space-y-1 text-base font-light text-gray-100">
+                                    <p>Kelas: <?= htmlspecialchars($m['nama_kelas']) ?></p>
+                                    <p>Tipe: <?= $m['tipe'] ?></p>
+                                    <p>Tanggal: <?= date('d M Y', strtotime($m['created_at'])) ?></p>
+                                </div>
+                                <div class="flex items-center gap-3 mt-4">
+                                    <a href="<?= $m['file_url'] ?>" target="_blank" class="bg-white text-teal-500 px-3 py-1.5 rounded-md text-xs font-bold hover:bg-teal-100 transition">Lihat File</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                <?php endforeach; ?>
+                    <?php endforeach; ?>
                 </div>
 
             </div>
@@ -180,9 +180,9 @@ if ($pengajar_id) {
                         <div>
                             <label for="kelasInduk" class="block text-sm font-medium text-teal-500  mb-2">Untuk Kelas</label>
                             <select name="kelas_id" id="kelasInduk" class="...">
-                            <?php foreach ($kelas_options as $k): ?>
-                                <option value="<?= $k['kelas_id'] ?>"><?= htmlspecialchars($k['judul']) ?></option>
-                            <?php endforeach; ?>
+                                <?php foreach ($kelas_options as $k): ?>
+                                    <option value="<?= $k['kelas_id'] ?>"><?= htmlspecialchars($k['judul']) ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                         <div>
@@ -206,40 +206,40 @@ if ($pengajar_id) {
     </div>
 
     <script>
-    document.getElementById('urutkanBtn').addEventListener('click', () => {
-    const container = document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2.gap-8');
-    const materiCards = Array.from(container.children);
-    
-    // Toggle sorting order
-    const isAscending = container.dataset.sortOrder !== 'asc';
-    container.dataset.sortOrder = isAscending ? 'asc' : 'desc';
-    
-    // Update button text to show current action
-    const sortBtn = document.getElementById('urutkanBtn');
-    sortBtn.innerHTML = `<span>${isAscending ? 'A-Z ↑' : 'Z-A ↓'}</span>`;
-    
-    // Sort the cards based on material title
-    materiCards.sort((a, b) => {
-        const titleA = a.querySelector('h3').textContent.trim().toLowerCase();
-        const titleB = b.querySelector('h3').textContent.trim().toLowerCase();
-        
-        if (isAscending) {
-            return titleA.localeCompare(titleB);
-        } else {
-            return titleB.localeCompare(titleA);
-        }
-    });
-    
-    // Clear container and re-append sorted cards
-    container.innerHTML = '';
-    materiCards.forEach(card => container.appendChild(card));
-    
-    // Add visual feedback
-    container.style.opacity = '0.7';
-    setTimeout(() => {
-        container.style.opacity = '1';
-    }, 200);
-});
+        document.getElementById('urutkanBtn').addEventListener('click', () => {
+            const container = document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2.gap-8');
+            const materiCards = Array.from(container.children);
+
+            // Toggle sorting order
+            const isAscending = container.dataset.sortOrder !== 'asc';
+            container.dataset.sortOrder = isAscending ? 'asc' : 'desc';
+
+            // Update button text to show current action
+            const sortBtn = document.getElementById('urutkanBtn');
+            sortBtn.innerHTML = `<span>${isAscending ? 'A-Z ↑' : 'Z-A ↓'}</span>`;
+
+            // Sort the cards based on material title
+            materiCards.sort((a, b) => {
+                const titleA = a.querySelector('h3').textContent.trim().toLowerCase();
+                const titleB = b.querySelector('h3').textContent.trim().toLowerCase();
+
+                if (isAscending) {
+                    return titleA.localeCompare(titleB);
+                } else {
+                    return titleB.localeCompare(titleA);
+                }
+            });
+
+            // Clear container and re-append sorted cards
+            container.innerHTML = '';
+            materiCards.forEach(card => container.appendChild(card));
+
+            // Add visual feedback
+            container.style.opacity = '0.7';
+            setTimeout(() => {
+                container.style.opacity = '1';
+            }, 200);
+        });
     </script>
 
     <footer>

@@ -264,7 +264,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (sidebar) {
               sidebar.classList.toggle('-translate-x-full');
-
             }
 
             // Allow next toggle after 300ms (adjust if needed)
