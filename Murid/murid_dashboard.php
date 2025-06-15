@@ -262,7 +262,7 @@ if ($id_pengguna) {
                                         <div>
                                             <!-- Dalam daftar modul -->
                                             <?php if (in_array($modul['modul_id'], $modul_dibeli)): ?>
-                                                <a href="../Pengajar/detail_materi.php?id=<?= $modul['modul_id'] ?>" class="text-teal-500 font-bold hover:underline">
+                                                <a href="../pengajar/detail_materi.php?modul_id=<?= $modul['modul_id'] ?>" class="text-teal-500 font-bold hover:underline">
                                                     <?= htmlspecialchars($modul['judul']) ?>
                                                 </a>
                                                 <div class="text-sm text-green-600 mt-1 font-semibold">Sudah Dibeli</div>
