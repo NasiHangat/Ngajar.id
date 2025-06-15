@@ -1,61 +1,85 @@
-<?php include '../Includes/session_check.php'; ?>
-<?php include '../Includes/DBkoneksi.php'; ?>
 <?php
-if ($_SESSION['role'] !== 'pengajar') {
-    header("Location: unauthorized.php");
-    exit;
-}
+include '../Includes/session_check.php';
+include '../Includes/DBkoneksi.php';
 
-$id_pengguna = $_SESSION['user_id'] ?? null;
-$namaPengguna = "";
+// Sesuaikan nama parameter GET sesuai URL yang kamu kirim
+$materi_id = $_GET['materi_id'] ?? null;  // pastikan di URL kamu pakai materi_id
 $kelas_id = $_GET['kelas_id'] ?? null;
+$id_pengguna = $_SESSION['user_id'] ?? null;
+$role = $_SESSION['role'] ?? null;
 
-if (!$kelas_id) {
-    echo "<p class='text-red-500 text-center font-bold mt-10'>Kelas tidak ditemukan.</p>";
+// Cek data lengkap
+if (!$kelas_id || !$materi_id || !$id_pengguna || !$role) {
+    echo "<p class='text-red-500 text-center font-bold mt-10'>Data tidak lengkap.</p>";
     exit;
 }
-$materi_id = $_GET['id'] ?? null;
 
-// Validasi apakah kelas memang milik pengajar
-$judulKelas = "";
-$stmt = $conn->prepare("SELECT judul FROM kelas WHERE kelas_id = ? AND pengajar_id = ?");
-$stmt->bind_param("ii", $kelas_id, $id_pengguna);
-$stmt->execute();
-$stmt->bind_result($judulKelas);
-if (!$stmt->fetch()) {
-    echo "<p class='text-red-500 text-center font-bold mt-10'>Kelas tidak ditemukan atau bukan milik Anda.</p>";
-    exit;
-}
-$stmt->close();
+$aksesDiizinkan = false;
 
-
-if ($id_pengguna) {
-    $stmt = $conn->prepare("SELECT name FROM users WHERE user_id = ?");
-    $stmt->bind_param("i", $id_pengguna);
+// Jika pengajar: pastikan kelas ini miliknya
+if ($role === 'pengajar') {
+    $stmt = $conn->prepare("SELECT kelas_id FROM kelas WHERE kelas_id = ? AND pengajar_id = ?");
+    $stmt->bind_param("ii", $kelas_id, $id_pengguna);
     $stmt->execute();
-    $stmt->bind_result($namaPengguna);
-    $stmt->fetch();
+    $stmt->store_result();
+    if ($stmt->num_rows > 0) {
+        $aksesDiizinkan = true;
+    }
     $stmt->close();
 }
 
-// Ambil data materi spesifik
+// Jika murid: pastikan dia mengikuti kelas ini
+if ($role === 'murid') {
+    $stmt = $conn->prepare("SELECT id FROM kelas_peserta WHERE kelas_id = ? AND siswa_id = ?");
+    $stmt->bind_param("ii", $kelas_id, $id_pengguna);
+    $stmt->execute();
+    $stmt->store_result();
+    if ($stmt->num_rows > 0) {
+        $aksesDiizinkan = true;
+    }
+    $stmt->close();
+}
+
+// Jika akses tidak diizinkan, hentikan dan tampilkan pesan
+if (!$aksesDiizinkan) {
+    echo "<p class='text-red-500 text-center font-bold mt-10'>Anda tidak memiliki akses ke materi ini.</p>";
+    exit;
+}
+
+// Ambil nama pengguna
+$namaPengguna = '';
+$stmt = $conn->prepare("SELECT name FROM users WHERE user_id = ?");
+$stmt->bind_param("i", $id_pengguna);
+$stmt->execute();
+$stmt->bind_result($namaPengguna);
+$stmt->fetch();
+$stmt->close();
+
+// Ambil info kelas
+$judulKelas = '';
+$stmt = $conn->prepare("SELECT judul FROM kelas WHERE kelas_id = ?");
+$stmt->bind_param("i", $kelas_id);
+$stmt->execute();
+$stmt->bind_result($judulKelas);
+$stmt->fetch();
+$stmt->close();
+
+// Ambil data materi
 $judulMateri = '';
 $deskripsiMateri = '';
 $fileUrl = '';
 $createdAt = '';
 
-$stmt = $conn->prepare("SELECT judul, deskripsi, file_url, created_at FROM materi WHERE materi_id = ? AND kelas_id = ?");
+$stmt = $conn->prepare("SELECT judul, file_url, created_at FROM materi WHERE materi_id = ? AND kelas_id = ?");
 $stmt->bind_param("ii", $materi_id, $kelas_id);
 $stmt->execute();
-$stmt->bind_result($judulMateri, $deskripsiMateri, $fileUrl, $createdAt);
+$stmt->bind_result($judulMateri, $fileUrl, $createdAt);
 
 if (!$stmt->fetch()) {
     echo "<p class='text-red-500 text-center font-bold mt-10'>Materi tidak ditemukan.</p>";
     exit;
 }
 $stmt->close();
-
-
 ?>
 
 <!DOCTYPE html>
