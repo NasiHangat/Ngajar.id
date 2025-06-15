@@ -120,8 +120,8 @@ if ($id_pengguna) {
                         <h2 class="font-bold text-base sm:text-lg leading-tight"><?php echo $namaPengguna; ?></h2>
                         <p class="text-white-200 opacity-70 text-xs sm:text-sm leading-tight">Pelajar</p>
                         <div class="mt-2 flex items-center space-x-2">
-                            <div class="bg-white text-teal-500 text-xs font-semibold px-2.5 py-1 rounded-lg flex items-center">
-                                <img src="../img/coin.png" class="mr-1.5 w-4"> 
+                            <div class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm">
+                                <img src="../img/coin.png" class="w-3 h-3" alt="Token">
                                 <?php echo htmlspecialchars($token); ?>
                             </div>
                             <button class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center">
@@ -191,8 +191,8 @@ if ($id_pengguna) {
                                                     <?= htmlspecialchars($modul['judul']) ?>
                                                 </a>
                                                 <div class="text-sm text-gray-600 mt-1"><?= htmlspecialchars($modul['deskripsi']) ?></div>
-                                                <div class="flex items-center text-sm mt-1">
-                                                    <img src="../img/coin.png" class="mr-1.5 w-4">
+                                                <div class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm">
+                                                    <img src="../img/coin.png" class="w-3 h-3" alt="Token">
                                                     <?= (int)$modul['token_harga'] ?>
                                                 </div>
                                             </div>
