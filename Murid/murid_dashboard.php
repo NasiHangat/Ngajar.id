@@ -182,7 +182,7 @@ if ($id_pengguna) {
             </div>
         </div>
 
-        <main class="mx-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <main class="mx-w-6xl mx-[250px] px-4 sm:px-6 lg:px-8 py-8">
             <section class="mb-8">
                 <div>
                     <div class="mb-3">
