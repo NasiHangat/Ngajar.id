@@ -247,7 +247,7 @@ if (!empty($kelasIds)) {
                     <!-- VIDEO -->
                     <div id="modul-video" class="tab-modul hidden">
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                            <<?php if (empty($materiList['video'])): ?>
+                            <?php if (empty($materiList['video'])): ?>
                                 <p class="text-center col-span-full text-gray-500">Belum ada video dari kelas yang Anda
                                     ikuti.</p>
                             <?php else: ?>
