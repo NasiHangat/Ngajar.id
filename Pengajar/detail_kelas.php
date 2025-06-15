@@ -159,7 +159,7 @@ $stmt->close();
             <div class="mt-6 space-y-4">
                 <?php if (!empty($materi)): ?>
                     <?php foreach ($materi as $m): ?>
-                    <a href="detail_materi.php?id=<?= $m['materi_id'] ?>&kelas_id=<?= $kelas_id ?>" class="block hover:shadow-lg transition-shadow">
+                    <a href="detail_materi.php?materi_id=<?= $m['materi_id'] ?>&kelas_id=<?= $kelas_id ?>" class="block hover:shadow-lg transition-shadow">
                     <div class="bg-white p-4 shadow rounded-lg flex items-start gap-4">
                         <div class="w-10 h-10 bg-teal-500 text-white p-2 rounded-full flex items-center justify-center">
                             <i class="fas fa-clipboard text-lg"></i>
