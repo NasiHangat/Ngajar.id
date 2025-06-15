@@ -2,8 +2,33 @@
 <?php include '../includes/DBkoneksi.php'; ?>
 
 <?php
+// Tangani request jika user klik tombol "Ikuti"
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ikuti'])) {
+    $kelas_id = $_POST['kelas_id'];
+    $siswa_id = $_SESSION['user_id'];
+
+    // Cek apakah murid sudah mengikuti kelas
+    $cek = $conn->prepare("SELECT id FROM kelas_peserta WHERE siswa_id = ? AND kelas_id = ?");
+    $cek->bind_param("ii", $siswa_id, $kelas_id);
+    $cek->execute();
+    $cek->store_result();
+
+    if ($cek->num_rows == 0) {
+        // Insert jika belum terdaftar
+        $stmt = $conn->prepare("INSERT INTO kelas_peserta (siswa_id, kelas_id) VALUES (?, ?)");
+        $stmt->bind_param("ii", $siswa_id, $kelas_id);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    $cek->close();
+
+    // Hindari submit ulang saat refresh
+    header("Location: detail_kelas.php?id=" . $kelas_id);
+    exit;
+}
+
 $id_pengguna = $_SESSION['user_id'] ?? null;
-$namaPengguna = "";
 $kelas_id = $_GET['id'] ?? null;
 
 if (!$kelas_id || !$id_pengguna) {
@@ -11,7 +36,20 @@ if (!$kelas_id || !$id_pengguna) {
     exit;
 }
 
+// Cek apakah murid sudah mengikuti kelas ini
+$cek = $conn->prepare("SELECT id FROM kelas_peserta WHERE siswa_id = ? AND kelas_id = ?");
+$cek->bind_param("ii", $id_pengguna, $kelas_id);
+$cek->execute();
+$cek->store_result();
+
+if ($cek->num_rows === 0) {
+    echo "<p class='text-red-500 text-center font-bold mt-10'>Anda belum mengikuti kelas ini.</p>";
+    exit;
+}
+$cek->close();
+
 // Ambil nama pengguna
+$namaPengguna = "";
 $stmt = $conn->prepare("SELECT name FROM users WHERE user_id = ?");
 $stmt->bind_param("i", $id_pengguna);
 $stmt->execute();
@@ -19,16 +57,16 @@ $stmt->bind_result($namaPengguna);
 $stmt->fetch();
 $stmt->close();
 
-// Ambil info kelas
+// Ambil info kelas (tanpa filter pengajar_id)
 $judulKelas = '';
 $deskripsiKelas = '';
 
-$stmt = $conn->prepare("SELECT judul, deskripsi FROM kelas WHERE kelas_id = ? AND pengajar_id = ?");
-$stmt->bind_param("ii", $kelas_id, $id_pengguna);
+$stmt = $conn->prepare("SELECT judul, deskripsi FROM kelas WHERE kelas_id = ?");
+$stmt->bind_param("i", $kelas_id);
 $stmt->execute();
 $stmt->bind_result($judulKelas, $deskripsiKelas);
 if (!$stmt->fetch()) {
-    echo "<p class='text-red-500 text-center font-bold mt-10'>Kelas tidak ditemukan atau Anda tidak memiliki akses.</p>";
+    echo "<p class='text-red-500 text-center font-bold mt-10'>Kelas tidak ditemukan.</p>";
     exit;
 }
 $stmt->close();
