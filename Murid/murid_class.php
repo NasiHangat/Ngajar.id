@@ -217,8 +217,7 @@ if ($id_pengguna) {
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-14 gap-y-12">
                     <?php if (count($kelas_diikuti) > 0): ?>
                         <?php foreach ($kelas_diikuti as $kelas): ?>
-                            <div onclick="location.href='../pengajar/detail_kelas.php?id=<?= $kelas['kelas_id'] ?>'"
-                                class="cursor-pointer w-full max-w-[361px] h-[207px] shadow-lg rounded-lg flex transition-transform hover:scale-[1.02]">
+                            <div class="cursor-pointer w-full max-w-[361px] h-[207px] shadow-lg rounded-lg flex transition-transform hover:scale-[1.02]">
                                 <div class="w-3 bg-cyan-950 rounded-l-lg"></div>
                                 <div class="flex-grow">
                                     <div class="bg-teal-600 h-[90px] rounded-tr-lg p-4 flex justify-between items-start">
@@ -230,9 +229,12 @@ if ($id_pengguna) {
                                                 <?= htmlspecialchars($kelas['nama_pengajar']) ?>
                                             </p>
                                         </div>
-                                        <div class="w-14 h-14 bg-white rounded-full flex justify-center items-center shrink-0">
-                                            <img class="w-6 h-8" src="img/vector-10.svg" alt="Web Programming Icon" />
-                                        </div>
+                                        <input type="hidden" name="kelas_id" value="<?= $item['kelas_id'] ?>">
+                                            <button type="submit" name="keluar"
+                                                class="text-sm bg-white hover:bg-teal-600 text-teal-500 font-semibold px-4 py-1 rounded shadow">
+                                                Keluar
+                                            </button>
+                                        </input>
                                     </div>
                                     <div class="bg-white p-4 rounded-b-lg">
                                         <p class="font-roboto-slab font-bold text-cyan-950 text-[10px] line-clamp-3">
