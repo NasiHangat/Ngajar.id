@@ -202,11 +202,11 @@ if (!empty($kelasIds)) {
                     <!-- PDF -->
                     <div id="modul-pdf" class="tab-modul hidden">
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                           <?php if (empty($materiList['PDF'])): ?>
+                           <?php if (empty($materiList['pdf'])): ?>
                                 <p class="text-center col-span-full text-gray-500">Belum ada PDF dari kelas yang Anda
                                     ikuti.</p>
                             <?php else: ?>
-                                <?php foreach ($materiList['PDF'] as $materi): ?>
+                                <?php foreach ($materiList['pdf'] as $materi): ?>
                                     <a href="<?= htmlspecialchars($materi['file_url']) ?>" target="_blank" class="block mt-3 text-right text-sm text-blue-500 hover:underline">                                    
                                         <div
                                         class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
