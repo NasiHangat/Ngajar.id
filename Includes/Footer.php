@@ -65,7 +65,7 @@
         <ul class="space-y-2 text-sm">
           <li><a href="ngajar.id@outlook.com" class="hover:underline">ngajar.id@outlook.com</a></li>
           <li><a href="tel:+6281234567890" class="hover:underline">+62 812-3456-7890</a></li>
-          <li><span class="block">Jl. Pendidikan No. 10, Jakarta</span></li>
+          <li><span class="block">Jl. Pendidikan No. 10, Bandung</span></li>
         </ul>
       </div>
     </div>
