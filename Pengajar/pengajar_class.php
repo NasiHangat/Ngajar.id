@@ -96,7 +96,7 @@ if ($pengajar_id) {
                     <?php if (!empty($kelas)): ?>
                         <?php foreach ($kelas as $item): ?>
                             <div class="bg-white rounded-xl shadow-md p-6 flex flex-col sm:flex-row items-center gap-6 border-l-8 border-teal-500">
-                                <img class="w-28 h-28 ..." src="..." />
+                                <img class="w-28 h-28 ..." src="../img/Logo.png" />
                                 <div class="flex-grow w-full">
                                     <a href="detail_kelas.php?id=<?= $item['kelas_id'] ?>" class="text-2xl font-bold text-teal-600 hover:underline block mb-2">
                                         <?= htmlspecialchars($item['judul']) ?>
@@ -308,6 +308,52 @@ if ($pengajar_id) {
         })
         .catch(() => alert('Terjadi kesalahan saat mengedit!'));
     });
+    // Tambahkan script ini sebelum tag </body>
+document.addEventListener('DOMContentLoaded', function() {
+    const urutkanBtn = document.querySelector('.bg-teal-500.text-white.px-4.py-2.rounded-lg.font-bold.flex.items-center.gap-2.hover\\:bg-teal-600.transition-colors.text-sm');
+    
+    if (urutkanBtn) {
+        urutkanBtn.addEventListener('click', () => {
+            const container = document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2.gap-8');
+            const kelasCards = Array.from(container.children);
+            
+            // Skip empty state message
+            const actualCards = kelasCards.filter(card => !card.querySelector('p.text-gray-500.text-center.col-span-full'));
+            
+            if (actualCards.length === 0) return;
+            
+            // Toggle sorting order
+            const isAscending = container.dataset.sortOrder !== 'asc';
+            container.dataset.sortOrder = isAscending ? 'asc' : 'desc';
+            
+            // Update button text to show current action
+            const sortSpan = urutkanBtn.querySelector('span');
+            sortSpan.textContent = isAscending ? 'A-Z ↑' : 'Z-A ↓';
+            
+            // Sort the cards based on class title
+            actualCards.sort((a, b) => {
+                const titleA = a.querySelector('a').textContent.trim().toLowerCase();
+                const titleB = b.querySelector('a').textContent.trim().toLowerCase();
+                
+                if (isAscending) {
+                    return titleA.localeCompare(titleB);
+                } else {
+                    return titleB.localeCompare(titleA);
+                }
+            });
+            
+            // Clear container and re-append sorted cards
+            container.innerHTML = '';
+            actualCards.forEach(card => container.appendChild(card));
+            
+            // Add visual feedback
+            container.style.opacity = '0.7';
+            setTimeout(() => {
+                container.style.opacity = '1';
+            }, 200);
+        });
+    }
+});
 </script>
 <script>
     function hapusKelas(kelasId) {

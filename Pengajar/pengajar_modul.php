@@ -134,7 +134,7 @@ while ($row = $result->fetch_assoc()) {
                     <div class="bg-teal-500 rounded-xl shadow-md p-5 flex flex-col sm:flex-row items-center gap-6">
                         <i class="fas fa-book text-white text-8xl opacity-100"></i>
                         <div class="flex-grow w-full">
-                            <h3 class="text-2xl font-bold mb-2 text-white"><?= htmlspecialchars($m['judul']) ?></h3>
+                            <h3 id="namaList" class="text-2xl font-bold mb-2 text-white"><?= htmlspecialchars($m['judul']) ?></h3>
                             <div class="space-y-1 text-base font-light text-gray-100">
                                 <p>Kelas: <?= htmlspecialchars($m['nama_kelas']) ?></p>
                                 <p>Tipe: <?= $m['tipe'] ?></p>
@@ -192,58 +192,39 @@ while ($row = $result->fetch_assoc()) {
 
     <script>
     document.getElementById('urutkanBtn').addEventListener('click', () => {
-      const list = document.getElementById('namaList');
-      const itemsArray = Array.from(list.querySelectorAll('li'));
-
-      itemsArray.sort((a, b) => {
-        return a.textContent.toLowerCase().localeCompare(b.textContent.toLowerCase());
-      });
-      while (list.firstChild) {
-        list.removeChild(list.firstChild);
-      }
-
-      itemsArray.forEach(item => list.appendChild(item));
+    const container = document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2.gap-8');
+    const materiCards = Array.from(container.children);
+    
+    // Toggle sorting order
+    const isAscending = container.dataset.sortOrder !== 'asc';
+    container.dataset.sortOrder = isAscending ? 'asc' : 'desc';
+    
+    // Update button text to show current action
+    const sortBtn = document.getElementById('urutkanBtn');
+    sortBtn.innerHTML = `<span>${isAscending ? 'A-Z ↑' : 'Z-A ↓'}</span>`;
+    
+    // Sort the cards based on material title
+    materiCards.sort((a, b) => {
+        const titleA = a.querySelector('h3').textContent.trim().toLowerCase();
+        const titleB = b.querySelector('h3').textContent.trim().toLowerCase();
+        
+        if (isAscending) {
+            return titleA.localeCompare(titleB);
+        } else {
+            return titleB.localeCompare(titleA);
+        }
     });
-
-        // --- Modal Logic ---
-        const tambahMateriBtn = document.getElementById('tambahMateriBtn');
-        const modal = document.getElementById('modalTambahMateri');
-        const closeModalBtn = document.getElementById('closeModal');
-        const batalBtn = document.getElementById('batalBtn');
-        const form = document.getElementById('formTambahMateri');
-
-        function openModal() {
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModalFunc() {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-            document.body.style.overflow = 'auto';
-            form.reset();
-        }
-
-        tambahMateriBtn.addEventListener('click', openModal);
-        closeModalBtn.addEventListener('click', closeModalFunc);
-        batalBtn.addEventListener('click', closeModalFunc);
-
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModalFunc();
-            }
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-                closeModalFunc();
-            }
-        });
-
-        form.addEventListener('submit', (e) => {
-
-        });
+    
+    // Clear container and re-append sorted cards
+    container.innerHTML = '';
+    materiCards.forEach(card => container.appendChild(card));
+    
+    // Add visual feedback
+    container.style.opacity = '0.7';
+    setTimeout(() => {
+        container.style.opacity = '1';
+    }, 200);
+});
     </script>
 
     <footer>
