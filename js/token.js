@@ -252,18 +252,25 @@ function togglePremium(button) {
 function toggleNgajar(button, parentType) {
     modul.toggleNgajar(button, parentType);
 }
-
-// Hamburger menu functionality (bonus)
 document.addEventListener('DOMContentLoaded', function() {
     const hamburgerButton = document.getElementById('hamburgerButton');
-    const sidebar = document.getElementById('sidebar'); // Assuming sidebar has this ID
-    
+    const sidebar = document.getElementById('sidebar');
+    let isToggling = false; // Flag to prevent double clicks
+
     if (hamburgerButton) {
         hamburgerButton.addEventListener('click', function() {
+            if (isToggling) return; // Skip if already toggling
+            isToggling = true;
+
             if (sidebar) {
-                sidebar.classList.toggle('hidden');
-                sidebar.classList.toggle('block');
+              sidebar.classList.toggle('-translate-x-full');
+
             }
+
+            // Allow next toggle after 300ms (adjust if needed)
+            setTimeout(() => {
+                isToggling = false;
+            }, 300);
         });
     }
 });
@@ -277,19 +284,3 @@ function smoothScrollToSection(element) {
         });
     }
 }
-
-// Add loading animation (optional enhancement)
-function addLoadingAnimation(button) {
-    const originalText = button.innerHTML;
-    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-    button.disabled = true;
-    
-    setTimeout(() => {
-        button.innerHTML = originalText;
-        button.disabled = false;
-    }, 300);
-}
-// === Window Bindings ===
-window.modul = modul;
-window.utils = utils;
-window.formHandler = formHandler;
