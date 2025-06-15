@@ -191,10 +191,16 @@ if ($id_pengguna) {
                                                     <?= htmlspecialchars($modul['judul']) ?>
                                                 </a>
                                                 <div class="text-sm text-gray-600 mt-1"><?= htmlspecialchars($modul['deskripsi']) ?></div>
-                                                <div class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm">
-                                                    <img src="../img/coin.png" class="w-3 h-3" alt="Token">
-                                                    <?= (int)$modul['token_harga'] ?>
-                                                </div>
+                                                <form action="murid_beli_modul.php" method="POST" onsubmit="return confirm('Yakin ingin membeli modul ini seharga <?= (int)$modul['token_harga'] ?> token?')">
+                                                    <input type="hidden" name="modul_id" value="<?= $modul['modul_id'] ?>">
+                                                    <input type="hidden" name="harga" value="<?= (int)$modul['token_harga'] ?>">
+                                                    <button type="submit" class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm hover:bg-yellow-200">
+                                                        <img src="../img/coin.png" class="w-3 h-3" alt="Token">
+                                                        Beli <?= (int)$modul['token_harga'] ?>
+                                                    </button>
+                                                </form>
+
+
                                             </div>
                                         </div>
                                     <?php endforeach; ?>
