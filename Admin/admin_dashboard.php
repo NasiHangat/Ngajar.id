@@ -181,12 +181,12 @@ while ($row = mysqli_fetch_assoc($result_top_murid)) {
     
     <section class="py-10 px-4">
                 <div class="max-w-4xl mx-auto">
-                    <h2 class="text-2xl font-bold text-center text-gray-800 mb-8">Peringkat Teratas Pembelian Token</h2>
+                    <h2 class="text-2xl font-bold text-center text-teal-50 mb-8">Peringkat Teratas Pembelian Token</h2>
                     <div class="flex justify-center items-end gap-4 md:gap-6">
                         <!-- Peringkat 2 -->
                         <div class="text-center w-1/3">
                             <img src="https://placehold.co/80x80/c0c0c0/FFFFFF?text=2nd" alt="Peringkat 2" class="w-20 h-20 rounded-full mx-auto border-4 border-gray-300">
-                            <h4 class="font-bold mt-2 text-gray-700"><?php echo htmlspecialchars($top_murid[1]['name'] ?? 'N/A'); ?></h4>
+                            <h4 class="font-bold mt-2 text-teal-500"><?php echo htmlspecialchars($top_murid[1]['name'] ?? 'N/A'); ?></h4>
                             <div class="flex items-center justify-center text-yellow-500 font-bold"><i class="fas fa-star mr-1"></i><span><?php echo $top_murid[1]['total_token'] ?? 0; ?></span></div>
                             <div class="bg-gray-200 rounded-t-lg p-6 mt-2 h-32 flex items-center justify-center">
                                 <i class="fas fa-trophy text-5xl text-gray-400"></i>
@@ -199,7 +199,7 @@ while ($row = mysqli_fetch_assoc($result_top_murid)) {
                                 <img src="https://placehold.co/96x96/ffd700/FFFFFF?text=1st" alt="Peringkat 1" class="w-24 h-24 rounded-full mx-auto border-4 border-yellow-400">
                                 <i class="fas fa-crown text-3xl text-yellow-500 absolute -top-4 right-0 transform rotate-12"></i>
                             </div>
-                            <h4 class="font-bold mt-2 text-gray-800"><?php echo htmlspecialchars($top_murid[0]['name'] ?? 'N/A'); ?></h4>
+                            <h4 class="font-bold mt-2 text-teal-500"><?php echo htmlspecialchars($top_murid[0]['name'] ?? 'N/A'); ?></h4>
                             <div class="flex items-center justify-center text-yellow-500 font-bold"><i class="fas fa-star mr-1"></i><span><?php echo $top_murid[0]['total_token'] ?? 0; ?></span></div>
                             <div class="bg-yellow-300 rounded-t-lg p-6 mt-2 h-48 flex items-center justify-center">
                                 <i class="fas fa-trophy text-6xl text-yellow-500"></i>
@@ -209,7 +209,7 @@ while ($row = mysqli_fetch_assoc($result_top_murid)) {
                         <!-- Peringkat 3 -->
                         <div class="text-center w-1/3">
                             <img src="https://placehold.co/80x80/cd7f32/FFFFFF?text=3rd" alt="Peringkat 3" class="w-20 h-20 rounded-full mx-auto border-4 border-orange-300">
-                            <h4 class="font-bold mt-2 text-gray-700"><?php echo htmlspecialchars($top_murid[2]['name'] ?? 'N/A'); ?></h4>
+                            <h4 class="font-bold mt-2 text-teal-500"><?php echo htmlspecialchars($top_murid[2]['name'] ?? 'N/A'); ?></h4>
                             <div class="flex items-center justify-center text-yellow-500 font-bold"><i class="fas fa-star mr-1"></i><span><?php echo $top_murid[2]['total_token'] ?? 0; ?></span></div>
                             <div class="bg-orange-200 rounded-t-lg p-6 mt-2 h-24 flex items-center justify-center">
                                 <i class="fas fa-trophy text-4xl text-orange-400"></i>
