@@ -48,7 +48,7 @@ $result_riwayat = $conn->query($sql_riwayat);
         <!-- Total Donasi -->
         <div class="bg-teal-600 text-white text-center py-10 rounded-lg mb-8">
             <h2 class="text-5xl font-bold uppercase mb-2">Total Donasi</h2>
-            <p class="text-5xl md:text-7xl font-bold">Rp <?php echo number_format($total_donasi, 0, ',', '.'); ?>,00</p>
+            <p class="text-5xl md:text-7xl font-bold">Rp <?php echo number_format($total_donasi, 0, ',', '.'); ?></p>
         </div>
 
         <!-- Riwayat Donasi -->
@@ -68,7 +68,7 @@ $result_riwayat = $conn->query($sql_riwayat);
                     <?php while($row = $result_riwayat->fetch_assoc()): ?>
                     <tr>
                         <td class="border border-teal-300 px-4 py-2"><?php echo htmlspecialchars($row['nama']); ?></td>
-                        <td class="border border-teal-300 px-4 py-2">Rp <?php echo number_format($row['jumlah'], 0, ',', '.'); ?>,00</td>
+                        <td class="border border-teal-300 px-4 py-2">Rp <?php echo number_format($row['jumlah'], 0, ',', '.'); ?></td>
                         <td class="border border-teal-300 px-4 py-2"><?php echo date('d-m-Y H:i', strtotime($row['tanggal'])); ?></td>
                     </tr>
                     <?php endwhile; ?>

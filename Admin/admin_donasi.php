@@ -73,7 +73,7 @@ $result_riwayat = $conn->query($sql_riwayat);
                         <?php while ($row = $result_riwayat->fetch_assoc()): ?>
                             <tr>
                                 <td class="border border-teal-300 px-4 py-2"><?php echo htmlspecialchars($row['nama']); ?></td>
-                                <td class="border border-teal-300 px-4 py-2">Rp <?php echo number_format($row['jumlah'], 0, ',', '.'); ?>,00</td>
+                                <td class="border border-teal-300 px-4 py-2">Rp <?php echo number_format($row['jumlah'], 0, ',', '.'); ?></td>
                                 <td class="border border-teal-300 px-4 py-2"><?php echo date('d-m-Y H:i', strtotime($row['tanggal'])); ?></td>
                             </tr>
                         <?php endwhile; ?>

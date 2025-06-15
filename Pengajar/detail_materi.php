@@ -90,7 +90,7 @@ $stmt->close();
                     <button id="hamburgerButton" class="text-teal-500 focus:outline-none mt-1">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
-                    <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Modul</h1>
+                    <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Materi</h1>
                 </div>
                 <div class="flex items-center space-x-2 sm:space-x-4">
                     <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-bell text-xl"></i></button>
@@ -100,27 +100,7 @@ $stmt->close();
         </header>
 
         <?php include "../Includes/sidebar.php" ?>
-        <div class="bg-teal-500 py-4">
-            <div class="max-w-6xl mx-auto px-4 sm:px-8 flex items-start justify-between">
-                <div class="flex items-center space-x-4">
-                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white flex items-center justify-center">
-                        <i class="fa-regular fa-user text-teal-500 text-3xl"></i>
-                    </div>
-                    <div class="text-white">
-                        <h2 class="font-bold text-base sm:text-lg leading-tight"><?php echo $namaPengguna; ?></h2>
-                        <p class="text-white-200 opacity-70 text-xs sm:text-sm leading-tight">Pelajar</p>
-                        <div class="mt-2 flex items-center space-x-2">
-                            <div class="bg-white text-teal-500 text-xs font-semibold px-2.5 py-1 rounded-lg flex items-center">
-                                <img src="../img/coin.png" class="mr-1.5 w-4"> 20
-                            </div>
-                            <button class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center">
-                                <i class="fas fa-plus text-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
 
         <main class="flex-grow">
             <div class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">

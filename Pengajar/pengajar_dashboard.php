@@ -124,7 +124,7 @@ if ($id_pengguna) {
                     <div class="bg-teal-500 text-white p-5 rounded-xl shadow-md flex items-center space-x-4 hover:shadow-lg hover:-translate-y-1 transition-all">
                         <i class="fas fa-book text-3xl opacity-80"></i>
                         <div>
-                            <p class="text-sm font-medium opacity-90">Modul Yang Dibuat</p>
+                            <p class="text-sm font-medium opacity-90">Materi Yang Dibuat</p>
                             <p class="text-2xl font-bold"><?php echo $total_materi; ?></p>
                         </div>
                     </div>
