@@ -681,9 +681,6 @@ class MuridDashboard {
     }
 }
 
-<<<<<<< Updated upstream
-
-
 class MuridModul {
      constructor() {
         this.activeTab = "soal"; // hanya satu tab global (soal, pdf, video)
@@ -779,9 +776,6 @@ class MuridModul {
 
 // ✅ Buat instance global
 window.modul = new MuridModul();
-=======
-// Initialize dashboard when DOM is loaded
->>>>>>> Stashed changes
 document.addEventListener('DOMContentLoaded', function() {
     new MuridDashboard();
 });
@@ -1156,3 +1150,395 @@ function injectAnimationStyles() {
     console.log('CSS animasi berhasil diinjeksi!');
 }
 
+// Enhanced Modul JavaScript with Smooth Animations
+const modul = {
+    // Initialize the module system
+    init() {
+        this.setupEventListeners();
+        this.initializeDefaultTabs();
+        this.addTransitionStyles();
+    },
+
+    // Add CSS transition styles dynamically
+    addTransitionStyles() {
+        const style = document.createElement('style');
+        style.textContent = `
+            .tab-modul, .tab-ngajar, .sub-tab-group {
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                transform-origin: top;
+            }
+            
+            .tab-modul.hidden, .tab-ngajar.hidden, .sub-tab-group.hidden {
+                opacity: 0;
+                transform: translateY(-10px) scale(0.98);
+                max-height: 0;
+                overflow: hidden;
+                padding: 0;
+                margin: 0;
+            }
+            
+            .tab-modul:not(.hidden), .tab-ngajar:not(.hidden), .sub-tab-group:not(.hidden) {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                max-height: 1000px;
+            }
+            
+            .toggle-modul, .toggle-tab, .toggle-ngajar {
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                transform: translateY(0);
+            }
+            
+            .toggle-modul:hover, .toggle-tab:hover, .toggle-ngajar:hover {
+                transform: translateY(-2px);
+                box-shadow: 0px 6px 8px rgba(0, 61, 78, 0.3);
+            }
+            
+            .toggle-modul:active, .toggle-tab:active, .toggle-ngajar:active {
+                transform: translateY(0);
+                transition: all 0.1s ease;
+            }
+            
+            .fade-in {
+                animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            }
+            
+            .fade-out {
+                animation: fadeOutDown 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            }
+            
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            @keyframes fadeOutDown {
+                from {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+            }
+            
+            .loading-shimmer {
+                background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+                background-size: 200% 100%;
+                animation: shimmer 1.5s infinite;
+            }
+            
+            @keyframes shimmer {
+                0% { background-position: -200% 0; }
+                100% { background-position: 200% 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    },
+
+    // Setup event listeners
+    setupEventListeners() {
+        // Smooth scroll for page navigation
+        document.addEventListener('DOMContentLoaded', () => {
+            this.addScrollToTopOnLoad();
+        });
+    },
+
+    // Initialize default tabs
+    initializeDefaultTabs() {
+        // Set default active states
+        setTimeout(() => {
+            const defaultModulButton = document.getElementById('btnSoal');
+            const defaultPremiumButton = document.getElementById('btnGratis');
+            
+            if (defaultModulButton) {
+                this.showModulContent('soal');
+            }
+            
+            if (defaultPremiumButton) {
+                this.showTabContent('Gratis');
+                this.showNgajarContent('soal', 'Gratis');
+            }
+        }, 100);
+    },
+
+    // Enhanced toggle function for modul pembelajaran
+    toggleModul(button) {
+        const target = button.getAttribute('data-target');
+        
+        // Add loading state
+        this.setLoadingState(button, true);
+        
+        setTimeout(() => {
+            // Update button states with animation
+            this.updateButtonStates('.toggle-modul', button);
+            
+            // Show content with animation
+            this.showModulContent(target);
+            
+            // Remove loading state
+            this.setLoadingState(button, false);
+        }, 200);
+    },
+
+    // Enhanced toggle function for premium/gratis
+    togglePremium(button) {
+        const target = button.getAttribute('data-target');
+        
+        // Add loading state
+        this.setLoadingState(button, true);
+        
+        setTimeout(() => {
+            // Update button states
+            this.updateButtonStates('.toggle-tab', button);
+            
+            // Show content with animation
+            this.showTabContent(target);
+            
+            // Reset ngajar buttons to first option
+            this.resetNgajarButtons(target);
+            this.showNgajarContent('soal', target);
+            
+            // Remove loading state
+            this.setLoadingState(button, false);
+        }, 200);
+    },
+
+    // Enhanced toggle function for ngajar content
+    toggleNgajar(button, parentTab) {
+        const target = button.getAttribute('data-target');
+        
+        // Add loading state
+        this.setLoadingState(button, true);
+        
+        setTimeout(() => {
+            // Update button states within the parent tab
+            const parentElement = document.getElementById(parentTab);
+            if (parentElement) {
+                const buttons = parentElement.querySelectorAll('.toggle-ngajar');
+                this.updateButtonStatesInParent(buttons, button);
+            }
+            
+            // Show content with animation
+            this.showNgajarContent(target, parentTab);
+            
+            // Remove loading state
+            this.setLoadingState(button, false);
+        }, 200);
+    },
+
+    // Set loading state for buttons
+    setLoadingState(button, isLoading) {
+        if (isLoading) {
+            button.classList.add('loading-shimmer');
+            button.style.pointerEvents = 'none';
+        } else {
+            button.classList.remove('loading-shimmer');
+            button.style.pointerEvents = 'auto';
+        }
+    },
+
+    // Update button states with smooth transitions
+    updateButtonStates(selector, activeButton) {
+        const buttons = document.querySelectorAll(selector);
+        buttons.forEach(btn => {
+            btn.classList.remove('bg-teal-500', 'text-white');
+            btn.classList.add('bg-white', 'text-teal-500');
+        });
+        
+        // Add active state to clicked button
+        activeButton.classList.remove('bg-white', 'text-teal-500');
+        activeButton.classList.add('bg-teal-500', 'text-white');
+    },
+
+    // Update button states within a parent element
+    updateButtonStatesInParent(buttons, activeButton) {
+        buttons.forEach(btn => {
+            btn.classList.remove('bg-teal-500', 'text-white');
+            btn.classList.add('bg-white', 'text-teal-500');
+        });
+        
+        activeButton.classList.remove('bg-white', 'text-teal-500');
+        activeButton.classList.add('bg-teal-500', 'text-white');
+    },
+
+    // Show modul content with smooth animation
+    showModulContent(target) {
+        const contents = document.querySelectorAll('.tab-modul');
+        const targetContent = document.getElementById(`modul-${target}`);
+        
+        // Hide all contents
+        contents.forEach(content => {
+            if (!content.classList.contains('hidden')) {
+                content.classList.add('fade-out');
+                setTimeout(() => {
+                    content.classList.add('hidden');
+                    content.classList.remove('fade-out');
+                }, 300);
+            }
+        });
+        
+        // Show target content
+        if (targetContent) {
+            setTimeout(() => {
+                targetContent.classList.remove('hidden');
+                targetContent.classList.add('fade-in');
+                setTimeout(() => {
+                    targetContent.classList.remove('fade-in');
+                }, 500);
+            }, 300);
+        }
+    },
+
+    // Show tab content with smooth animation
+    showTabContent(target) {
+        const contents = document.querySelectorAll('.sub-tab-group');
+        const targetContent = document.getElementById(target);
+        
+        // Hide all contents
+        contents.forEach(content => {
+            if (!content.classList.contains('hidden')) {
+                content.classList.add('fade-out');
+                setTimeout(() => {
+                    content.classList.add('hidden');
+                    content.classList.remove('fade-out');
+                }, 300);
+            }
+        });
+        
+        // Show target content
+        if (targetContent) {
+            setTimeout(() => {
+                targetContent.classList.remove('hidden');
+                targetContent.classList.add('fade-in');
+                setTimeout(() => {
+                    targetContent.classList.remove('fade-in');
+                }, 500);
+            }, 300);
+        }
+    },
+
+    // Show ngajar content with smooth animation
+    showNgajarContent(target, parentTab) {
+        const contents = document.querySelectorAll(`#${parentTab} .tab-ngajar`);
+        const targetContent = document.getElementById(`ngajar-${parentTab}-${target}`);
+        
+        // Hide all contents in this parent tab
+        contents.forEach(content => {
+            if (!content.classList.contains('hidden')) {
+                content.classList.add('fade-out');
+                setTimeout(() => {
+                    content.classList.add('hidden');
+                    content.classList.remove('fade-out');
+                }, 300);
+            }
+        });
+        
+        // Show target content
+        if (targetContent) {
+            setTimeout(() => {
+                targetContent.classList.remove('hidden');
+                targetContent.classList.add('fade-in');
+                setTimeout(() => {
+                    targetContent.classList.remove('fade-in');
+                }, 500);
+            }, 300);
+        }
+    },
+
+    // Reset ngajar buttons to default state
+    resetNgajarButtons(parentTab) {
+        const parentElement = document.getElementById(parentTab);
+        if (parentElement) {
+            const buttons = parentElement.querySelectorAll('.toggle-ngajar');
+            buttons.forEach((btn, index) => {
+                btn.classList.remove('bg-teal-500', 'text-white');
+                btn.classList.add('bg-white', 'text-teal-500');
+                
+                // Set first button as active
+                if (index === 0) {
+                    btn.classList.remove('bg-white', 'text-teal-500');
+                    btn.classList.add('bg-teal-500', 'text-white');
+                }
+            });
+        }
+    },
+
+    // Add smooth scroll to top on page load
+    addScrollToTopOnLoad() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    },
+
+    // Utility function for smooth scrolling to elements
+    scrollToElement(elementId) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    },
+
+    // Add pulse animation to buttons
+    addPulseAnimation(button) {
+        button.style.animation = 'pulse 0.6s cubic-bezier(0.4, 0, 0.6, 1)';
+        setTimeout(() => {
+            button.style.animation = '';
+        }, 600);
+    }
+};
+
+// Initialize the module system when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    modul.init();
+});
+
+// Add global styles for better UX
+const globalStyles = `
+    .pulse {
+        animation: pulse 0.6s cubic-bezier(0.4, 0, 0.6, 1);
+    }
+    
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.05);
+        }
+    }
+    
+    .smooth-transition {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .content-enter {
+        animation: contentEnter 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+    
+    @keyframes contentEnter {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+`;
+
+// Add global styles to document
+const styleSheet = document.createElement('style');
+styleSheet.textContent = globalStyles;
+document.head.appendChild(styleSheet);
