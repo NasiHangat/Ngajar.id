@@ -52,7 +52,7 @@ $result_riwayat = $conn->query($sql_riwayat);
         </div>
 
         <!-- Riwayat Donasi -->
-        <h3 class="text-teal-600 text-2xl font-bold text-center mb-4">Riwayat Donasi</h3>
+        <h3 class="text-teal-500 text-2xl font-bold text-center mb-4">Riwayat Donasi</h3>
 
         <div class="mx-w-6xl overflow-x-auto">
             <table class="w-full table-auto border border-teal-500 text-center">

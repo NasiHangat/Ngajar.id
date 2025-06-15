@@ -247,7 +247,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['keluar'])) {
                                         <form action="" method="POST" onClick="event.stopPropagation();">
                                             <input type="hidden" name="kelas_id" value="<?= $kelas['kelas_id'] ?>">
                                             <button type="submit" name="keluar"
-                                                class="text-sm bg-white hover:bg-gray-100 text-teal-500 font-semibold px-4 py-1 rounded shadow">
+                                                class="text-sm bg-red-500 hover:bg-gray-100 text-white font-semibold px-4 py-1 rounded shadow">
                                                 Keluar
                                             </button>
                                         </form>
