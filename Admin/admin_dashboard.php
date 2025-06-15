@@ -113,9 +113,6 @@ while ($row = mysqli_fetch_assoc($result_top_murid)) {
                     <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Dashboard</h1>
                 </div>
                 <div class="flex items-center space-x-2 sm:space-x-4">
-                    <button class="text-teal-500 hover:text-teal-600 p-2 rounded-full transition-colors">
-                        <i class="fas fa-bell text-xl"></i>
-                    </button>
                     <?php include "../includes/Profile.php"; ?>
                 </div>
             </div>
