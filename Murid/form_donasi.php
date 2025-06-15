@@ -77,7 +77,7 @@ while ($row = $result->fetch_assoc()) {
                 </div>
             <?php endif; ?>
             <!-- Total Donasi -->
-            <div class="bg-teal-600 text-white text-center py-10 rounded-lg mb-8">
+            <div class="bg-teal-500 text-white text-center py-12 rounded-lg mb-8">
                 <h2 class="text-xl font-bold uppercase mb-2">Total Donasi</h2>
                 <p class="text-4xl md:text-5xl font-bold">Rp <?php echo number_format($total_donasi, 0, ',', '.'); ?></p>
             </div>
@@ -90,9 +90,9 @@ while ($row = $result->fetch_assoc()) {
                         <table class="w-full table-auto text-center text-sm">
                             <thead class="bg-white text-teal-600 font-bold">
                                 <tr>
-                                    <th class="border border-teal-500 px-4 py-2">Nama</th>
-                                    <th class="border border-teal-500 px-4 py-2">Jumlah</th>
-                                    <th class="border border-teal-500 px-4 py-2">Tanggal</th>
+                                    <th class="border border-teal-500 px-4 py-3">Nama</th>
+                                    <th class="border border-teal-500 px-4 py-3">Jumlah</th>
+                                    <th class="border border-teal-500 px-4 py-3">Tanggal</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -115,7 +115,7 @@ while ($row = $result->fetch_assoc()) {
                 </div>
                 <!-- Form Donasi -->
                 <div>
-                    <div class="bg-teal-500 rounded-lg p-6 shadow-md">
+                    <div class="bg-teal-500 rounded-lg p-8 shadow-md">
                         <h3 class="text-white text-xl font-bold mb-4">Donasi</h3>
                         <form action="" method="POST" class="space-y-4">
                             <input
@@ -141,7 +141,7 @@ while ($row = $result->fetch_assoc()) {
             </div>
         </div>
         <footer>
-            <?php include '../includes/Footer.php'; ?>
+            <?php include '../includes/Footer.php' ?>
         </footer>
 </body>
 
