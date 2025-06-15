@@ -317,7 +317,7 @@ if ($id_pengguna) {
                                             <!-- Isi Card -->
                                             <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
                                                 <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl"
-                                                    src="https://placehold.co/160x90"
+                                                    src="../img/Logo.png"
                                                     alt="<?= htmlspecialchars($materi['judul']) ?>">
 
                                                 <h2 class="text-emerald-500 text-lg font-bold mt-4 text-left">
