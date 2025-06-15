@@ -29,11 +29,11 @@ class MuridDashboard {
             hamburgerBtn.addEventListener('click', this.toggleSidebar.bind(this));
         }
 
-    const topupBtn = document.getElementById('topupButton');
+        // Token top-up button
+        const topupBtn = document.querySelector('.bg-white.bg-opacity-20');
         if (topupBtn) {
-            topupBtn.addEventListener('click', this.showTopuptoken.bind(this));
+            topupBtn.addEventListener('click', this.showTopupModal.bind(this));
         }
-
 
         // Subject cards hover effects
         this.initSubjectCards();
@@ -405,7 +405,7 @@ class MuridDashboard {
     }
 
     showInsufficientTokensModal() {
-        const token = this.createModal(
+        const modal = this.createModal(
             'Token Tidak Cukup',
             'Anda tidak memiliki cukup token untuk membeli modul ini. Lakukan top up terlebih dahulu.',
             [
@@ -681,6 +681,7 @@ class MuridDashboard {
     }
 }
 
+<<<<<<< Updated upstream
 
 
 class MuridModul {
@@ -778,11 +779,12 @@ class MuridModul {
 
 // ✅ Buat instance global
 window.modul = new MuridModul();
+=======
+// Initialize dashboard when DOM is loaded
+>>>>>>> Stashed changes
 document.addEventListener('DOMContentLoaded', function() {
     new MuridDashboard();
 });
-
-
 
 // Add CSS animations
 const style = document.createElement('style');
@@ -823,4 +825,334 @@ style.textContent = `
 `;
 
 document.head.appendChild(style);
+
+// Animasi untuk Dashboard Kelas Ngajar.ID - VERSI PERBAIKAN
+console.log('JavaScript animasi dimuat!'); // Debug log
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM sudah siap, memulai animasi...'); // Debug log
+    
+    // Inject CSS animations first
+    injectAnimationStyles();
+    
+    // 1. ANIMASI HAMBURGER MENU
+    const hamburgerButton = document.getElementById('hamburgerButton');
+    if (hamburgerButton) {
+        console.log('Hamburger button ditemukan');
+        hamburgerButton.addEventListener('click', function() {
+            const icon = this.querySelector('i');
+            if (icon) {
+                icon.style.transform = icon.style.transform === 'rotate(90deg)' ? 'rotate(0deg)' : 'rotate(90deg)';
+                icon.style.transition = 'transform 0.3s ease';
+            }
+        });
+    }
+
+    // 2. ANIMASI FADE IN UNTUK HEADER
+    setTimeout(() => {
+        const header = document.querySelector('header');
+        if (header) {
+            console.log('Header ditemukan, menjalankan animasi');
+            header.style.opacity = '0';
+            header.style.transform = 'translateY(-20px)';
+            header.style.transition = 'all 0.8s ease';
+            
+            setTimeout(() => {
+                header.style.opacity = '1';
+                header.style.transform = 'translateY(0)';
+            }, 100);
+        }
+    }, 100);
+
+    // 3. ANIMASI PROFILE SECTION (background hijau)
+    setTimeout(() => {
+        const profileSection = document.querySelector('.bg-teal-500');
+        if (profileSection) {
+            console.log('Profile section ditemukan');
+            profileSection.style.opacity = '0';
+            profileSection.style.transform = 'translateY(30px)';
+            profileSection.style.transition = 'all 1s ease';
+            
+            setTimeout(() => {
+                profileSection.style.opacity = '1';
+                profileSection.style.transform = 'translateY(0)';
+            }, 200);
+        }
+    }, 300);
+
+    // 4. ANIMASI UNTUK CARD KELAS - MENGGUNAKAN SELECTOR YANG LEBIH SPESIFIK
+    setTimeout(() => {
+        // Cari semua div yang memiliki onclick dengan detail_kelas.php
+        const kelasCards = document.querySelectorAll('div[onclick*="detail_kelas.php"]');
+        console.log(`Ditemukan ${kelasCards.length} card kelas`);
+        
+        kelasCards.forEach((card, index) => {
+            // Set initial state
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(50px) scale(0.8)';
+            card.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+            
+            // Staggered animation dengan delay
+            setTimeout(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0) scale(1)';
+            }, index * 150);
+
+            // Hover effects
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.03)';
+                this.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.2)';
+                this.style.transition = 'all 0.3s ease';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+                this.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+            });
+        });
+    }, 500);
+
+    // 5. ANIMASI UNTUK COIN/TOKEN
+    setTimeout(() => {
+        const coinElements = document.querySelectorAll('img[src*="coin.png"]');
+        coinElements.forEach(coin => {
+            const coinContainer = coin.closest('.bg-white.text-teal-500');
+            if (coinContainer) {
+                console.log('Coin container ditemukan');
+                coinContainer.addEventListener('mouseenter', function() {
+                    coin.style.transform = 'rotate(360deg) scale(1.2)';
+                    coin.style.transition = 'transform 0.5s ease';
+                    this.style.transform = 'scale(1.05)';
+                    this.style.transition = 'transform 0.3s ease';
+                });
+                
+                coinContainer.addEventListener('mouseleave', function() {
+                    coin.style.transform = 'rotate(0deg) scale(1)';
+                    this.style.transform = 'scale(1)';
+                });
+            }
+        });
+    }, 800);
+
+    // 6. ANIMASI UNTUK TOMBOL IKUTI
+    setTimeout(() => {
+        const ikutiButtons = document.querySelectorAll('button[name="ikuti"]');
+        console.log(`Ditemukan ${ikutiButtons.length} tombol ikuti`);
+        
+        ikutiButtons.forEach(button => {
+            // Hover effect
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px) scale(1.05)';
+                this.style.boxShadow = '0 8px 15px rgba(0, 0, 0, 0.3)';
+                this.style.transition = 'all 0.2s ease';
+            });
+
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+                this.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
+            });
+
+            // Click effect
+            button.addEventListener('click', function(e) {
+                // Animasi ripple effect
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple-effect');
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+                
+                // Loading state
+                const originalText = this.textContent;
+                this.innerHTML = '<span class="loading-spinner"></span>Memproses...';
+                this.disabled = true;
+            });
+        });
+    }, 1000);
+
+    // 7. ANIMASI UNTUK SECTION TITLES
+    setTimeout(() => {
+        const sectionTitles = document.querySelectorAll('h3');
+        console.log(`Ditemukan ${sectionTitles.length} section titles`);
+        
+        sectionTitles.forEach((title, index) => {
+            if (title.textContent.includes('Rekomendasi') || title.textContent.includes('Diikuti')) {
+                title.style.opacity = '0';
+                title.style.transform = 'translateX(-50px)';
+                title.style.transition = 'all 0.8s ease';
+                
+                setTimeout(() => {
+                    title.style.opacity = '1';
+                    title.style.transform = 'translateX(0)';
+                }, index * 300);
+            }
+        });
+    }, 1200);
+
+    // 8. ANIMASI NOTIFICATION BELL
+    const bellButton = document.querySelector('.fa-bell');
+    if (bellButton) {
+        bellButton.parentElement.addEventListener('click', function() {
+            bellButton.classList.add('bell-ring');
+            setTimeout(() => {
+                bellButton.classList.remove('bell-ring');
+            }, 1000);
+        });
+    }
+
+    // 9. ANIMASI SAAT SCROLL
+    let isScrolling = false;
+    window.addEventListener('scroll', () => {
+        if (!isScrolling) {
+            window.requestAnimationFrame(() => {
+                const scrolled = window.pageYOffset;
+                const header = document.querySelector('header');
+                if (header && scrolled > 50) {
+                    header.style.backdropFilter = 'blur(10px)';
+                    header.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+                } else if (header) {
+                    header.style.backdropFilter = 'none';
+                    header.style.backgroundColor = 'white';
+                }
+                isScrolling = false;
+            });
+            isScrolling = true;
+        }
+    });
+
+    console.log('Semua animasi telah diinisialisasi!');
+});
+
+// Function untuk inject CSS styles
+function injectAnimationStyles() {
+    const style = document.createElement('style');
+    style.id = 'kelas-animations-styles';
+    style.textContent = `
+        /* Keyframe animations */
+        @keyframes bell-ring {
+            0%, 100% { transform: rotate(0deg); }
+            10%, 30%, 50%, 70%, 90% { transform: rotate(-10deg); }
+            20%, 40%, 60%, 80% { transform: rotate(10deg); }
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translate3d(0, 40px, 0);
+            }
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+        
+        @keyframes bounceIn {
+            0%, 20%, 40%, 60%, 80%, 100% {
+                transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+            }
+            0% {
+                opacity: 0;
+                transform: scale3d(.3, .3, .3);
+            }
+            20% {
+                transform: scale3d(1.1, 1.1, 1.1);
+            }
+            40% {
+                transform: scale3d(.9, .9, .9);
+            }
+            60% {
+                opacity: 1;
+                transform: scale3d(1.03, 1.03, 1.03);
+            }
+            80% {
+                transform: scale3d(.97, .97, .97);
+            }
+            100% {
+                opacity: 1;
+                transform: scale3d(1, 1, 1);
+            }
+        }
+        
+        /* Utility classes */
+        .bell-ring {
+            animation: bell-ring 1s ease-in-out;
+        }
+        
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin-left: -10px;
+            margin-top: -10px;
+        }
+        
+        .loading-spinner {
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            width: 12px;
+            height: 12px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        
+        /* Smooth transitions */
+        * {
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+        }
+        
+        /* Hover effects enhancement */
+        button:hover {
+            cursor: pointer;
+        }
+        
+        .cursor-pointer:hover {
+            cursor: pointer;
+        }
+        
+        /* Enhanced shadows */
+        .shadow-lg {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .shadow-lg:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+    `;
+    
+    // Remove existing styles if any
+    const existingStyle = document.getElementById('kelas-animations-styles');
+    if (existingStyle) {
+        existingStyle.remove();
+    }
+    
+    document.head.appendChild(style);
+    console.log('CSS animasi berhasil diinjeksi!');
+}
 
