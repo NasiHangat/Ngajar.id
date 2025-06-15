@@ -681,10 +681,68 @@ class MuridDashboard {
     }
 }
 
+
+
+class MuridModul {
+    toggleModul(button) {
+        const allButtons = document.querySelectorAll(".toggle-modul");
+        const allTabs = document.querySelectorAll(".tab-modul");
+
+        allButtons.forEach(btn => {
+            btn.classList.remove("bg-teal-500", "text-white");
+            btn.classList.add("bg-white", "text-teal-500");
+        });
+
+        allTabs.forEach(tab => {
+            tab.classList.add("hidden");
+        });
+
+        const target = button.getAttribute("data-target");
+        const activeTab = document.getElementById("modul-" + target);
+        if (activeTab) {
+            activeTab.classList.remove("hidden");
+        }
+
+        button.classList.remove("bg-white", "text-teal-500");
+        button.classList.add("bg-teal-500", "text-white");
+    }
+
+      togglePremium(button) {
+        const allButtons = document.querySelectorAll(".toggle-tab");
+        const allTabs = document.querySelectorAll(".tab-content");
+
+        allButtons.forEach(btn => {
+            btn.classList.remove("bg-teal-500", "text-white");
+            btn.classList.add("bg-white", "text-teal-500");
+        });
+
+        allTabs.forEach(tab => {
+            tab.classList.add("hidden");
+        });
+
+        const target = button.getAttribute("data-target");
+        const activeTab = document.getElementById("tab-" + target);
+        if (activeTab) {
+            activeTab.classList.remove("hidden");
+        }
+
+        button.classList.remove("bg-white", "text-teal-500");
+        button.classList.add("bg-teal-500", "text-white");
+    }
+
+
+    
+}
+
+// ✅ Buat instance global
+window.modul = new MuridModul();
+
 // Initialize dashboard when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     new MuridDashboard();
 });
+
+
 
 // Add CSS animations
 const style = document.createElement('style');

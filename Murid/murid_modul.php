@@ -28,6 +28,7 @@ if ($id_pengguna) {
     <title>Modul - Ngajar.ID</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" type="image/png" href="../img/Logo.png">
+    <script src="../js/murid.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -91,11 +92,15 @@ if ($id_pengguna) {
                         <h1 class="text-xl font-bold text-teal-500 py-2">Modul Pembelajaran</h1>
                     </div>
                     <div class="flex space-x-8 mb-5">
-                        <button class="bg-teal-500 text-white px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">Soal</button>
+                        <!-- <button class="bg-teal-500 text-white px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">Soal</button>
                         <button class="bg-white text-teal-500 px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">PDF</button>
-                        <button class="bg-white text-teal-500 px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">Video</button>
+                        <button class="bg-white text-teal-500 px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">Video</button> -->
+                          <button id="btnSoal" data-target="soal" onclick="modul.toggleModul(this)" class="toggle-modul bg-teal-500 text-white px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">Soal</button>
+                            <button id="btnPDF" data-target="pdf" onclick="modul.toggleModul(this)" class="toggle-modul bg-white text-teal-500 px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">PDF</button>
+                            <button id="btnVideo" data-target="video" onclick="modul.toggleModul(this)" class="toggle-modul bg-white text-teal-500 px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">Video</button>
                     </div>
                     <!-- Modul Pembelajaran Cards -->
+                <div id="modul-soal" class="tab-modul">
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-14">
                         <div class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
                             <div class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl"></div>
@@ -150,16 +155,30 @@ if ($id_pengguna) {
                             </div>
                         </div>
                     </div>
+                </div>
+
+                    <!-- PDF -->
+                    <div id="modul-pdf" class="tab-modul hidden">
+                          <p class="text-gray-500 ">Belum ada konten PDF.</p>
+                    </div>
+
+                    <!-- Video -->
+                    <div id="modul-video" class="tab-modul hidden">
+                          <p class="text-gray-500 ">Belum ada konten untuk Video.</p>
+                    </div>
+
                 </section>
 
                 <section class="mb-8">
                     <div class="flex items-center justify-between mb-3">
                         <h1 class="text-xl font-bold text-teal-500 py-2">Modul Pembelajaran Premium</h1>
                     </div>
+
                     <div class="flex space-x-8 mb-5">
-                        <button class="bg-teal-500 text-white px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">CPNS</button>
-                        <button class="bg-white text-teal-500 px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">UTBK</button>
+                        <button id="btnCPNS" data-target="CPNS" onclick="modul.togglePremium(this)" class="toggle-tab bg-teal-500 text-white px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">CPNS</button>
+                            <button id="btnUTBk" data-target="UTBK" onclick="modul.togglePremium(this)" class="toggle-tab bg-white text-teal-500 px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">UTBK</button>
                     </div>
+                    <div id="tab-CPNS" class="tab-content">
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-14">
                         <div class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
                             <div class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl"></div>
@@ -212,6 +231,14 @@ if ($id_pengguna) {
                             </div>
                         </div>
                     </div>
+    </div>
+
+                    <!-- Video -->
+                    <div id="tab-UTBK" class="tab-content hidden">
+                        <p class="text-gray-500">Konten Video akan ditampilkan di sini.</p>
+                    </div>
+        
+                    
                 </section>
             </main>
         <footer>
