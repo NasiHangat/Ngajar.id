@@ -957,10 +957,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     ripple.remove();
                 }, 600);
                 
-                // Loading state
-                const originalText = this.textContent;
-                this.innerHTML = '<span class="loading-spinner"></span>Memproses...';
-                this.disabled = true;
+
             });
         });
     }, 1000);
