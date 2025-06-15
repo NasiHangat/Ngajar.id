@@ -128,7 +128,7 @@ if ($modul_id) {
                     <?php if (!empty($file_url)): ?>
                         <div class="mt-4">
                             <a href="<?= htmlspecialchars($file_url) ?>" target="_blank"
-                               class="inline-block bg-teal-500 text-white font-medium py-2 px-5 rounded-lg hover:bg-teal-600 transition-colors shadow">
+                                class="inline-block bg-teal-500 text-white font-medium py-2 px-5 rounded-lg hover:bg-teal-600 transition-colors shadow">
                                 Download File Materi
                             </a>
                         </div>
