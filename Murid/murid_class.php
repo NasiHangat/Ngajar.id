@@ -145,8 +145,8 @@ if ($id_pengguna) {
                     </div>
                     <div class="text-white">
                         <h2 class="font-bold text-base sm:text-lg leading-tight "><?php echo $namaPengguna; ?></h2>
-                        <div class="text-xs rounded-full mt-1 uppercase tracking-wide">
-                            <?php echo htmlspecialchars($rolePengguna); ?>
+                        <div class="text-white-200 opacity-70 text-xs sm:text-sm leading-tight">
+                            <?php echo htmlspecialchars(ucfirst($rolePengguna)); ?>
                         </div>
                         <div class="mt-2 flex items-center space-x-2">
                             <div

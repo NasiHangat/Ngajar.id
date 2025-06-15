@@ -125,7 +125,8 @@ if ($id_pengguna) {
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" type="image/png" href="../img/Logo.png">
     <script src="../js/token.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;500;600;700;900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
@@ -166,13 +167,17 @@ if ($id_pengguna) {
                     </div>
                     <div class="text-white">
                         <h2 class="font-bold text-base sm:text-lg leading-tight"><?php echo $namaPengguna; ?></h2>
-                        <p class="text-white-200 opacity-70 text-xs sm:text-sm leading-tight">Pelajar</p>
+                        <div class="text-white-200 opacity-70 text-xs sm:text-sm leading-tight">
+                            <?php echo htmlspecialchars(ucfirst($rolePengguna)); ?>
+                        </div>
                         <div class="mt-2 flex items-center space-x-2">
-                            <div class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm">
+                            <div
+                                class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm">
                                 <img src="../img/coin.png" class="w-3 h-3" alt="Token">
                                 <?php echo htmlspecialchars($token); ?>
                             </div>
-                            <button id="openPopup" class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center">
+                            <button id="openPopup"
+                                class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center">
                                 <i class="fas fa-plus text-sm"></i>
                             </button>
                             <?php include "../Includes/token.php"; ?>
@@ -191,12 +196,15 @@ if ($id_pengguna) {
                     </div>
                     <div class="border-l-4 border-r-4 border-b-4 border-[#003F4A] shadow-lg rounded-xl p-4 bg-white">
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                            <?php if (!empty($materiList)) : ?>
+                            <?php if (!empty($materiList)): ?>
                                 <?php foreach ($materiList as $materi): ?>
-                                    <a href="murid_isimateri.php?id=<?= $materi['materi_id'] ?>" class="block bg-white p-3 rounded-lg border-l-4 border-b-2 border-t-2 border-[#003F4A] shadow-sm hover:shadow-md transition-shadow text-left">
-                                        <p class="text-sm font-bold text-teal-500"><?= htmlspecialchars($materi['materi_judul']) ?></p>
-                                        <p class="text-xs text-gray-500">Kelas: <?= htmlspecialchars($materi['kelas_judul']) ?></p>
-                                        
+                                    <a href="murid_isimateri.php?id=<?= $materi['materi_id'] ?>"
+                                        class="block bg-white p-3 rounded-lg border-l-4 border-b-2 border-t-2 border-[#003F4A] shadow-sm hover:shadow-md transition-shadow text-left">
+                                        <p class="text-sm font-bold text-teal-500">
+                                            <?= htmlspecialchars($materi['materi_judul']) ?></p>
+                                        <p class="text-xs text-gray-500">Kelas: <?= htmlspecialchars($materi['kelas_judul']) ?>
+                                        </p>
+
                                     </a>
                                 <?php endforeach; ?>
                             <?php else: ?>
@@ -209,28 +217,34 @@ if ($id_pengguna) {
             <section>
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-xl font-bold text-teal-500">Modul Ngajar.Id</h3>
-                    </div>
+                </div>
                 <div class="relative">
                     <div class="absolute top-2 right-2 w-full h-full bg-[#003F4A] rounded-lg z-0"></div>
-                    <div class="relative w-full h-full bg-white border-4 border-[#003F4A] rounded-lg z-10 p-5 space-y-3">
+                    <div
+                        class="relative w-full h-full bg-white border-4 border-[#003F4A] rounded-lg z-10 p-5 space-y-3">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                            <?php if (!empty($modul_admin)) : ?>
+                            <?php if (!empty($modul_admin)): ?>
                                 <?php foreach ($modul_admin as $modul): ?>
                                     <div class="flex items-start space-x-4">
-                                        <div class="bg-teal-500 text-white font-bold p-4 py-10 border-l-8 border-[#003F4A] rounded-lg shadow-md">
+                                        <div
+                                            class="bg-teal-500 text-white font-bold p-4 py-10 border-l-8 border-[#003F4A] rounded-lg shadow-md">
                                             <?= strtoupper(substr($modul['judul'], 0, 6)) ?>
                                         </div>
                                         <div>
-                                            <a href="murid_isimodul.php?id=<?= $modul['modul_id'] ?>" class="text-teal-500 font-bold hover:underline">
+                                            <a href="murid_isimodul.php?id=<?= $modul['modul_id'] ?>"
+                                                class="text-teal-500 font-bold hover:underline">
                                                 <?= htmlspecialchars($modul['judul']) ?>
                                             </a>
-                                            <div class="text-sm text-gray-600 mt-1"><?= htmlspecialchars($modul['deskripsi']) ?></div>
-                                            <form action="murid_beli_modul.php" method="POST" onsubmit="return confirm('Yakin ingin membeli modul ini seharga <?= (int)$modul['token_harga'] ?> token?')">
+                                            <div class="text-sm text-gray-600 mt-1"><?= htmlspecialchars($modul['deskripsi']) ?>
+                                            </div>
+                                            <form action="murid_beli_modul.php" method="POST"
+                                                onsubmit="return confirm('Yakin ingin membeli modul ini seharga <?= (int) $modul['token_harga'] ?> token?')">
                                                 <input type="hidden" name="modul_id" value="<?= $modul['modul_id'] ?>">
-                                                <input type="hidden" name="harga" value="<?= (int)$modul['token_harga'] ?>">
-                                                <button type="submit" class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm hover:bg-yellow-200">
+                                                <input type="hidden" name="harga" value="<?= (int) $modul['token_harga'] ?>">
+                                                <button type="submit"
+                                                    class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm hover:bg-yellow-200">
                                                     <img src="../img/coin.png" class="w-3 h-3" alt="Token">
-                                                    Beli <?= (int)$modul['token_harga'] ?>
+                                                    Beli <?= (int) $modul['token_harga'] ?>
                                                 </button>
                                             </form>
                                         </div>
@@ -243,11 +257,11 @@ if ($id_pengguna) {
                     </div>
                 </div>
             </section>
-        </div>
+    </div>
     </main>
-        <footer>
-            <?php include '../includes/Footer.php'; ?>
-        </footer>
+    <footer>
+        <?php include '../includes/Footer.php'; ?>
+    </footer>
 </body>
 
 </html>
