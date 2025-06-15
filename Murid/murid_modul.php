@@ -128,12 +128,92 @@ if ($id_pengguna) {
 
                     <!-- PDF -->
                     <div id="modul-pdf" class="tab-modul hidden">
-                        <p class="text-gray-500 ">Belum ada konten PDF.</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                           <?php if (empty($materiList['pdf'])): ?>
+                                <p class="text-center col-span-full text-gray-500">Belum ada PDF dari kelas yang Anda
+                                    ikuti.</p>
+                            <?php else: ?>
+                                <?php foreach ($materiList['pdf'] as $materi): ?>
+                                    <a href="<?= htmlspecialchars($materi['file_url']) ?>" target="_blank" class="block mt-3 text-right text-sm text-blue-500 hover:underline">                                    
+                                        <div
+                                        class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
+                                        <!-- Layer biru di kiri bawah -->
+                                        <div
+                                            class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl">
+                                        </div>
+
+                                        <!-- Strip biru di bawah -->
+                                        <div
+                                            class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl">
+                                        </div>
+
+                                        <!-- Isi Card -->
+                                        <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
+                                            <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl"
+                                                src="https://placehold.co/160x90"
+                                                alt="<?= htmlspecialchars($materi['judul']) ?>">
+
+                                            <h2 class="text-emerald-500 text-lg font-bold mt-4 text-left">
+                                                <?= htmlspecialchars($materi['judul']) ?>
+                                            </h2>
+
+                                            <p class="text-emerald-500 text-sm font-light mt-2 text-left">
+                                                <?= htmlspecialchars($materi['nama_kelas']) ?>
+                                            </p>
+
+                                            <p class="text-emerald-500 py-5 text-sm font-light mt-2 text-right">
+                                            </p>
+                                        </div>
+                                    </div>
+                                    </a>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </div>
                     </div>
 
                     <!-- Video -->
                     <div id="modul-video" class="tab-modul hidden">
-                        <p class="text-gray-500 ">Belum ada konten untuk Video.</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                            <<?php if (empty($materiList['video'])): ?>
+                                <p class="text-center col-span-full text-gray-500">Belum ada video dari kelas yang Anda
+                                    ikuti.</p>
+                            <?php else: ?>
+                                <?php foreach ($materiList['video'] as $materi): ?>
+                                    <a href="<?= htmlspecialchars($materi['file_url']) ?>" target="_blank" class="block mt-3 text-right text-sm text-blue-500 hover:underline">                                    
+                                        <div
+                                        class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
+                                        <!-- Layer biru di kiri bawah -->
+                                        <div
+                                            class="absolute translate-x-[-15px] z-0 w-full h-[90%] bottom-0 left-0 bg-sky-900 rounded-tl-2xl rounded-bl-2xl">
+                                        </div>
+
+                                        <!-- Strip biru di bawah -->
+                                        <div
+                                            class="absolute translate-x-[-1px] w-full h-3 bottom-0 z-20 left-0 bg-sky-900 rounded-tr-2xl">
+                                        </div>
+
+                                        <!-- Isi Card -->
+                                        <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
+                                            <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl"
+                                                src="https://placehold.co/160x90"
+                                                alt="<?= htmlspecialchars($materi['judul']) ?>">
+
+                                            <h2 class="text-emerald-500 text-lg font-bold mt-4 text-left">
+                                                <?= htmlspecialchars($materi['judul']) ?>
+                                            </h2>
+
+                                            <p class="text-emerald-500 text-sm font-light mt-2 text-left">
+                                                <?= htmlspecialchars($materi['nama_kelas']) ?>
+                                            </p>
+
+                                            <p class="text-emerald-500 py-5 text-sm font-light mt-2 text-right">
+                                            </p>
+                                        </div>
+                                    </div>
+                                    </a>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </div>
                     </div>
 
                 </section>
