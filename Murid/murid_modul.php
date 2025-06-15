@@ -69,6 +69,32 @@ if (!empty($kelasIds)) {
     $stmt->close();
 }
 
+// Ambil modul yang dibuat oleh admin
+$modul_admin = [];
+$stmt = $conn->prepare("
+    SELECT modul_id, judul, deskripsi, tipe, token_harga 
+    FROM modul 
+    WHERE dibuat_oleh IN (SELECT user_id FROM users WHERE role = 'admin')
+");
+$stmt->execute();
+$result = $stmt->get_result();
+while ($row = $result->fetch_assoc()) {
+    $modul_admin[] = $row;
+}
+$stmt->close();
+
+// Ambil modul yang sudah dibeli
+$modul_dibeli = [];
+$stmt = $conn->prepare("SELECT modul_id FROM token_log WHERE user_id = ?");
+$stmt->bind_param("i", $id_pengguna);
+$stmt->execute();
+$result = $stmt->get_result();
+while ($row = $result->fetch_assoc()) {
+    $modul_dibeli[] = $row['modul_id'];
+}
+$stmt->close();
+
+
 $token = 0;
 if ($id_pengguna) {
     // Ambil nama
@@ -133,35 +159,36 @@ if ($id_pengguna) {
                 </div>
             </header>
             <?php include "../Includes/sidebar.php" ?>
-                    <div class="bg-teal-500 py-4">
-            <div class="max-w-6xl mx-auto px-4 sm:px-8 flex items-start justify-between">
-                <div class="flex items-center space-x-4">
-                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white flex items-center justify-center">
-                        <i class="fa-regular fa-user text-teal-500 text-3xl"></i>
-                    </div>
-                    <div class="text-white">
-                        <h2 class="font-bold text-base sm:text-lg leading-tight"><?php echo $namaPengguna; ?></h2>
-                        <div class="text-white-200 opacity-70 text-xs sm:text-sm leading-tight">
-                            <?php echo htmlspecialchars(ucfirst($rolePengguna)); ?>
+            <div class="bg-teal-500 py-4">
+                <div class="max-w-6xl mx-auto px-4 sm:px-8 flex items-start justify-between">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white flex items-center justify-center">
+                            <i class="fa-regular fa-user text-teal-500 text-3xl"></i>
                         </div>
-                        <div class="mt-2 flex items-center space-x-2">
-                            <div
-                                class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm">
-                                <img src="../img/coin.png" class="w-3 h-3" alt="Token">
-                                <?php echo htmlspecialchars($token); ?>
+                        <div class="text-white">
+                            <h2 class="font-bold text-base sm:text-lg leading-tight"><?php echo $namaPengguna; ?></h2>
+                            <div class="text-white-200 opacity-70 text-xs sm:text-sm leading-tight">
+                                <?php echo htmlspecialchars(ucfirst($rolePengguna)); ?>
                             </div>
-                            <button id="openPopup"
-                                class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center">
-                                <i class="fas fa-plus text-sm"></i>
-                            </button>
-                            <?php include "../Includes/token.php"; ?>
+                            <div class="mt-2 flex items-center space-x-2">
+                                <div
+                                    class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm">
+                                    <img src="../img/coin.png" class="w-3 h-3" alt="Token">
+                                    <?php echo htmlspecialchars($token); ?>
+                                </div>
+                                <button id="openPopup"
+                                    class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center">
+                                    <i class="fas fa-plus text-sm"></i>
+                                </button>
+                                <?php include "../Includes/token.php"; ?>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
             <main class="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+                
                 <section class="mb-8">
                     <div class="flex items-start justify-between mb-3">
                         <h1 class="text-start text-xl font-bold text-teal-500 py-2">Modul Pembelajaran</h1>
@@ -200,8 +227,7 @@ if ($id_pengguna) {
                                             <!-- Isi Card -->
                                             <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
                                                 <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl"
-                                                    src="../img/Logo.png"
-                                                    alt="<?= htmlspecialchars($materi['judul']) ?>">
+                                                    src="../img/Logo.png" alt="<?= htmlspecialchars($materi['judul']) ?>">
 
                                                 <h2 class="text-emerald-500 text-lg font-bold mt-4 text-left">
                                                     <?= htmlspecialchars($materi['judul']) ?>
@@ -246,8 +272,7 @@ if ($id_pengguna) {
                                             <!-- Isi Card -->
                                             <div class="relative w-full rounded-tl-3xl bg-white h-full p-4 z-10">
                                                 <img class="w-full h-28 object-cover rounded-tl-2xl rounded-tr-2xl"
-                                                    src="../img/Logo.png"
-                                                    alt="<?= htmlspecialchars($materi['judul']) ?>">
+                                                    src="../img/Logo.png" alt="<?= htmlspecialchars($materi['judul']) ?>">
 
                                                 <h2 class="text-emerald-500 text-lg font-bold mt-4 text-left">
                                                     <?= htmlspecialchars($materi['judul']) ?>
@@ -318,81 +343,115 @@ if ($id_pengguna) {
                         <h1 class="text-xl font-bold text-teal-500 py-2">Modul Ngajar.id</h1>
                     </div>
 
+                    <!-- Tombol toggle utama -->
                     <div class="flex space-x-8 mb-5">
-                        <button id="btnGratis" data-target="Gratis" onclick="modul.togglePremium(this)"
-                            class="toggle-tab bg-teal-500 text-white px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">Gratis</button>
-                        <button id="btnPremium" data-target="Premium" onclick="modul.togglePremium(this)"
-                            class="toggle-tab bg-white text-teal-500 px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">Premium</button>
+                        <button id="btnBelumDibeli" data-target="BelumDibeli" onclick="modul.togglePremium(this)"
+                            class="toggle-tab bg-teal-500 text-white px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">
+                            Belum Dibeli
+                        </button>
+                        <button id="btnSudahDibeli" data-target="SudahDibeli" onclick="modul.togglePremium(this)"
+                            class="toggle-tab bg-white text-teal-500 px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">
+                            Sudah Dibeli
+                        </button>
                     </div>
 
+                    <!-- Konten tab -->
                     <div id="tabContent">
-                        <div id="Gratis" class="sub-tab-group block">
-                            <div class="flex space-x-8 mb-5">
-                                <button data-target="soal" onclick="modul.toggleNgajar(this, 'Gratis')"
-                                    class="toggle-ngajar bg-teal-500 text-white px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">Soal</button>
-                                <button data-target="pdf" onclick="modul.toggleNgajar(this, 'Gratis')"
-                                    class="toggle-ngajar bg-white text-teal-500 px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">PDF</button>
-                                <button data-target="video" onclick="modul.toggleNgajar(this, 'Gratis')"
-                                    class="toggle-ngajar bg-white text-teal-500 px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">Video</button>
-                            </div>
-                            <!-- Konten Gratis bisa ditaruh di sini -->
-                            <div id="ngajar-Gratis-soal" class="tab-ngajar">
-                                <div class="p-4 bg-gray-100 rounded shadow">
-                                    <h2 class="text-lg font-semibold mb-2">Soal Gratis</h2>
-                                    <p>Ini adalah placeholder untuk Soal Gratis.</p>
-                                </div>
-                            </div>
-
-                            <div id="ngajar-Gratis-pdf" class="tab-ngajar hidden">
-                                <div class="p-4 bg-gray-100 rounded shadow">
-                                    <h2 class="text-lg font-semibold mb-2">PDF Gratis</h2>
-                                    <p>Ini adalah placeholder untuk PDF Gratis.</p>
-                                </div>
-                            </div>
-
-                            <div id="ngajar-Gratis-video" class="tab-ngajar hidden">
-                                <div class="p-4 bg-gray-100 rounded shadow">
-                                    <h2 class="text-lg font-semibold mb-2">Video Gratis</h2>
-                                    <p>Ini adalah placeholder untuk Video Gratis.</p>
+                        <!-- Belum Dibeli -->
+                        <div id="BelumDibeli" class="sub-tab-group block">
+                            <div class="relative mb-6">
+                                <div class="absolute top-2 right-2 w-full h-full bg-[#003F4A] rounded-lg z-0"></div>
+                                <div
+                                    class="relative w-full h-full bg-white border-4 border-[#003F4A] rounded-lg z-10 p-5 space-y-3">
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                        <?php
+                                        $adaBelumDibeli = false;
+                                        if (!empty($modul_admin)):
+                                            foreach ($modul_admin as $modul):
+                                                if (!in_array($modul['modul_id'], $modul_dibeli)):
+                                                    $adaBelumDibeli = true;
+                                                    ?>
+                                                    <div class="flex items-start space-x-4">
+                                                        <div
+                                                            class="bg-teal-500 text-white font-bold p-4 py-10 border-l-8 border-[#003F4A] rounded-lg shadow-md">
+                                                            <?= strtoupper(substr($modul['judul'], 0, 6)) ?>
+                                                        </div>
+                                                        <div>
+                                                            <p class="text-teal-500 font-bold">
+                                                                <?= htmlspecialchars($modul['judul']) ?></p>
+                                                            <form action="murid_beli_modul.php" method="POST"
+                                                                onsubmit="return confirm('Yakin ingin membeli modul ini seharga <?= (int) $modul['token_harga'] ?> token?')">
+                                                                <input type="hidden" name="modul_id"
+                                                                    value="<?= $modul['modul_id'] ?>">
+                                                                <input type="hidden" name="harga"
+                                                                    value="<?= (int) $modul['token_harga'] ?>">
+                                                                <button type="submit"
+                                                                    class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm hover:bg-yellow-200">
+                                                                    <img src="../img/coin.png" class="w-3 h-3" alt="Token">
+                                                                    Beli <?= (int) $modul['token_harga'] ?>
+                                                                </button>
+                                                            </form>
+                                                            <div class="text-sm text-gray-600 mt-1">
+                                                                <?= htmlspecialchars($modul['deskripsi']) ?></div>
+                                                        </div>
+                                                    </div>
+                                                    <?php
+                                                endif;
+                                            endforeach;
+                                        endif;
+                                        if (!$adaBelumDibeli):
+                                            ?>
+                                            <p class="text-sm text-gray-500 col-span-full">Tidak ada modul yang belum
+                                                dibeli.</p>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div id="Premium" class="sub-tab-group hidden">
-                            <div class="flex space-x-8 mb-5">
-                                <button data-target="soal" onclick="modul.toggleNgajar(this, 'Premium')"
-                                    class="toggle-ngajar bg-teal-500 text-white px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">Soal</button>
-                                <button data-target="pdf" onclick="modul.toggleNgajar(this, 'Premium')"
-                                    class="toggle-ngajar bg-white text-teal-500 px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">PDF</button>
-                                <button data-target="video" onclick="modul.toggleNgajar(this, 'Premium')"
-                                    class="toggle-ngajar bg-white text-teal-500 px-6 py-1 rounded-lg text-sm font-semibold shadow-[0px_4px_1px_0px_#003D4E]">Video</button>
-                            </div>
-
-                            <!-- Untuk PREMIUM -->
-                            <div id="ngajar-Premium-soal" class="tab-ngajar">
-                                <div class="p-4 bg-yellow-100 rounded shadow">
-                                    <h2 class="text-lg font-semibold mb-2">Soal Premium</h2>
-                                    <p>Ini adalah placeholder untuk Soal Premium.</p>
-                                </div>
-                            </div>
-
-                            <div id="ngajar-Premium-pdf" class="tab-ngajar hidden">
-                                <div class="p-4 bg-yellow-100 rounded shadow">
-                                    <h2 class="text-lg font-semibold mb-2">PDF Premium</h2>
-                                    <p>Ini adalah placeholder untuk PDF Premium.</p>
-                                </div>
-                            </div>
-
-                            <div id="ngajar-Premium-video" class="tab-ngajar hidden">
-                                <div class="p-4 bg-yellow-100 rounded shadow">
-                                    <h2 class="text-lg font-semibold mb-2">Video Premium</h2>
-                                    <p>Ini adalah placeholder untuk Video Premium.</p>
+                        <!-- Sudah Dibeli -->
+                        <div id="SudahDibeli" class="sub-tab-group hidden">
+                            <div class="relative">
+                                <div class="absolute top-2 right-2 w-full h-full bg-[#003F4A] rounded-lg z-0"></div>
+                                <div
+                                    class="relative w-full h-full bg-white border-4 border-[#003F4A] rounded-lg z-10 p-5 space-y-3">
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                        <?php
+                                        $adaSudahDibeli = false;
+                                        if (!empty($modul_admin)):
+                                            foreach ($modul_admin as $modul):
+                                                if (in_array($modul['modul_id'], $modul_dibeli)):
+                                                    $adaSudahDibeli = true;
+                                                    ?>
+                                                    <div class="flex items-start space-x-4">
+                                                        <div
+                                                            class="bg-teal-500 text-white font-bold p-4 py-10 border-l-8 border-[#003F4A] rounded-lg shadow-md">
+                                                            <?= strtoupper(substr($modul['judul'], 0, 6)) ?>
+                                                        </div>
+                                                        <div>
+                                                            <a href="../pengajar/detail_materi.php?modul_id=<?= $modul['modul_id'] ?>"
+                                                                class="text-teal-500 font-bold hover:underline">
+                                                                <?= htmlspecialchars($modul['judul']) ?>
+                                                            </a>
+                                                            <div class="text-sm text-green-600 mt-1 font-semibold">Sudah Dibeli
+                                                            </div>
+                                                            <div class="text-sm text-gray-600 mt-1">
+                                                                <?= htmlspecialchars($modul['deskripsi']) ?></div>
+                                                        </div>
+                                                    </div>
+                                                    <?php
+                                                endif;
+                                            endforeach;
+                                        endif;
+                                        if (!$adaSudahDibeli):
+                                            ?>
+                                            <p class="text-sm text-gray-500 col-span-full">Belum ada modul yang dibeli.</p>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
                 </section>
             </main>
             <footer>
