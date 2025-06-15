@@ -170,6 +170,44 @@ if ($id_pengguna) {
 </head>
 
 <body class="bg-white-50 font-roboto">
+    <?php
+    // ALERT HANDLER
+    if (isset($_GET['error'])) {
+        $errorMsg = '';
+        switch ($_GET['error']) {
+            case 'not_enough_token':
+                $errorMsg = 'Token kamu tidak cukup untuk membeli modul ini.';
+                break;
+            case 'already_purchased':
+                $errorMsg = 'Kamu sudah membeli modul ini sebelumnya.';
+                break;
+            case 'transaction_failed':
+                $errorMsg = 'Terjadi kesalahan saat memproses pembelian.';
+                break;
+            default:
+                $errorMsg = 'Terjadi kesalahan yang tidak diketahui.';
+                break;
+        }
+        echo '<div class="bg-red-100 text-red-700 px-4 py-3 rounded relative max-w-2xl mx-auto mt-4" role="alert">
+                <strong class="font-bold">Gagal! </strong>
+                <span class="block sm:inline">' . htmlspecialchars($errorMsg) . '</span>
+              </div>';
+    } elseif (isset($_GET['status']) && $_GET['status'] === 'success') {
+        echo '<div class="bg-green-100 text-green-700 px-4 py-3 rounded relative max-w-2xl mx-auto mt-4" role="alert">
+                <strong class="font-bold">Berhasil! </strong>
+                <span class="block sm:inline">Modul berhasil dibeli.</span>
+              </div>';
+    }
+    ?>
+
+    <!-- Optional: Bersihkan URL setelah 3 detik -->
+    <script>
+        setTimeout(() => {
+            const url = new URL(window.location.href);
+            url.search = "";
+            window.history.replaceState({}, document.title, url);
+        }, 3000);
+    </script>
     <div class="flex flex-col min-h-screen">
         <header class="bg-white shadow-sm sticky top-0 z-30">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">

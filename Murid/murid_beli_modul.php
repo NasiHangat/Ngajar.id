@@ -5,6 +5,12 @@ include "../Includes/DBkoneksi.php";
 // Ambil URL sebelumnya
 $previousPage = $_SERVER['HTTP_REFERER'] ?? 'murid_dashboard.php';
 
+// Fungsi untuk menambahkan parameter ke URL dengan aman
+function appendQueryParam($url, $key, $value) {
+    $separator = (parse_url($url, PHP_URL_QUERY)) ? '&' : '?';
+    return $url . $separator . urlencode($key) . '=' . urlencode($value);
+}
+
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['user_id'], $_POST['modul_id'], $_POST['harga'])) {
     $user_id  = (int) $_SESSION['user_id'];
     $modul_id = (int) $_POST['modul_id'];
@@ -19,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['user_id'], $_POST[
     $stmt->close();
 
     if ($sudah_dibeli > 0) {
-        header("Location: $previousPage?error=already_purchased");
+        header("Location: " . appendQueryParam($previousPage, 'error', 'already_purchased'));
         exit;
     }
 
@@ -32,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['user_id'], $_POST[
     $stmt->close();
 
     if ($jumlah_token < $harga) {
-        header("Location: $previousPage?error=not_enough_token");
+        header("Location: " . appendQueryParam($previousPage, 'error', 'not_enough_token'));
         exit;
     }
 
@@ -51,11 +57,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['user_id'], $_POST[
         $stmt->execute();
 
         $conn->commit();
-        header("Location: $previousPage?status=success");
+        header("Location: " . appendQueryParam($previousPage, 'status', 'success'));
         exit;
     } catch (Exception $e) {
         $conn->rollback();
-        header("Location: $previousPage?error=transaction_failed");
+        header("Location: " . appendQueryParam($previousPage, 'error', 'transaction_failed'));
         exit;
     }
 } else {
