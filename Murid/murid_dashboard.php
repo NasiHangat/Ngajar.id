@@ -9,11 +9,20 @@ if ($_SESSION['role'] !== 'murid') {
 $id_pengguna = $_SESSION['user_id'] ?? null;
 $namaPengguna = "";
 
+// Ambil nama dan token pengguna
+$token = 0;
 if ($id_pengguna) {
     $stmt = $conn->prepare("SELECT name FROM users WHERE user_id = ?");
     $stmt->bind_param("i", $id_pengguna);
     $stmt->execute();
     $stmt->bind_result($namaPengguna);
+    $stmt->fetch();
+    $stmt->close();
+
+    $stmt = $conn->prepare("SELECT jumlah FROM token WHERE user_id = ?");
+    $stmt->bind_param("i", $id_pengguna);
+    $stmt->execute();
+    $stmt->bind_result($token);
     $stmt->fetch();
     $stmt->close();
 }
@@ -25,7 +34,6 @@ $stmt = $conn->prepare("
     FROM modul 
     WHERE dibuat_oleh IN (SELECT user_id FROM users WHERE role = 'admin')
 ");
-
 $stmt->execute();
 $result = $stmt->get_result();
 while ($row = $result->fetch_assoc()) {
@@ -43,61 +51,18 @@ while ($row = $result->fetch_assoc()) {
 }
 $stmt->close();
 
-
-// Ambil token pengguna
-$token = 0;
-if ($id_pengguna) {
-    // Ambil nama
-    $stmt = $conn->prepare("SELECT name FROM users WHERE user_id = ?");
-    $stmt->bind_param("i", $id_pengguna);
-    $stmt->execute();
-    $stmt->bind_result($namaPengguna);
-    $stmt->fetch();
-    $stmt->close();
-
-    // Ambil token
-    $stmt = $conn->prepare("SELECT jumlah FROM token WHERE user_id = ?");
-    $stmt->bind_param("i", $id_pengguna);
-    $stmt->execute();
-    $stmt->bind_result($token);
-    $stmt->fetch();
-    $stmt->close();
-}
-
-// Ambil materi kelas yang diikuti oleh pengguna
-$materi_kelas = [];
-
-if ($id_pengguna) {
-    $stmt = $conn->prepare("
-        SELECT k.kelas_id, k.judul, k.deskripsi 
-        FROM kelas_peserta kp
-        JOIN kelas k ON kp.kelas_id = k.kelas_id
-        WHERE kp.siswa_id = ?
-    ");
-
-    $stmt->bind_param("i", $id_pengguna);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    while ($row = $result->fetch_assoc()) {
-        $materi_kelas[] = $row['judul'];
-    }
-    $stmt->close();
-}
-
-
 // Ambil materi dari kelas yang diikuti murid
 $materiList = [];
 $seen = [];
 
 if ($id_pengguna) {
     $stmt = $conn->prepare("
-        SELECT m.materi_id, m.judul AS materi_judul, m.deskripsi AS materi_deskripsi, k.judul AS kelas_judul
+        SELECT m.materi_id, m.judul AS materi_judul, m.deskripsi AS materi_deskripsi, m.kelas_id, k.judul AS kelas_judul
         FROM kelas_peserta kp
         JOIN kelas k ON kp.kelas_id = k.kelas_id
         JOIN materi m ON k.kelas_id = m.kelas_id
         WHERE kp.siswa_id = ?
     ");
-
     $stmt->bind_param("i", $id_pengguna);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -108,10 +73,33 @@ if ($id_pengguna) {
             $seen[] = $row['materi_id'];
         }
     }
-
     $stmt->close();
+    
 }
 
+if (!empty($kelasIds)) {
+    $placeholders = implode(',', array_fill(0, count($kelasIds), '?'));
+    $types = str_repeat('i', count($kelasIds));
+
+    $sql = "
+        SELECT m.materi_id, m.judul, m.tipe, m.file_url, m.kelas_id, k.judul AS nama_kelas
+        FROM materi m
+        JOIN kelas k ON m.kelas_id = k.kelas_id
+        WHERE m.kelas_id IN ($placeholders)
+    ";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param($types, ...$kelasIds);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $tipe = strtolower($row['tipe']);
+        if (isset($materiList[$tipe])) {
+            $materiList[$tipe][] = $row;
+        }
+    }
+    $stmt->close();
+}
 
 ?>
 
@@ -198,13 +186,14 @@ if ($id_pengguna) {
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                             <?php if (!empty($materiList)): ?>
                                 <?php foreach ($materiList as $materi): ?>
-                                    <a href="murid_isimateri.php?id=<?= $materi['materi_id'] ?>"
-                                        class="block bg-white p-3 rounded-lg border-l-4 border-b-2 border-t-2 border-[#003F4A] shadow-sm hover:shadow-md transition-shadow text-left">
+                                    <a href="../Pengajar/detail_materi.php?materi_id=<?= htmlspecialchars($materi['materi_id']) ?>&kelas_id=<?= htmlspecialchars($materi['kelas_id']) ?>"
+                                        class="block hover:shadow-lg transition-shadow mb-4 p-4 border border-gray-200 rounded-lg">
                                         <p class="text-sm font-bold text-teal-500">
-                                            <?= htmlspecialchars($materi['materi_judul']) ?></p>
-                                        <p class="text-xs text-gray-500">Kelas: <?= htmlspecialchars($materi['kelas_judul']) ?>
+                                            <?= htmlspecialchars($materi['materi_judul']) ?>
                                         </p>
-
+                                        <p class="text-xs text-gray-500">
+                                            Kelas: <?= htmlspecialchars($materi['kelas_judul']) ?>
+                                        </p>
                                     </a>
                                 <?php endforeach; ?>
                             <?php else: ?>
