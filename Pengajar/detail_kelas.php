@@ -2,8 +2,11 @@
 <?php include '../includes/DBkoneksi.php'; ?>
 
 <?php
-// Tangani request jika user klik tombol "Ikuti"
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ikuti'])) {
+include '../Includes/session_check.php';
+include '../Includes/DBkoneksi.php';
+
+// Tangani tombol "Ikuti" hanya jika murid yang mengklik
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ikuti']) && $_SESSION['role'] === 'murid') {
     $kelas_id = $_POST['kelas_id'];
     $siswa_id = $_SESSION['user_id'];
 
@@ -29,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ikuti'])) {
 }
 
 $id_pengguna = $_SESSION['user_id'] ?? null;
+$role = $_SESSION['role'] ?? null;
 $kelas_id = $_GET['id'] ?? null;
 
 if (!$kelas_id || !$id_pengguna) {
@@ -36,20 +40,41 @@ if (!$kelas_id || !$id_pengguna) {
     exit;
 }
 
-// Cek apakah murid sudah mengikuti kelas ini
-$cek = $conn->prepare("SELECT id FROM kelas_peserta WHERE siswa_id = ? AND kelas_id = ?");
-$cek->bind_param("ii", $id_pengguna, $kelas_id);
-$cek->execute();
-$cek->store_result();
+$aksesDiizinkan = false;
 
-if ($cek->num_rows === 0) {
-    echo "<p class='text-red-500 text-center font-bold mt-10'>Anda belum mengikuti kelas ini.</p>";
+// Jika murid, cek apakah sudah mengikuti kelas
+if ($role === 'murid') {
+    $cek = $conn->prepare("SELECT id FROM kelas_peserta WHERE siswa_id = ? AND kelas_id = ?");
+    $cek->bind_param("ii", $id_pengguna, $kelas_id);
+    $cek->execute();
+    $cek->store_result();
+
+    if ($cek->num_rows > 0) {
+        $aksesDiizinkan = true;
+    }
+    $cek->close();
+}
+
+// Jika pengajar, cek apakah kelas ini miliknya
+if ($role === 'pengajar') {
+    $cek = $conn->prepare("SELECT kelas_id FROM kelas WHERE kelas_id = ? AND pengajar_id = ?");
+    $cek->bind_param("ii", $kelas_id, $id_pengguna);
+    $cek->execute();
+    $cek->store_result();
+
+    if ($cek->num_rows > 0) {
+        $aksesDiizinkan = true;
+    }
+    $cek->close();
+}
+
+if (!$aksesDiizinkan) {
+    echo "<p class='text-red-500 text-center font-bold mt-10'>Anda tidak memiliki akses ke kelas ini.</p>";
     exit;
 }
-$cek->close();
 
 // Ambil nama pengguna
-$namaPengguna = "";
+$namaPengguna = '';
 $stmt = $conn->prepare("SELECT name FROM users WHERE user_id = ?");
 $stmt->bind_param("i", $id_pengguna);
 $stmt->execute();

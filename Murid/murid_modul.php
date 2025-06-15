@@ -164,7 +164,7 @@ if ($id_pengguna) {
 
                     <!-- Video -->
                     <div id="modul-video" class="tab-modul hidden">
-                          <p class="text-gray-500 italic">Belum ada konten untuk Video.</p>
+                          <p class="text-gray-500 ">Belum ada konten untuk Video.</p>
                     </div>
 
                 </section>
