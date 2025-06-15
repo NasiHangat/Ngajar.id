@@ -2,8 +2,6 @@
 <?php include '../includes/DBkoneksi.php'; ?>
 
 <?php
-include '../Includes/session_check.php';
-include '../Includes/DBkoneksi.php';
 
 // Tangani tombol "Ikuti" hanya jika murid yang mengklik
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ikuti']) && $_SESSION['role'] === 'murid') {
