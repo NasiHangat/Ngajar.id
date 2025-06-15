@@ -176,8 +176,7 @@ if ($id_pengguna) {
                     </div>
                 <div>
                 <div class="relative">
-                    <div class="absolute top-1.5 left-1.5 w-full h-full bg-cyan-950 rounded-lg z-0"></div>
-                    <div class="relative bg-white p-4 shadow rounded-lg flex items-start justify-between border-4 border-cyan-950 z-10">
+                    <div class="bg-white p-4 shadow rounded-lg flex items-start justify-between border-4 border-[#003F4A]">
                         <div class="flex gap-4 hover:text-gray-700">
                             <div class="w-10 h-10 bg-teal-500 text-white p-2 rounded-full flex items-center justify-center">
                                 <i class="fas fa-clipboard text-lg"></i>
