@@ -159,7 +159,7 @@ $stmt->close();
                                                 <div class="text-sm text-gray-600 mt-1"><?= htmlspecialchars($modul['deskripsi']) ?></div>
                                                 <div class="flex items-center text-sm mt-1">
                                                     <img src="../img/coin.png" class="mr-1.5 w-4">
-                                                    <?= (int)$modul['token_harga'] ?> Token
+                                                    <?= (int)$modul['token_harga'] ?>
                                                 </div>
                                             </div>
                                         </div>
