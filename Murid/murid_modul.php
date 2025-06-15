@@ -96,9 +96,9 @@ if ($id_pengguna) {
                             <p class="text-white-200 opacity-70 text-xs sm:text-sm leading-tight">Pelajar</p>
                             <!-- Token dan tombol tambah diletakkan di bawah -->
                             <div class="mt-2 flex items-center space-x-2">
-                                <div class="bg-white text-teal-500 text-xs font-semibold px-2.5 py-1 rounded-lg flex items-center">
-                                    <img src="../img/coin.png" class="mr-1.5 w-4"></img> 
-                                    <?php echo htmlspecialchars($token); ?>
+                                <div class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm">
+                                <img src="../img/coin.png" class="w-3 h-3" alt="Token">
+                                <?php echo htmlspecialchars($token); ?>
                                 </div>
                                 <button
                                     class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center">
