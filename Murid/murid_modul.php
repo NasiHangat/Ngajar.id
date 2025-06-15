@@ -140,7 +140,7 @@ if (!empty($kelasIds)) {
                 </div>
             </div>
 
-            <main class="max-w-6xl mx-[250px] px-4 sm:px-6 lg:px-8 py-8">
+            <main class="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
                 <section class="mb-8">
                     <div class="flex items-start justify-between mb-3">
                         <h1 class="text-start text-xl font-bold text-teal-500 py-2">Modul Pembelajaran</h1>
@@ -162,7 +162,7 @@ if (!empty($kelasIds)) {
                                     ikuti.</p>
                             <?php else: ?>
                                 <?php foreach ($materiList['soal'] as $materi): ?>
-                                     <a href="../Pengajar/detail_materi.php?materi_id=<?= htmlspecialchars($materi['materi_id']) ?>&kelas_id=<?= htmlspecialchars($materi['kelas_id']) ?>" class="block hover:shadow-lg transition-shadow">                                      
+                                    <a href="../Pengajar/detail_materi.php?materi_id=<?= htmlspecialchars($materi['materi_id']) ?>&kelas_id=<?= htmlspecialchars($materi['kelas_id']) ?>" class="block hover:shadow-lg transition-shadow">                                      
                                     <div
                                         class="relative w-50 h-70 bg-white shadow-[0px_4px_15px_0px_rgba(0,0,0,0.25)] rounded-xl">
                                         <!-- Layer biru di kiri bawah -->
