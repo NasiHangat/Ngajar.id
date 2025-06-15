@@ -64,6 +64,55 @@ if ($id_pengguna) {
     $stmt->close();
 }
 
+// Ambil materi kelas yang diikuti oleh pengguna
+$materi_kelas = [];
+
+if ($id_pengguna) {
+    $stmt = $conn->prepare("
+        SELECT k.kelas_id, k.judul, k.deskripsi 
+        FROM kelas_peserta kp
+        JOIN kelas k ON kp.kelas_id = k.kelas_id
+        WHERE kp.siswa_id = ?
+    ");
+
+    $stmt->bind_param("i", $id_pengguna);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $materi_kelas[] = $row['judul'];
+    }
+    $stmt->close();
+}
+
+
+// Ambil materi dari kelas yang diikuti murid
+$materiList = [];
+$seen = [];
+
+if ($id_pengguna) {
+    $stmt = $conn->prepare("
+        SELECT m.materi_id, m.judul AS materi_judul, m.deskripsi AS materi_deskripsi, k.judul AS kelas_judul
+        FROM kelas_peserta kp
+        JOIN kelas k ON kp.kelas_id = k.kelas_id
+        JOIN materi m ON k.kelas_id = m.kelas_id
+        WHERE kp.siswa_id = ?
+    ");
+
+    $stmt->bind_param("i", $id_pengguna);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    while ($row = $result->fetch_assoc()) {
+        if (!in_array($row['materi_id'], $seen)) {
+            $materiList[] = $row;
+            $seen[] = $row['materi_id'];
+        }
+    }
+
+    $stmt->close();
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -141,31 +190,18 @@ if ($id_pengguna) {
                             <span>Materi Pembelajaran<span>
                     </div>
                     <div class="border-l-4 border-r-4 border-b-4 border-[#003F4A] shadow-lg rounded-xl p-4 bg-white">
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            <a href="murid_modul.php" class="block bg-white p-3 rounded-lg border-l-4 border-b-2 border-t-2 border-[#003F4A] shadow-sm hover:shadow-md transition-shadow text-center">
-                                <p class="text-sm font-bold text-teal-500">Matematika</p>
-                            </a>
-                            <a href="#" class="block bg-gray-50 p-3 rounded-lg border-l-4 border-b-2 border-t-2 border-[#003F4A] shadow-sm hover:shadow-md transition-shadow text-center">
-                                <p class="text-sm font-bold text-teal-500">Fisika</p>
-                            </a>
-                            <a href="#" class="block bg-gray-50 p-3 rounded-lg border-l-4 border-b-2 border-t-2 border-[#003F4A] shadow-sm hover:shadow-md transition-shadow text-center">
-                                <p class="text-sm font-bold text-teal-500">Kimia</p>
-                            </a>
-                            <a href="#" class="block bg-gray-50 p-3 rounded-lg border-l-4 border-b-2 border-t-2 border-[#003F4A] shadow-sm hover:shadow-md transition-shadow text-center">
-                                <p class="text-sm font-bold text-teal-500">Biologi</p>
-                            </a>
-                            <a href="#" class="block bg-gray-50 p-3 rounded-lg border-l-4 border-b-2 border-t-2 border-[#003F4A] shadow-sm hover:shadow-md transition-shadow text-center">
-                                <p class="text-sm font-bold text-teal-500">Bahasa Indonesia</p>
-                            </a>
-                            <a href="#" class="block bg-gray-50 p-3 rounded-lg border-l-4 border-b-2 border-t-2 border-[#003F4A] shadow-sm hover:shadow-md transition-shadow text-center">
-                                <p class="text-sm font-bold text-teal-500">Bahasa Inggris</p>
-                            </a>
-                            <a href="#" class="block bg-gray-50 p-3 rounded-lg border-l-4 border-b-2 border-t-2 border-[#003F4A] shadow-sm hover:shadow-md transition-shadow text-center">
-                                <p class="text-sm font-bold text-teal-500">Pendidikan Kewarganegaraan</p>
-                            </a>
-                            <a href="#" class="block bg-gray-50 p-3 rounded-lg border-l-4 border-b-2 border-t-2 border-[#003F4A] shadow-sm hover:shadow-md transition-shadow text-center">
-                                <p class="text-sm font-bold text-teal-500">Sejarah</p>
-                            </a>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <?php if (!empty($materiList)) : ?>
+                                <?php foreach ($materiList as $materi): ?>
+                                    <a href="murid_isimateri.php?id=<?= $materi['materi_id'] ?>" class="block bg-white p-3 rounded-lg border-l-4 border-b-2 border-t-2 border-[#003F4A] shadow-sm hover:shadow-md transition-shadow text-left">
+                                        <p class="text-sm font-bold text-teal-500"><?= htmlspecialchars($materi['materi_judul']) ?></p>
+                                        <p class="text-xs text-gray-500">Kelas: <?= htmlspecialchars($materi['kelas_judul']) ?></p>
+                                        
+                                    </a>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <p class="text-sm text-gray-500 col-span-full">Belum ada materi yang tersedia.</p>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
