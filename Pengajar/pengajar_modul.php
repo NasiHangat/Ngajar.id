@@ -117,14 +117,22 @@ if ($pengajar_id) {
         <?php include "../Includes/sidebar.php" ?>
         <main class="flex-grow flex-col min-h-screen p-4 sm:p-8">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <!-- Tombol Tambah Kelas -->
+                <!-- Pesan sukses -->
+                <?php if ($pesan): ?>
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
+                        <?= htmlspecialchars($pesan) ?>
+                    </div>
+                <?php endif; ?>
+
+                <!-- Tombol Tambah Materi -->
                 <div class="mb-6">
                     <button id="tambahMateriBtn" class="bg-teal-500 text-white px-4 py-2 rounded-lg font-bold flex items-center gap-2 hover:bg-teal-600 transition-colors shadow-md">
                         <i class="fas fa-plus"></i>
                         <span>Tambah Materi</span>
                     </button>
                 </div>
-                <div class="bg-white rounded-lg shadow-lg  p-4 mb-8">
+                
+                <div class="bg-white rounded-lg shadow-lg p-4 mb-8">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                         <div>
                             <h2 class="text-2xl font-bold text-teal-500">Materi Pembelajaran</h2>
@@ -138,7 +146,7 @@ if ($pengajar_id) {
                     </div>
                 </div>
 
-                <!-- Grid Kartu Kelas -->
+                <!-- Grid Kartu Materi -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <?php foreach ($materi_list as $m): ?>
                         <div class="bg-teal-500 rounded-xl shadow-md p-5 flex flex-col sm:flex-row items-center gap-6">
@@ -166,20 +174,28 @@ if ($pengajar_id) {
             </div>
         </main>
     </div>
-    <div id="modalTambahMateri" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+
+    <!-- Modal Tambah Materi -->
+    <div id="modalTambahMateri" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg transform transition-all">
             <div class="bg-teal-500 text-white px-6 py-4 rounded-t-xl flex items-center justify-between">
                 <h3 class="text-xl font-bold">Tambah Materi Baru</h3>
-                <button id="closeModal" class="text-white hover:text-gray-200 text-2xl"><i class="fas fa-times"></i></button>
+                <button id="closeModal" class="text-white hover:text-gray-200 text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
             <div class="p-6">
                 <form id="formTambahMateri" class="space-y-4" method="POST" enctype="multipart/form-data">
-                    <div><label for="namaMateri" class="block text-sm font-medium text-teal-500 mb-2">Nama Materi</label><input name="judul" type="text" id="namaMateri" placeholder="Contoh: Pengenalan Vektor" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500" required></div>
+                    <div>
+                        <label for="namaMateri" class="block text-sm font-medium text-teal-500 mb-2">Nama Materi</label>
+                        <input name="judul" type="text" id="namaMateri" placeholder="Contoh: Pengenalan Vektor" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500" required>
+                    </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label for="kelasInduk" class="block text-sm font-medium text-teal-500  mb-2">Untuk Kelas</label>
-                            <select name="kelas_id" id="kelasInduk" class="...">
+                            <label for="kelasInduk" class="block text-sm font-medium text-teal-500 mb-2">Untuk Kelas</label>
+                            <select name="kelas_id" id="kelasInduk" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500" required>
+                                <option value="">Pilih Kelas</option>
                                 <?php foreach ($kelas_options as $k): ?>
                                     <option value="<?= $k['kelas_id'] ?>"><?= htmlspecialchars($k['judul']) ?></option>
                                 <?php endforeach; ?>
@@ -187,25 +203,90 @@ if ($pengajar_id) {
                         </div>
                         <div>
                             <label for="tipeMateri" class="block text-sm font-medium text-teal-500 mb-2">Tipe Materi</label>
-                            <select name="tipe" id="tipeMateri" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500">
-                                <option>Soal</option>
-                                <option>PDF</option>
-                                <option>Video</option>
+                            <select name="tipe" id="tipeMateri" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500" required>
+                                <option value="">Pilih Tipe</option>
+                                <option value="Soal">Soal</option>
+                                <option value="PDF">PDF</option>
+                                <option value="Video">Video</option>
                             </select>
                         </div>
                     </div>
-                    <div><label for="deskripsiMateri" class="block text-sm font-medium text-teal-500 mb-2">Deskripsi</label><textarea name="deskripsi" id="deskripsiMateri" placeholder="Jelaskan isi singkat dari Materi ini" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"></textarea></div>
+                    
+                    <div>
+                        <label for="deskripsiMateri" class="block text-sm font-medium text-teal-500 mb-2">Deskripsi</label>
+                        <textarea name="deskripsi" id="deskripsiMateri" placeholder="Jelaskan isi singkat dari Materi ini" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"></textarea>
+                    </div>
+                    
                     <div>
                         <label for="fileMateri" class="block text-sm font-medium text-teal-500 mb-2">Upload File</label>
                         <input name="file" type="file" id="fileMateri" required class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100" />
                     </div>
-                    <div class="flex gap-3 pt-4"><button type="button" id="batalBtn" class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors font-medium">Batal</button><button type="submit" class="flex-1 px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition-colors font-medium">Tambah Materi</button></div>
+                    
+                    <div class="flex gap-3 pt-4">
+                        <button type="button" id="batalBtn" class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors font-medium">Batal</button>
+                        <button type="submit" class="flex-1 px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition-colors font-medium">Tambah Materi</button>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Elemen-elemen yang diperlukan
+            const tambahMateriBtn = document.getElementById('tambahMateriBtn');
+            const modalTambahMateri = document.getElementById('modalTambahMateri');
+            const closeModal = document.getElementById('closeModal');
+            const batalBtn = document.getElementById('batalBtn');
+            
+            // Fungsi untuk menampilkan modal
+            function showModal() {
+                modalTambahMateri.classList.remove('hidden');
+                modalTambahMateri.classList.add('flex');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            }
+            
+            // Fungsi untuk menyembunyikan modal
+            function hideModal() {
+                modalTambahMateri.classList.add('hidden');
+                modalTambahMateri.classList.remove('flex');
+                document.body.style.overflow = 'auto'; // Allow scrolling
+            }
+            
+            // Event listener untuk tombol tambah materi
+            tambahMateriBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                showModal();
+            });
+            
+            // Event listener untuk tombol close (X)
+            closeModal.addEventListener('click', function(e) {
+                e.preventDefault();
+                hideModal();
+            });
+            
+            // Event listener untuk tombol batal
+            batalBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                hideModal();
+            });
+            
+            // Event listener untuk klik di luar modal
+            modalTambahMateri.addEventListener('click', function(e) {
+                if (e.target === modalTambahMateri) {
+                    hideModal();
+                }
+            });
+            
+            // Event listener untuk tombol ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && !modalTambahMateri.classList.contains('hidden')) {
+                    hideModal();
+                }
+            });
+        });
+
+        // Fungsi untuk sorting
         document.getElementById('urutkanBtn').addEventListener('click', () => {
             const container = document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2.gap-8');
             const materiCards = Array.from(container.children);
