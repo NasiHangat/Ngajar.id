@@ -55,14 +55,20 @@ for ($i = 1; $i <= 12; $i++) {
 // Query untuk Peringkat Teratas Topup Token
 $top_murid = [];
 $query_top_murid = "
-    SELECT u.name, SUM(t.jumlah_token) as total_token
-    FROM topup t
-    JOIN users u ON t.user_id = u.user_id
-    WHERE u.role = 'murid'
-    GROUP BY t.user_id
-    ORDER BY total_token DESC
-    LIMIT 3
+    SELECT ranked.name, ranked.total_token, ranked.rank FROM (
+        SELECT 
+            u.name, 
+            SUM(t.jumlah_token) AS total_token,
+            RANK() OVER (ORDER BY SUM(t.jumlah_token) DESC) AS rank
+        FROM topup t
+        JOIN users u ON u.user_id = t.user_id
+        WHERE u.role = 'murid'
+        GROUP BY t.user_id
+    ) AS ranked
+    WHERE ranked.rank <= 3
+    ORDER BY ranked.rank
 ";
+
 $result_top_murid = mysqli_query($conn, $query_top_murid);
 while ($row = mysqli_fetch_assoc($result_top_murid)) {
     $top_murid[] = $row;
