@@ -684,6 +684,11 @@ class MuridDashboard {
 
 
 class MuridModul {
+     constructor() {
+        this.activeTab = "soal"; // hanya satu tab global (soal, pdf, video)
+    }
+
+
     toggleModul(button) {
         const allButtons = document.querySelectorAll(".toggle-modul");
         const allTabs = document.querySelectorAll(".tab-modul");
@@ -707,51 +712,64 @@ class MuridModul {
         button.classList.add("bg-teal-500", "text-white");
     }
 
-      togglePremium(button) {
-    const allButtons = document.querySelectorAll(".toggle-tab");
-    const allTabs = document.querySelectorAll(".sub-tab-group");
+     togglePremium(button) {
+        const allButtons = document.querySelectorAll(".toggle-tab");
+        const allGroups = document.querySelectorAll(".sub-tab-group");
 
-    allButtons.forEach(btn => {
-        btn.classList.remove("bg-teal-500", "text-white");
-        btn.classList.add("bg-white", "text-teal-500");
-    });
+        allButtons.forEach(btn => {
+            btn.classList.remove("bg-teal-500", "text-white");
+            btn.classList.add("bg-white", "text-teal-500");
+        });
 
-    allTabs.forEach(tab => {
-        tab.classList.add("hidden");
-    });
+        allGroups.forEach(group => group.classList.add("hidden"));
 
-    const target = button.getAttribute("data-target");
-    const activeTab = document.getElementById(target); // <== harus cocok
-    if (activeTab) {
-        activeTab.classList.remove("hidden");
+        const target = button.getAttribute("data-target");
+        const tabGroup = document.getElementById(target);
+        if (tabGroup) {
+            tabGroup.classList.remove("hidden");
+        }
+
+        button.classList.remove("bg-white", "text-teal-500");
+        button.classList.add("bg-teal-500", "text-white");
+
+        // Tampilkan sub-tab yang sama di grup yang baru
+        this.setActiveNgajarTab(target, this.activeTab);
     }
 
-    button.classList.remove("bg-white", "text-teal-500");
-    button.classList.add("bg-teal-500", "text-white");
-}
+    toggleNgajar(button, tipe) {
+        const allButtons = document.querySelectorAll(`#${tipe} .toggle-ngajar`);
+        const allTabs = document.querySelectorAll(`#${tipe} .tab-ngajar`);
 
-   toggleNgajar(button, group) {
-    const allButtons = document.querySelectorAll(`#${group} .toggle-ngajar`);
-    const allTabs = document.querySelectorAll(`#${group} .tab-ngajar`);
+        allButtons.forEach(btn => {
+            btn.classList.remove("bg-teal-500", "text-white");
+            btn.classList.add("bg-white", "text-teal-500");
+        });
 
-    allButtons.forEach(btn => {
-        btn.classList.remove("bg-teal-500", "text-white");
-        btn.classList.add("bg-white", "text-teal-500");
-    });
+        allTabs.forEach(tab => {
+            tab.classList.add("hidden");
+        });
 
-    allTabs.forEach(tab => {
-        tab.classList.add("hidden");
-    });
+        const target = button.getAttribute("data-target");
+        const activeTab = document.getElementById(`ngajar-${tipe}-${target}`);
+        if (activeTab) {
+            activeTab.classList.remove("hidden");
+        }
 
-    const target = button.getAttribute("data-target");
-    const activeTab = document.getElementById(`ngajar-${group}-${target}`);
-    if (activeTab) {
-        activeTab.classList.remove("hidden");
+        button.classList.remove("bg-white", "text-teal-500");
+        button.classList.add("bg-teal-500", "text-white");
+
+        // Simpan tab aktif global (soal, pdf, video)
+        this.activeTab = target;
     }
 
-    button.classList.remove("bg-white", "text-teal-500");
-    button.classList.add("bg-teal-500", "text-white");
-}
+    setActiveNgajarTab(tipe, target) {
+        const buttons = document.querySelectorAll(`#${tipe} .toggle-ngajar`);
+        buttons.forEach(btn => {
+            if (btn.getAttribute("data-target") === target) {
+                this.toggleNgajar(btn, tipe);
+            }
+        });
+    }
 
 
 
