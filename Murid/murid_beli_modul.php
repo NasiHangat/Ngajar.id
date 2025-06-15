@@ -2,6 +2,9 @@
 session_start();
 include "../Includes/DBkoneksi.php";
 
+// Ambil URL sebelumnya
+$previousPage = $_SERVER['HTTP_REFERER'] ?? 'murid_dashboard.php';
+
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['user_id'], $_POST['modul_id'], $_POST['harga'])) {
     $user_id  = (int) $_SESSION['user_id'];
     $modul_id = (int) $_POST['modul_id'];
@@ -16,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['user_id'], $_POST[
     $stmt->close();
 
     if ($sudah_dibeli > 0) {
-        header("Location: murid_dashboard.php?status=already_purchased");
+        header("Location: $previousPage?error=already_purchased");
         exit;
     }
 
@@ -29,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['user_id'], $_POST[
     $stmt->close();
 
     if ($jumlah_token < $harga) {
-        header("Location: murid_dashboard.php?status=not_enough_token");
+        header("Location: $previousPage?error=not_enough_token");
         exit;
     }
 
@@ -48,14 +51,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['user_id'], $_POST[
         $stmt->execute();
 
         $conn->commit();
-        header("Location: murid_dashboard.php?status=success");
+        header("Location: $previousPage?status=success");
         exit;
     } catch (Exception $e) {
         $conn->rollback();
-        header("Location: murid_dashboard.php?status=failed");
+        header("Location: $previousPage?error=transaction_failed");
         exit;
     }
 } else {
-    header("Location: murid_dashboard.php");
+    header("Location: $previousPage");
     exit;
 }
