@@ -71,7 +71,6 @@ while ($row = $result->fetch_assoc()) {
     $modul_dibeli[] = $row['modul_id'];
 }
 $stmt->close();
-<<<<<<< Updated upstream
 
 // Ambil materi dari kelas yang diikuti murid
 $materiList = [];
@@ -140,8 +139,7 @@ if ($id_pengguna) {
     $stmt->fetch();
     $stmt->close();
 }
-=======
->>>>>>> Stashed changes
+
 ?>
 
 
@@ -264,7 +262,7 @@ if ($id_pengguna) {
                                         <div>
                                             <!-- Dalam daftar modul -->
                                             <?php if (in_array($modul['modul_id'], $modul_dibeli)): ?>
-                                                <a href="../detail_materi.php?id=<?= $modul['modul_id'] ?>" class="text-teal-500 font-bold hover:underline">
+                                                <a href="../Pengajar/detail_materi.php?id=<?= $modul['modul_id'] ?>" class="text-teal-500 font-bold hover:underline">
                                                     <?= htmlspecialchars($modul['judul']) ?>
                                                 </a>
                                                 <div class="text-sm text-green-600 mt-1 font-semibold">Sudah Dibeli</div>
