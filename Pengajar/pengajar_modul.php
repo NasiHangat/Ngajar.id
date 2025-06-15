@@ -100,7 +100,6 @@ while ($row = $result->fetch_assoc()) {
                     <h1 class="text-xl font-bold text-teal-500 hidden sm:block">Materi</h1>
                 </div>
                 <div class="flex items-center space-x-2 sm:space-x-4">
-                    <button class="text-teal-500 hover:text-teal-500 p-2 rounded-full"><i class="fas fa-bell text-xl"></i></button>
                     <?php include "../includes/Profile.php"; ?>
                 </div>
             </div>
@@ -133,7 +132,7 @@ while ($row = $result->fetch_assoc()) {
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <?php foreach ($materi_list as $m): ?>
                     <div class="bg-teal-500 rounded-xl shadow-md p-5 flex flex-col sm:flex-row items-center gap-6">
-                        <i class="fas fa-book text-8xl opacity-100"></i>
+                        <i class="fas fa-book text-white text-8xl opacity-100"></i>
                         <div class="flex-grow w-full">
                             <h3 class="text-2xl font-bold mb-2 text-white"><?= htmlspecialchars($m['judul']) ?></h3>
                             <div class="space-y-1 text-base font-light text-gray-100">
@@ -194,20 +193,15 @@ while ($row = $result->fetch_assoc()) {
     <script>
     document.getElementById('urutkanBtn').addEventListener('click', () => {
       const list = document.getElementById('namaList');
-      // Ambil semua item list dan bikin array dari mereka
       const itemsArray = Array.from(list.querySelectorAll('li'));
 
-      // Urutkan array berdasarkan teks isi elemen, case insensitive
       itemsArray.sort((a, b) => {
         return a.textContent.toLowerCase().localeCompare(b.textContent.toLowerCase());
       });
-
-      // Hapus semua item list lama
       while (list.firstChild) {
         list.removeChild(list.firstChild);
       }
 
-      // Masukkan kembali item yang sudah diurutkan ke dalam list
       itemsArray.forEach(item => list.appendChild(item));
     });
 

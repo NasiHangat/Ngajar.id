@@ -89,7 +89,8 @@ $stmt->close();
                         <p class="text-white-200 opacity-70 text-xs sm:text-sm leading-tight">Pelajar</p>
                         <div class="mt-2 flex items-center space-x-2">
                             <div class="bg-white text-teal-500 text-xs font-semibold px-2.5 py-1 rounded-lg flex items-center">
-                                <img src="../img/coin.png" class="mr-1.5 w-4"> 20
+                                <img src="../img/coin.png" class="mr-1.5 w-4"> 
+                                <p>20</p>
                             </div>
                             <button class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center">
                                 <i class="fas fa-plus text-sm"></i>

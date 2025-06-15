@@ -76,6 +76,7 @@ if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'admin') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manajemen Modul Admin - Ngajar.ID</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../js/admin.js"></script>
     <link rel="icon" type="image/png" href="../img/Logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -132,35 +133,58 @@ if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'admin') {
                 </div>
 
                 <!-- Grid Kartu Modul -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">                  
-                    <?php if (!empty($modul)): ?>
-                        <?php foreach ($modul as $item): ?>
-                            <div class="bg-white rounded-xl shadow-md p-6 flex flex-col gap-4 border-l-8 border-teal-500">
-                                <h3 class="text-xl font-bold text-teal-600"><?= htmlspecialchars($item['judul']) ?></h3>
-                                <p class="text-sm text-gray-600"><?= htmlspecialchars($item['deskripsi']) ?></p>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-sm font-bold text-teal-500"><?= htmlspecialchars($item['tipe']) ?></span>
-                                    <?php if ($item['token_harga'] > 0): ?>
-                                        <div class="flex items-center gap-1 text-sm text-gray-700">
-                                            <img src="../img/coin.png" class="w-4 h-4" alt="Token"> <?= $item['token_harga'] ?>
-                                        </div>
-                                    <?php else: ?>
-                                        <span class="text-gray-400 text-sm">Gratis</span>
-                                    <?php endif; ?>
-                                </div>
-                                <a href="<?= $item['file_url'] ?>" target="_blank" class="text-teal-500 text-sm hover:underline">Lihat File</a>
-                                <p class="text-xs text-gray-400">Dibuat oleh: <?= htmlspecialchars($item['nama_pengajar']) ?></p>
-
-                                <!-- Tombol Hapus -->
-                                <button onclick="hapusModul(<?= $item['modul_id'] ?>)" class="mt-2 bg-red-500 text-white px-4 py-1.5 rounded-md text-sm font-bold hover:bg-red-600 transition-colors w-fit self-end">
-                                    <i class="fas fa-trash-alt mr-1"></i> Hapus
-                                </button>
-                            </div>
-                        <?php endforeach; ?>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <?php if (!empty($modul)): ?>
+        <?php foreach ($modul as $item): ?>
+            <div class="relative bg-white border border-gray-200 shadow-sm rounded-xl p-4 hover:shadow-md transition-all duration-200 transform hover:-translate-y-1">
+                
+                <!-- Token / Harga di Pojok Kanan Atas -->
+                <div class="absolute top-3 right-3">
+                    <?php if ($item['token_harga'] > 0): ?>
+                        <div class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm">
+                            <img src="../img/coin.png" class="w-3 h-3" alt="Token">
+                            <?= $item['token_harga'] ?>
+                        </div>
                     <?php else: ?>
-                        <p class="text-gray-500 text-center col-span-full">Belum ada modul yang dibuat.</p>
+                        <span class="text-[11px] text-gray-400 italic">Gratis</span>
                     <?php endif; ?>
                 </div>
+
+                <!-- Judul -->
+                <h3 class="text-base font-semibold text-teal-700 mb-1"><?= htmlspecialchars($item['judul']) ?></h3>
+
+                <!-- Deskripsi -->
+                <p class="text-xs text-gray-600 mb-3"><?= htmlspecialchars($item['deskripsi']) ?></p>
+
+                <!-- Tipe -->
+                <div class="mb-3">
+                    <span class="inline-block px-1.5 py-0.5 bg-teal-100 text-teal-700 text-[11px] font-medium rounded-full">
+                        <?= htmlspecialchars($item['tipe']) ?>
+                    </span>
+                </div>
+
+                <!-- Aksi -->
+                <div class="flex flex-col gap-2">
+                    <a href="<?= $item['file_url'] ?>" target="_blank"
+                        class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-medium rounded transition">
+                        <i class="fas fa-file-alt text-xs"></i> Lihat File
+                    </a>
+                    <p class="text-[10px] text-gray-400">Dibuat oleh: <?= htmlspecialchars($item['nama_pengajar']) ?></p>
+                </div>
+
+                <!-- Tombol Hapus -->
+                <button onclick="hapusModul(<?= $item['modul_id'] ?>)"
+                    class="mt-3 bg-red-100 hover:bg-red-200 text-red-600 px-2.5 py-1 text-xs font-semibold rounded flex items-center gap-1 transition">
+                    <i class="fas fa-trash-alt text-xs"></i> Hapus
+                </button>
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p class="col-span-full text-center text-gray-500 text-sm italic">Belum ada modul yang dibuat.</p>
+    <?php endif; ?>
+</div>
+
+
 
             </div>
         </main>
