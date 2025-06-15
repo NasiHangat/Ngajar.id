@@ -150,20 +150,8 @@ if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'admin') {
                     <?php endif; ?>
                 </div>
 
-                <!-- Judul -->
                 <h3 class="text-base font-semibold text-teal-700 mb-1"><?= htmlspecialchars($item['judul']) ?></h3>
-
-                <!-- Deskripsi -->
                 <p class="text-xs text-gray-600 mb-3"><?= htmlspecialchars($item['deskripsi']) ?></p>
-
-                <!-- Tipe -->
-                <div class="mb-3">
-                    <span class="inline-block px-1.5 py-0.5 bg-teal-100 text-teal-700 text-[11px] font-medium rounded-full">
-                        <?= htmlspecialchars($item['tipe']) ?>
-                    </span>
-                </div>
-
-                <!-- Aksi -->
                 <div class="flex flex-col gap-2">
                     <a href="<?= $item['file_url'] ?>" target="_blank"
                         class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-medium rounded transition">
@@ -171,8 +159,6 @@ if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'admin') {
                     </a>
                     <p class="text-[10px] text-gray-400">Dibuat oleh: <?= htmlspecialchars($item['nama_pengajar']) ?></p>
                 </div>
-
-                <!-- Tombol Hapus -->
                 <button onclick="hapusModul(<?= $item['modul_id'] ?>)"
                     class="mt-3 bg-red-100 hover:bg-red-200 text-red-600 px-2.5 py-1 text-xs font-semibold rounded flex items-center gap-1 transition">
                     <i class="fas fa-trash-alt text-xs"></i> Hapus

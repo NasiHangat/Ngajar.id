@@ -29,11 +29,11 @@ class MuridDashboard {
             hamburgerBtn.addEventListener('click', this.toggleSidebar.bind(this));
         }
 
-        // Token top-up button
-        const topupBtn = document.querySelector('.bg-white.bg-opacity-20');
+    const topupBtn = document.getElementById('topupButton');
         if (topupBtn) {
-            topupBtn.addEventListener('click', this.showTopupModal.bind(this));
+            topupBtn.addEventListener('click', this.showTopuptoken.bind(this));
         }
+
 
         // Subject cards hover effects
         this.initSubjectCards();
@@ -405,7 +405,7 @@ class MuridDashboard {
     }
 
     showInsufficientTokensModal() {
-        const modal = this.createModal(
+        const token = this.createModal(
             'Token Tidak Cukup',
             'Anda tidak memiliki cukup token untuk membeli modul ini. Lakukan top up terlebih dahulu.',
             [
@@ -736,8 +736,6 @@ class MuridModul {
 
 // ✅ Buat instance global
 window.modul = new MuridModul();
-
-// Initialize dashboard when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     new MuridDashboard();
 });
