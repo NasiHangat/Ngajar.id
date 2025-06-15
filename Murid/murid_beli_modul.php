@@ -2,6 +2,12 @@
 include '../Includes/session_check.php';
 include '../Includes/DBkoneksi.php';
 
+
+$_SESSION['pesan'] = "Modul berhasil dibeli!";
+header("Location: murid_dashboard.php");
+exit;
+
+
 if ($_SESSION['role'] !== 'murid') {
     header("Location: unauthorized.php");
     exit;
