@@ -17,6 +17,26 @@ if ($id_pengguna) {
     $stmt->fetch();
     $stmt->close();
 }
+
+$token = 0;
+if ($id_pengguna) {
+    // Ambil nama
+    $stmt = $conn->prepare("SELECT name FROM users WHERE user_id = ?");
+    $stmt->bind_param("i", $id_pengguna);
+    $stmt->execute();
+    $stmt->bind_result($namaPengguna);
+    $stmt->fetch();
+    $stmt->close();
+
+    // Ambil token
+    $stmt = $conn->prepare("SELECT jumlah FROM token WHERE user_id = ?");
+    $stmt->bind_param("i", $id_pengguna);
+    $stmt->execute();
+    $stmt->bind_result($token);
+    $stmt->fetch();
+    $stmt->close();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -75,7 +95,8 @@ if ($id_pengguna) {
                             <!-- Token dan tombol tambah diletakkan di bawah -->
                             <div class="mt-2 flex items-center space-x-2">
                                 <div class="bg-white text-teal-500 text-xs font-semibold px-2.5 py-1 rounded-lg flex items-center">
-                                    <img src="../img/coin.png" class="mr-1.5 w-4"></img> 20
+                                    <img src="../img/coin.png" class="mr-1.5 w-4"></img> 
+                                    <?php echo htmlspecialchars($token); ?>
                                 </div>
                                 <button class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center">
                                     <i class="fas fa-plus text-sm"></i>
