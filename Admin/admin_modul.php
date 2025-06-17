@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($stmt->execute()) {
         echo "<script>alert('Modul berhasil ditambahkan!'); window.location.href=window.location.href;</script>";
     } else {
-        echo "<script>alert('Gagal menambahkan modul.');</script>";
+        echo "<script> alert('Gagal menambahkan modul.'); </script>";
     }
 
     $stmt->close();
@@ -132,49 +132,49 @@ if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'admin') {
                 </div>
 
                 <!-- Grid Kartu Modul -->
-                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <?php if (!empty($modul)): ?>
-        <?php foreach ($modul as $item): ?>
-            <div class="relative bg-white border border-gray-200 shadow-sm rounded-xl p-4 hover:shadow-md transition-all duration-200 transform hover:-translate-y-1">
-                
-                <!-- Token / Harga di Pojok Kanan Atas -->
-                <div class="absolute top-3 right-3">
-                    <?php if ($item['token_harga'] > 0): ?>
-                        <div class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm">
-                            <img src="../img/coin.png" class="w-3 h-3" alt="Token">
-                            <?= $item['token_harga'] ?>
-                        </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <?php if (!empty($modul)): ?>
+                        <?php foreach ($modul as $item): ?>
+                            <div class="relative bg-white border border-gray-200 shadow-sm rounded-xl p-4 hover:shadow-md transition-all duration-200 transform hover:-translate-y-1">
+
+                                <!-- Token / Harga di Pojok Kanan Atas -->
+                                <div class="absolute top-3 right-3">
+                                    <?php if ($item['token_harga'] > 0): ?>
+                                        <div class="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-[11px] font-semibold px-2 py-0.5 rounded-full shadow-sm">
+                                            <img src="../img/coin.png" class="w-3 h-3" alt="Token">
+                                            <?= $item['token_harga'] ?>
+                                        </div>
+                                    <?php else: ?>
+                                        <span class="text-[11px] text-gray-400 italic">Gratis</span>
+                                    <?php endif; ?>
+                                </div>
+
+                                <h3 class="text-base font-semibold text-teal-700 mb-1">
+                                    <a href="#"><?= htmlspecialchars($item['judul']) ?></a>
+                                </h3>
+                                <p class="text-xs text-gray-600 mb-3"><?= htmlspecialchars($item['deskripsi']) ?></p>
+                                <div class="flex flex-col gap-2">
+                                    <a href="<?= $item['file_url'] ?>" target="_blank"
+                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-medium rounded transition">
+                                        <i class="fas fa-file-alt text-xs"></i> Lihat File
+                                    </a>
+                                    <p class="text-[10px] text-gray-400">Dibuat oleh: <?= htmlspecialchars($item['nama_pengajar']) ?></p>
+                                </div>
+                                <button onclick="hapusModul(<?= $item['modul_id'] ?>)"
+                                    class="mt-3 bg-red-100 hover:bg-red-200 text-red-600 px-2.5 py-1 text-xs font-semibold rounded flex items-center gap-1 transition">
+                                    <i class="fas fa-trash-alt text-xs"></i> Hapus
+                                </button>
+                            </div>
+                        <?php endforeach; ?>
                     <?php else: ?>
-                        <span class="text-[11px] text-gray-400 italic">Gratis</span>
+                        <p class="col-span-full text-center text-gray-500 text-sm italic">Belum ada modul yang dibuat.</p>
                     <?php endif; ?>
                 </div>
-
-                <h3 class="text-base font-semibold text-teal-700 mb-1"><?= htmlspecialchars($item['judul']) ?></h3>
-                <p class="text-xs text-gray-600 mb-3"><?= htmlspecialchars($item['deskripsi']) ?></p>
-                <div class="flex flex-col gap-2">
-                    <a href="<?= $item['file_url'] ?>" target="_blank"
-                        class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-medium rounded transition">
-                        <i class="fas fa-file-alt text-xs"></i> Lihat File
-                    </a>
-                    <p class="text-[10px] text-gray-400">Dibuat oleh: <?= htmlspecialchars($item['nama_pengajar']) ?></p>
-                </div>
-                <button onclick="hapusModul(<?= $item['modul_id'] ?>)"
-                    class="mt-3 bg-red-100 hover:bg-red-200 text-red-600 px-2.5 py-1 text-xs font-semibold rounded flex items-center gap-1 transition">
-                    <i class="fas fa-trash-alt text-xs"></i> Hapus
-                </button>
-            </div>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <p class="col-span-full text-center text-gray-500 text-sm italic">Belum ada modul yang dibuat.</p>
-    <?php endif; ?>
-</div>
-
-
 
             </div>
         </main>
     </div>
-    
+
     <div id="modalTambahModul" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg transform transition-all">
             <div class="bg-teal-500 text-white px-6 py-4 rounded-t-xl flex items-center justify-between">
@@ -196,16 +196,15 @@ if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'admin') {
                         <div>
                             <label for="modul" class="block text-sm font-medium text-teal-500  mb-2">Harga Token</label>
                             <input
-                            name="token_harga" type="number" id="tokenModul"
-                            placeholder="Masukkan harga token untuk akses modul"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
-                        >
+                                name="token_harga" type="number" id="tokenModul"
+                                placeholder="Masukkan harga token untuk akses modul"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500">
                         </div>
                     </div>
                     <div><label for="deskripsiModul" class="block text-sm font-medium text-teal-500 mb-2">Deskripsi</label><textarea name="deskripsi" id="deskripsiModul" placeholder="Jelaskan isi singkat dari modul ini" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"></textarea></div>
                     <div>
                         <label for="fileModul" class="block text-sm font-medium text-teal-500 mb-2">Upload File</label>
-                        <input name="file" type="file" id="fileModul" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100" />
+                        <input name="file" type="file" id="fileModul" required  class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100" />
                     </div>
                     <div class="flex gap-3 pt-4"><button type="button" id="batalBtn" class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors font-medium">Batal</button><button type="submit" class="flex-1 px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition-colors font-medium">Tambah Modul</button></div>
                 </form>
@@ -214,6 +213,53 @@ if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'admin') {
     </div>
 
     <script>
+        // Your existing sort functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const urutkanBtn = document.querySelector('.bg-teal-500.text-white.px-4.py-2.rounded-lg.font-bold.flex.items-center.gap-2.hover\\:bg-teal-600.transition-colors.text-sm');
+
+            if (urutkanBtn) {
+                urutkanBtn.addEventListener('click', () => {
+                    const container = document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2.gap-4');
+                    const modulCards = Array.from(container.children);
+
+                    // Skip empty state message
+                    const actualCards = modulCards.filter(card => !card.querySelector('p.text-gray-500.text-center.col-span-full'));
+
+                    if (actualCards.length === 0) return;
+
+                    // Toggle sorting order
+                    const isAscending = container.dataset.sortOrder !== 'asc';
+                    container.dataset.sortOrder = isAscending ? 'asc' : 'desc';
+
+                    // Update button text to show current action
+                    const sortSpan = urutkanBtn.querySelector('span');
+                    sortSpan.textContent = isAscending ? 'A-Z ↑' : 'Z-A ↓';
+
+                    // Sort the cards based on module title
+                    actualCards.sort((a, b) => {
+                        const titleA = a.querySelector('h3 a').textContent.trim().toLowerCase();
+                        const titleB = b.querySelector('h3 a').textContent.trim().toLowerCase();
+
+                        if (isAscending) {
+                            return titleA.localeCompare(titleB);
+                        } else {
+                            return titleB.localeCompare(titleA);
+                        }
+                    });
+
+                    // Clear container and re-append sorted cards
+                    container.innerHTML = '';
+                    actualCards.forEach(card => container.appendChild(card));
+
+                    // Add visual feedback
+                    container.style.opacity = '0.7';
+                    setTimeout(() => {
+                        container.style.opacity = '1';
+                    }, 200);
+                });
+            }
+        });
+
         // --- Modal Logic ---
         const tambahModulBtn = document.getElementById('tambahModulBtn');
         const modal = document.getElementById('modalTambahModul');
@@ -259,23 +305,21 @@ if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'admin') {
             }
         });
 
-    </script>
-    <script>
-    function hapusModul(modulId) {
-        if (confirm("Yakin ingin menghapus modul ini?")) {
-            fetch(`hapus_modul.php?id=${modulId}`, {
-                method: 'GET'
-            })
-            .then(res => res.json())
-            .then(data => {
-                alert(data.message);
-                if (data.status === 'success') {
-                    location.reload();
-                }
-            })
-            .catch(() => alert('Terjadi kesalahan saat menghapus modul.'));
+        function hapusModul(modulId) {
+            if (confirm("Yakin ingin menghapus modul ini?")) {
+                fetch(`hapus_modul.php?id=${modulId}`, {
+                        method: 'GET'
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        alert(data.message);
+                        if (data.status === 'success') {
+                            location.reload();
+                        }
+                    })
+                    .catch(() => alert('Terjadi kesalahan saat menghapus modul.'));
+            }
         }
-    }
     </script>
 
     <footer>

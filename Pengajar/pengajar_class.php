@@ -108,14 +108,14 @@ if ($pengajar_id) {
 
                                     <div class="flex items-center gap-3 mt-4">
                                         <button class="editKelasBtn bg-teal-500 text-white px-3 py-1.5 rounded-md text-xs font-bold flex items-center gap-2 hover:bg-teal-600 transition-colors"
-                                                data-id="<?= $item['kelas_id'] ?>"
-                                                data-judul="<?= htmlspecialchars($item['judul']) ?>"
-                                                data-deskripsi="<?= htmlspecialchars($item['deskripsi']) ?>">
+                                            data-id="<?= $item['kelas_id'] ?>"
+                                            data-judul="<?= htmlspecialchars($item['judul']) ?>"
+                                            data-deskripsi="<?= htmlspecialchars($item['deskripsi']) ?>">
                                             <i class="fas fa-pencil-alt"></i><span>Edit Kelas</span>
                                         </button>
 
                                         <button onclick="hapusKelas(<?= $item['kelas_id'] ?>)"
-                                                class="bg-red-500 text-white px-3 py-1.5 rounded-md text-xs font-bold flex items-center gap-2 hover:bg-red-600 transition-colors">
+                                            class="bg-red-500 text-white px-3 py-1.5 rounded-md text-xs font-bold flex items-center gap-2 hover:bg-red-600 transition-colors">
                                             <i class="fas fa-trash-alt"></i><span>Delete Kelas</span>
                                         </button>
                                     </div>
@@ -208,30 +208,30 @@ if ($pengajar_id) {
             const namaKelas = document.getElementById('namaKelasTambah').value;
             const deskripsiKelas = document.getElementById('deskripsiKelasTambah').value;
 
-        // Kirim data ke PHP
+            // Kirim data ke PHP
             fetch('../proses_tambah_kelas.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: new URLSearchParams({
-                    namaKelas: namaKelas,
-                    deskripsiKelas: deskripsiKelas
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({
+                        namaKelas: namaKelas,
+                        deskripsiKelas: deskripsiKelas
+                    })
                 })
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message);
-                if (data.status === 'success') {
-                    closeModalTambahFunc();
-                    // Optional: reload halaman agar kelas muncul
-                    location.reload();
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Terjadi kesalahan!');
-            });
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    if (data.status === 'success') {
+                        closeModalTambahFunc();
+                        // Optional: reload halaman agar kelas muncul
+                        location.reload();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan!');
+                });
         });
 
         // --- Modal Logic for Edit Kelas ---
@@ -267,107 +267,107 @@ if ($pengajar_id) {
                 closeModalEditFunc();
             }
         });
-    </script>
-    <script>
-    document.querySelectorAll('.editKelasBtn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const id = btn.dataset.id;
-            const judul = btn.dataset.judul;
-            const deskripsi = btn.dataset.deskripsi;
+        document.querySelectorAll('.editKelasBtn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.dataset.id;
+                const judul = btn.dataset.judul;
+                const deskripsi = btn.dataset.deskripsi;
 
-            document.getElementById('namaKelasEdit').value = judul;
-            document.getElementById('deskripsiKelasEdit').value = deskripsi;
-            formEdit.dataset.id = id;
+                document.getElementById('namaKelasEdit').value = judul;
+                document.getElementById('deskripsiKelasEdit').value = deskripsi;
+                formEdit.dataset.id = id;
 
-            openModalEdit();
-        });
-    });
-
-    formEdit.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const namaKelas = document.getElementById('namaKelasEdit').value;
-        const deskripsiKelas = document.getElementById('deskripsiKelasEdit').value;
-        const kelasId = formEdit.dataset.id;
-
-        fetch('../proses_edit_kelas.php', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: new URLSearchParams({
-                id: kelasId,
-                namaKelas: namaKelas,
-                deskripsiKelas: deskripsiKelas
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            alert(data.message);
-            if (data.status === 'success') {
-                closeModalEditFunc();
-                location.reload();
-            }
-        })
-        .catch(() => alert('Terjadi kesalahan saat mengedit!'));
-    });
-    // Tambahkan script ini sebelum tag </body>
-document.addEventListener('DOMContentLoaded', function() {
-    const urutkanBtn = document.querySelector('.bg-teal-500.text-white.px-4.py-2.rounded-lg.font-bold.flex.items-center.gap-2.hover\\:bg-teal-600.transition-colors.text-sm');
-    
-    if (urutkanBtn) {
-        urutkanBtn.addEventListener('click', () => {
-            const container = document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2.gap-8');
-            const kelasCards = Array.from(container.children);
-            
-            // Skip empty state message
-            const actualCards = kelasCards.filter(card => !card.querySelector('p.text-gray-500.text-center.col-span-full'));
-            
-            if (actualCards.length === 0) return;
-            
-            // Toggle sorting order
-            const isAscending = container.dataset.sortOrder !== 'asc';
-            container.dataset.sortOrder = isAscending ? 'asc' : 'desc';
-            
-            // Update button text to show current action
-            const sortSpan = urutkanBtn.querySelector('span');
-            sortSpan.textContent = isAscending ? 'A-Z ↑' : 'Z-A ↓';
-            
-            // Sort the cards based on class title
-            actualCards.sort((a, b) => {
-                const titleA = a.querySelector('a').textContent.trim().toLowerCase();
-                const titleB = b.querySelector('a').textContent.trim().toLowerCase();
-                
-                if (isAscending) {
-                    return titleA.localeCompare(titleB);
-                } else {
-                    return titleB.localeCompare(titleA);
-                }
+                openModalEdit();
             });
-            
-            // Clear container and re-append sorted cards
-            container.innerHTML = '';
-            actualCards.forEach(card => container.appendChild(card));
-            
-            // Add visual feedback
-            container.style.opacity = '0.7';
-            setTimeout(() => {
-                container.style.opacity = '1';
-            }, 200);
         });
-    }
-});
-</script>
-<script>
-    function hapusKelas(kelasId) {
-        if (!confirm('Yakin ingin menghapus kelas ini?')) return;
 
-        fetch(`../hapus_kelas.php?id=${kelasId}`, { method: 'GET' })
-            .then(res => res.json())
-            .then(data => {
-                alert(data.message);
-                if (data.status === 'success') location.reload();
-            })
-            .catch(() => alert('Terjadi kesalahan saat menghapus!'));
-    }
-</script>
+        formEdit.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const namaKelas = document.getElementById('namaKelasEdit').value;
+            const deskripsiKelas = document.getElementById('deskripsiKelasEdit').value;
+            const kelasId = formEdit.dataset.id;
+
+            fetch('../proses_edit_kelas.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({
+                        id: kelasId,
+                        namaKelas: namaKelas,
+                        deskripsiKelas: deskripsiKelas
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.message);
+                    if (data.status === 'success') {
+                        closeModalEditFunc();
+                        location.reload();
+                    }
+                })
+                .catch(() => alert('Terjadi kesalahan saat mengedit!'));
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const urutkanBtn = document.querySelector('.bg-teal-500.text-white.px-4.py-2.rounded-lg.font-bold.flex.items-center.gap-2.hover\\:bg-teal-600.transition-colors.text-sm');
+
+            if (urutkanBtn) {
+                urutkanBtn.addEventListener('click', () => {
+                    const container = document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2.gap-8');
+                    const kelasCards = Array.from(container.children);
+
+                    // Skip empty state message
+                    const actualCards = kelasCards.filter(card => !card.querySelector('p.text-gray-500.text-center.col-span-full'));
+
+                    if (actualCards.length === 0) return;
+
+                    // Toggle sorting order
+                    const isAscending = container.dataset.sortOrder !== 'asc';
+                    container.dataset.sortOrder = isAscending ? 'asc' : 'desc';
+
+                    // Update button text to show current action
+                    const sortSpan = urutkanBtn.querySelector('span');
+                    sortSpan.textContent = isAscending ? 'A-Z ↑' : 'Z-A ↓';
+
+                    // Sort the cards based on class title
+                    actualCards.sort((a, b) => {
+                        const titleA = a.querySelector('a').textContent.trim().toLowerCase();
+                        const titleB = b.querySelector('a').textContent.trim().toLowerCase();
+
+                        if (isAscending) {
+                            return titleA.localeCompare(titleB);
+                        } else {
+                            return titleB.localeCompare(titleA);
+                        }
+                    });
+
+                    // Clear container and re-append sorted cards
+                    container.innerHTML = '';
+                    actualCards.forEach(card => container.appendChild(card));
+
+                    // Add visual feedback
+                    container.style.opacity = '0.7';
+                    setTimeout(() => {
+                        container.style.opacity = '1';
+                    }, 200);
+                });
+            }
+        });
+        function hapusKelas(kelasId) {
+            if (!confirm('Yakin ingin menghapus kelas ini?')) return;
+
+            fetch(`../hapus_kelas.php?id=${kelasId}`, {
+                    method: 'GET'
+                })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.message);
+                    if (data.status === 'success') location.reload();
+                })
+                .catch(() => alert('Terjadi kesalahan saat menghapus!'));
+        }
+    </script>
 
     <footer>
         <?php include '../Includes/Footer.php'; ?>
