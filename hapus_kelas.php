@@ -2,6 +2,7 @@
 header('Content-Type: application/json');
 include "Includes/DBkoneksi.php";
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
     $kelas_id = $_GET['id'];
 

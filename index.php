@@ -134,7 +134,7 @@ if ($result = $conn->query($sql_murid)) {
   <section class="max-w-6xl mx-auto px-4 py-12 text-center  ">
     <h2 class="text-lg font-semibold mb-2">TUNGGU APA LAGI</h2>
     <p class="text-sm mb-6">Belajar dan Mengajar Di Ngajar.ID</p>
-    <a href="#" class="bg-teal-500 text-white px-6 py-2 rounded hover:bg-teal-600 text-sm font-medium">
+    <a href="Register.php" class="bg-teal-500 text-white px-6 py-2 rounded hover:bg-teal-600 text-sm font-medium">
       Gabung Sekarang
     </a>
   </section>
